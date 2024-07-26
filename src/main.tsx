@@ -1,25 +1,26 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from "react"
+import ReactDOM from "react-dom/client"
 
+import "./index.css"
+import Landpage from "./pages/landpage"
+import Login from "./pages/login"
 
-import './index.css'
-import Landpage  from './pages/landpage';
-
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/home",
     element: <Landpage />,
   },
-]);
+  {
+    path: "/",
+    element: <Login />,
+  },
+])
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>
-);
+)
