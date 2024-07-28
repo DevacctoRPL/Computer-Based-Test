@@ -2,8 +2,8 @@ import React from "react"
 import ReactDOM from "react-dom/client"
 
 import "./index.css"
-import Landpage from "./pages/landpage"
-import Login from "./pages/login"
+import Landpage from "./components/Landpage"
+import LoginForm from "./components/LoginForm"
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <Login />,
+    element: <LoginForm />,
   },
 ])
 
