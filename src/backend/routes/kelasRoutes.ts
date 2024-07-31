@@ -18,4 +18,4 @@ kelasRoutes.put('/kelas/:id', updateKelas); //Passed
 // Rute untuk menghapus pengguna
 kelasRoutes.delete('/kelas/:id', deleteKelas); //Passed
 
-export default kelasRoutes;
+export default kelasRoutes; //ini komen

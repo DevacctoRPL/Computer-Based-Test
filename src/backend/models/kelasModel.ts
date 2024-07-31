@@ -45,3 +45,4 @@ class KelasModel {
 }
 
 export default KelasModel
+//ini komen

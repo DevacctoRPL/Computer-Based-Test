@@ -18,4 +18,4 @@ mapelRoutes.put('/mapel/:id', updateMapel); //Passed
 // Rute untuk menghapus pengguna
 mapelRoutes.delete('/mapel/:id', deleteMapel); //Passed
 
-export default mapelRoutes;
+export default mapelRoutes; //ini komen

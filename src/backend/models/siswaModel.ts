@@ -58,3 +58,4 @@ class SiswaModel {
 }
 
 export default SiswaModel;
+//ini komen

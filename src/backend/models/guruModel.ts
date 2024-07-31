@@ -8,3 +8,5 @@ interface Guru {
     id_mapel_kelas: string;
     sandi: string;
 }
+
+//ini komen

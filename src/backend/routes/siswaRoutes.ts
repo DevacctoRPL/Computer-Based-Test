@@ -18,4 +18,4 @@ userRoutes.put('/siswa/:id', updateSiswa); //Passed
 // Rute untuk menghapus pengguna
 userRoutes.delete('/siswa/:id', deleteSiswa); //Passed
 
-export default userRoutes;
+export default userRoutes; //ini komen

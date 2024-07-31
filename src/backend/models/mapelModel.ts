@@ -43,3 +43,4 @@ class MapelModel {
 }
 
 export default MapelModel;
+//ini komen
