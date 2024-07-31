@@ -1,0 +1,36 @@
+{
+    "root":true,
+    "env": {
+        "es2021": true,
+        "node": true,
+        "browser": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "google"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": ["tsconfig.json"],
+        "ecmaVersion": 2021,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "no-var": "error",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "require-jsdoc":"off",
+        "max-len": "off",
+        "new-cap": "off",
+        "quotes": [
+            "warn",
+            "double"
+        ],
+        "@typescript-eslint/await-thenable": 2,
+        "linebreak-style": "off",
+        "camelcase": "off"
+    }
+}
