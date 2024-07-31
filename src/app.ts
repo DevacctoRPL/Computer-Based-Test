@@ -1,14 +1,18 @@
 import express from "express";
-import userRoutes from "./backend/routes/userRoutes.js";
 import cors from "cors";
+
+import userRoutes from "./backend/routes/siswaRoutes.js";
+import mapelRoutes from "./backend/routes/mapelRoutes.js";
+import kelasRoutes from "./backend/routes/kelasRoutes.js";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-// redirect all http request to https
-// app.use((req:express.Request, res:express.Response, next:()=> void) => req.secure ? next() : res.redirect(`https://${req.hostname}${req.url}`));
-app.use("/api/", userRoutes);
+app.use("/api/", userRoutes); //Testing passed
+app.use("/api/", mapelRoutes); // Testing passed
+app.use("/api/", kelasRoutes); // Testing passed
+
 
 app.listen(7772, () => console.log(`Server started on port 7772`));
