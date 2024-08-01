@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cbt-unit_test_dillon` INI UBAH AJA CUG, SESUAIIN AJAH
+-- Database: `cbt-unit_test_dillon` INI UBAH AJA CUG, SESUAIIN AJAH SENDIRI YH
 --
 
 -- --------------------------------------------------------
