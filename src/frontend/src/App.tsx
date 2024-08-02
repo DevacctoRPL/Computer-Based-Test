@@ -1,35 +1,64 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+const PostDataForm: React.FC = () => {
+    const [nis, setNis] = useState<number | string>("");
+    const [sandi, setSandi] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-export default App
+        try {
+            const response = await fetch("https://49kdgk28-7772.asse.devtunnels.ms/api/auth", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ nis, sandi })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                setMessage(`Success: ${JSON.stringify(data)}`);
+            } else {
+                const errorData = await response.json();
+                setMessage(`Error: ${errorData.message}`);
+            }
+        } catch (error) {
+            setMessage("An error occurred");
+            console.error("Error:", error);
+        }
+    };
+
+    return (
+        <div>
+            <h2>Login Form</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label htmlFor="nis">NIS:</label>
+                    <input
+                        type="number"
+                        id="nis"
+                        value={nis}
+                        onChange={(e) => setNis(Number(e.target.value))}
+                        required
+                    />
+                </div>
+                <div>
+                    <label htmlFor="sandi">Password:</label>
+                    <input
+                        type="password"
+                        id="sandi"
+                        value={sandi}
+                        onChange={(e) => setSandi(e.target.value)}
+                        required
+                    />
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            {message && <p>{message}</p>}
+        </div>
+    );
+};
+
+export default PostDataForm;
