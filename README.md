@@ -5,6 +5,11 @@
 - melakukan perombakan frontend, tidak menggunakan vite dan di setup manual
 - memperbaiki masalah tsconfig.json
 
+## Update on 3 August 2024
+
+- Membuat metode login dengan JWT sebagai token session
+- Memperbarui Frontend dengan  menggunakan Vite
+- Memberi batasan percobaan login
 
 ## Tech
 Menggunakan MERN Stack (MySQL, Express, ReactJS, NodeJS)
@@ -14,13 +19,14 @@ Menggunakan MERN Stack (MySQL, Express, ReactJS, NodeJS)
 perlu [Node.js](https://nodejs.org/) v16+ untuk menjalankan.
 
 ```sh
+cd computer-based-test
 npm install
 ```
 
 penginstallan package dan dependensi untuk frontend
 
 ```sh
-cd src/frontend
+cd computer-based-test/src/frontend
 npm install
 ```
 

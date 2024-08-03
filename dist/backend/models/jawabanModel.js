@@ -8,33 +8,33 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import pool from "../database/connection.js";
-class GuruModel {
-    static getAllGuru() {
+class JawabanModel {
+    static getAllJawaban() {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM guru`);
+            const [rows] = yield pool.query(`SELECT * FROM jawaban`);
             return rows;
         });
     }
-    static getGuruByNig(nig) {
+    static getJawabanById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM guru WHERE nig = ?`, [nig]);
+            const [rows] = yield pool.query(`SELECT * FROM jawaban WHERE id = ?`, [id]);
             return rows[0] || null;
         });
     }
-    static addGuru(guru) {
+    static addJawaban(jawaban) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`INSERT INTO guru (nig, nama, kode_guru, id_mapel_kelas, sandi) VALUES (?, ?, ?, ?, ?)`, [guru.nig, guru.nama, guru.kode_guru, guru.id_mapel_kelas, guru.sandi]);
+            yield pool.query(`INSERT INTO jawaban (id, id_soal, pilihan, isi_jawaban) VALUES (?, ?, ?, ?)`, [jawaban.id, jawaban.id_soal, jawaban.pilihan, jawaban.isi_jawaban]);
         });
     }
-    static updateGuru(nig, guru) {
+    static updateJawaban(id, jawaban) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`UPDATE guru SET sandi = ? WHERE nig = ?`, [guru.sandi, nig]);
+            yield pool.query(`UPDATE jawaban SET pilihan = ?, isi_jawaban = ? WHERE id = ?`, [jawaban.pilihan, jawaban.isi_jawaban, id]);
         });
     }
-    static deleteGuru(nig) {
+    static deleteJawaban(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`DELETE FROM guru WHERE nig = ?`, [nig]);
+            yield pool.query(`DELETE FROM jawaban WHERE id = ?`, [id]);
         });
     }
 }
-export default GuruModel;
+export default JawabanModel;

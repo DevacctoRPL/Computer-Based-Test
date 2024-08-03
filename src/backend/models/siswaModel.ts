@@ -13,6 +13,20 @@ interface User {
 
 // Class UserModel untuk operasi CRUD
 class SiswaModel {
+  //LOGIN HANDLER
+  static async getCredentialSiswaByNisPassword(nis: number, sandi: string): Promise<User | null> {
+    try {
+      const [rows] = await pool.query<RowDataPacket[]>(
+        "SELECT * FROM siswa WHERE nis = ? AND sandi = ?",
+        [nis, sandi]
+      );
+      return rows.length > 0 ? (rows[0] as User) : null;
+    } catch (error) {
+      console.error(error)
+      return null;
+    }
+  }
+
   // Method untuk mendapatkan semua pengguna
   static async getAllSiswa(): Promise<User[]> {
     const [rows] = await pool.query<RowDataPacket[]>("SELECT * FROM siswa");
