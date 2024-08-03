@@ -23,11 +23,17 @@ class KelasModel {
   }
 
   static async addKelas(kelas: Kelas): Promise<void> {
+    // Membuat ID berdasarkan nama_kelas dan angkatan
+    const id = `${kelas.nama_kelas.toLowerCase().replace(/\s+/g, '')}${kelas.angkatan}`;
+    console.log(`Generated ID: ${id}`); // Debugging statement
+    
+    // Menyimpan data kelas ke dalam database
     await pool.query<ResultSetHeader[]>(
       `INSERT INTO kelas (id, nama_kelas, jurusan, angkatan) VALUES (?, ?, ?, ?)`,
-      [kelas.id, kelas.nama_kelas, kelas.jurusan, kelas.angkatan]
+      [id, kelas.nama_kelas, kelas.jurusan, kelas.angkatan]
     );
   }
+  
 
   static async updateKelas(oldId:string, kelas: Kelas): Promise<void> {
     await pool.query<ResultSetHeader[]>(`UPDATE kelas SET id = ?, nama_kelas = ?, jurusan = ?, angkatan = ? WHERE id = ?`, [

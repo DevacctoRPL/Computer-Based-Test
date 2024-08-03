@@ -10,6 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import pool from "../database/connection.js";
 // Class UserModel untuk operasi CRUD
 class SiswaModel {
+    //LOGIN HANDLER
+    static getCredentialSiswaByNisPassword(nis, sandi) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const [rows] = yield pool.query("SELECT * FROM siswa WHERE nis = ? AND sandi = ?", [nis, sandi]);
+                return rows.length > 0 ? rows[0] : null;
+            }
+            catch (error) {
+                console.error(error);
+                return null;
+            }
+        });
+    }
     // Method untuk mendapatkan semua pengguna
     static getAllSiswa() {
         return __awaiter(this, void 0, void 0, function* () {
