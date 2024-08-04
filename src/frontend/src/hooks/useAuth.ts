@@ -15,8 +15,8 @@ const useAuth = (): UseAuthReturn => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const localAPI = 'http://localhost:7772/';
-  const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms/'
+  const localAPI = 'http://localhost:7772';
+  const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms'
 
   const login = async (nis: number, sandi: string) => {
     setLoading(true);
@@ -26,7 +26,7 @@ const useAuth = (): UseAuthReturn => {
     console.log('Sending Password:', sandi);
 
     try {
-      const response = await axios.post(`${devTunnelAPI}api/auth`, { nis, sandi });
+      const response = await axios.post(`${devTunnelAPI}/api/auth`, { nis, sandi });
       const { token } = response.data;
 
       // Save token to local storage
