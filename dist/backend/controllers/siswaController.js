@@ -7,9 +7,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { generateAccessToken } from '../utils/jwtConfig.js';
-import { getLoginAttempt, updateLoginAttempt } from '../utils/loginAttempts.js';
-import SiswaModel from '../models/siswaModel.js'; // Sesuaikan dengan jalur impor
+import { generateAccessToken, rts, ts } from "../utils/jwtConfig.js";
+import { getLoginAttempt, updateLoginAttempt } from "../utils/loginAttempts.js";
+import SiswaModel from "../models/siswaModel.js"; // Sesuaikan dengan jalur impor
 const MAX_ATTEMPTS = 3; // Maksimal percobaan login
 const BLOCK_DURATION = 5 * 60 * 1000; // 5 menit dalam milidetik
 export function login(req, res) {
@@ -21,7 +21,9 @@ export function login(req, res) {
         if (loginAttempt) {
             const blockUntil = new Date(loginAttempt.blockUntil || 0);
             if (loginAttempt.attemptCount >= MAX_ATTEMPTS && now < blockUntil) {
-                res.status(403).json({ message: `Account suspended. Try again after ${blockUntil.toISOString()}` });
+                res.status(403).json({
+                    message: `Account suspended. Try again after ${blockUntil.toISOString()}`,
+                });
                 return; // Pastikan untuk return di sini agar fungsi tidak melanjutkan
             }
             if (now >= blockUntil) {
@@ -32,20 +34,38 @@ export function login(req, res) {
         try {
             const user = yield SiswaModel.getCredentialSiswaByNisPassword(nis, sandi);
             if (user) {
-                const token = generateAccessToken({
+                const accessToken = generateAccessToken({
                     nis: user.nis,
-                    sandi: user.sandi
+                    sandi: user.sandi,
+                }, ts, "1h");
+                const refreshToken = generateAccessToken({
+                    nis: user.nis,
+                    sandi: user.sandi,
+                }, rts, "1d");
+                res.cookie("accessToken", accessToken, {
+                    httpOnly: true,
+                    maxAge: 60 * 60 * 1000, // 1 hour
                 });
-                // Atur header respons jika diperlukan
-                res.setHeader("Authorization", `Bearer ${token}`);
-                res.status(200).json({ token });
+                res.cookie("refreshToken", refreshToken, {
+                    httpOnly: true,
+                    maxAge: 24 * 60 * 60 * 1000, // 1 day
+                });
                 // Reset attempts on successful login
                 updateLoginAttempt(nis, 0, null);
+                return res.status(200).json({
+                    message: "Login successful",
+                    data: {
+                        nis: user.nis,
+                        nama: user.nama,
+                        panggilan: user.panggilan,
+                    },
+                    accessToken,
+                });
             }
             else {
                 // Jika login gagal
                 const newAttemptCount = ((loginAttempt === null || loginAttempt === void 0 ? void 0 : loginAttempt.attemptCount) || 0) + 1;
-                const newBlockUntil = (newAttemptCount >= MAX_ATTEMPTS)
+                const newBlockUntil = newAttemptCount >= MAX_ATTEMPTS
                     ? new Date(Date.now() + BLOCK_DURATION)
                     : null;
                 updateLoginAttempt(nis, newAttemptCount, newBlockUntil);
@@ -53,7 +73,7 @@ export function login(req, res) {
             }
         }
         catch (error) {
-            console.error('Error during login:', error);
+            console.error("Error during login:", error);
             res.status(500).json({ message: "Internal server error" });
         }
     });
@@ -67,7 +87,7 @@ export function getAllSiswa(req, res) {
             res.json(users);
         }
         catch (error) {
-            res.status(500).json({ message: 'Error retrieving users', error });
+            res.status(500).json({ message: "Error retrieving users", error });
         }
     });
 }
@@ -81,11 +101,11 @@ export function getSiswaByNis(req, res) {
                 res.json(user);
             }
             else {
-                res.status(404).json({ message: 'User not found' });
+                res.status(404).json({ message: "User not found" });
             }
         }
         catch (error) {
-            res.status(500).json({ message: 'Error retrieving user', error });
+            res.status(500).json({ message: "Error retrieving user", error });
         }
     });
 }
@@ -95,10 +115,10 @@ export function addSiswa(req, res) {
         const { nis, id_kelas, nama, panggilan, sandi, lulus } = req.body;
         try {
             yield SiswaModel.addSiswa({ nis, id_kelas, nama, panggilan, sandi, lulus });
-            res.status(201).json({ message: 'User added successfully' });
+            res.status(201).json({ message: "User added successfully" });
         }
         catch (error) {
-            res.status(500).json({ message: 'Error adding user', error });
+            res.status(500).json({ message: "Error adding user", error });
         }
     });
 }
@@ -108,11 +128,18 @@ export function updateSiswa(req, res) {
         const siswaId = parseInt(req.params.id, 10);
         const { nis, id_kelas, nama, panggilan, sandi, lulus } = req.body;
         try {
-            yield SiswaModel.updateSiswa(siswaId, { nis, id_kelas, nama, panggilan, sandi, lulus });
-            res.json({ message: 'User updated successfully' });
+            yield SiswaModel.updateSiswa(siswaId, {
+                nis,
+                id_kelas,
+                nama,
+                panggilan,
+                sandi,
+                lulus,
+            });
+            res.json({ message: "User updated successfully" });
         }
         catch (error) {
-            res.status(500).json({ message: 'Error updating user', error });
+            res.status(500).json({ message: "Error updating user", error });
         }
     });
 }
@@ -122,10 +149,10 @@ export function deleteSiswa(req, res) {
         const siswaId = parseInt(req.params.id, 10);
         try {
             yield SiswaModel.deleteSiswa(siswaId);
-            res.json({ message: 'User deleted successfully' });
+            res.json({ message: "User deleted successfully" });
         }
         catch (error) {
-            res.status(500).json({ message: 'Error deleting user', error });
+            res.status(500).json({ message: "Error deleting user", error });
         }
     });
 }

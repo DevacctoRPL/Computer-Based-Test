@@ -29,11 +29,11 @@ export function getGuruByNig(req, res) {
                 res.json(guru);
             }
             else {
-                res.status(404).json({ message: 'Guru not found' });
+                res.status(404).json({ message: "Guru not found" });
             }
         }
         catch (error) {
-            res.status(500).json({ message: 'Error retrieving Guru', error });
+            res.status(500).json({ message: "Error retrieving Guru", error });
         }
     });
 }
@@ -55,7 +55,11 @@ export function updateGuru(req, res) {
         const { nig, nama, kode_guru, id_mapel_kelas, sandi } = req.body;
         try {
             yield GuruModel.updateGuru(guruId, {
-                nig, nama, kode_guru, id_mapel_kelas, sandi
+                nig,
+                nama,
+                kode_guru,
+                id_mapel_kelas,
+                sandi,
             });
             res.json({ message: "Guru updated successfully" });
         }

@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
-const ts = process.env.TOKEN_SECRET || "TheGreatestDevacctoRPLEra!";
-export function generateAccessToken(payload) {
-    return jwt.sign(payload, ts, { expiresIn: '43200s' });
+export const ts = process.env.TOKEN_SECRET || "TheGreatestDevacctoRPLEra!";
+export const rts = process.env.REFRESH_TOKEN_SECRET || "GOATRPL!";
+export function generateAccessToken(payload, secret, expiresIn) {
+    return jwt.sign(payload, secret, { expiresIn });
 }

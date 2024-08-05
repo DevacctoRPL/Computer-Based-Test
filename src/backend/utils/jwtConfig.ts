@@ -3,13 +3,14 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const ts = process.env.TOKEN_SECRET || "TheGreatestDevacctoRPLEra!";
+export const ts = process.env.TOKEN_SECRET || "TheGreatestDevacctoRPLEra!";
+export const rts = process.env.REFRESH_TOKEN_SECRET || "GOATRPL!";
 
 interface JwtPayload {
     nis?: number;
     sandi: string;
 }
 
-export function generateAccessToken(payload: JwtPayload): string {
-    return jwt.sign(payload, ts, { expiresIn: '43200s' });
+export function generateAccessToken(payload: JwtPayload, secret: string, expiresIn: string | number): string {
+  return jwt.sign(payload, secret, {expiresIn});
 }
