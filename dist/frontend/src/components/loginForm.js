@@ -30,7 +30,7 @@ const LoginForm = () => {
             React.createElement("input", { type: "password", placeholder: "Password", value: sandi, onChange: (e) => setSandi(e.target.value), className: 'h-14 p-2 rounded-full bg-[#242424] text-white text-center relative duration-700 w-full', required: true }),
             React.createElement("span", { className: 'absolute -left-1 bg-slate-50 rounded-full' },
                 React.createElement("img", { src: Padlock, className: 'w-12 h-12 m-2 ', alt: 'padlock' }))),
-        React.createElement("button", { type: "submit", className: 'w-full self-center p-2 rounded-full bg-white text-center font-bold text-2xl', disabled: loading }, loading ? 'Logging in...' : 'Login'),
+        React.createElement("button", { type: "submit", className: 'w-full self-center p-2.5 rounded-full bg-[#fff] text-center font-bold text-2xl hover:scale-105 transition-all duration-150', disabled: loading }, loading ? 'Logging in...' : 'Login'),
         error && React.createElement("p", { style: { color: 'red' } }, error),
         isAuthenticated && React.createElement("p", null, "Login successful!")));
 };

@@ -24,7 +24,7 @@ const useAuth = () => {
         console.log('Sending NIS:', nis);
         console.log('Sending Password:', sandi);
         try {
-            const response = yield axios.post(`${devTunnelAPI}/api/auth`, { nis, sandi });
+            const response = yield axios.post(`${localAPI}/api/auth`, { nis, sandi });
             const { token } = response.data;
             // Save token to local storage
             localStorage.setItem('token', token);

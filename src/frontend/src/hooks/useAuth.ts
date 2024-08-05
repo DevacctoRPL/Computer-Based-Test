@@ -26,7 +26,7 @@ const useAuth = (): UseAuthReturn => {
     console.log('Sending Password:', sandi);
 
     try {
-      const response = await axios.post(`${devTunnelAPI}/api/auth`, { nis, sandi });
+      const response = await axios.post(`${localAPI}/api/auth`, { nis, sandi });
       const { token } = response.data;
 
       // Save token to local storage

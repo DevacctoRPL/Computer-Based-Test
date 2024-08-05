@@ -43,7 +43,7 @@ menjalankan ReactJS di frontend
 
 ```sh
 cd src/frontend
-npm start
+npm run dev
 ```
 
 ## Important

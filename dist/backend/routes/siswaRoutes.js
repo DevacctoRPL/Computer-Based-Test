@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { getAllSiswa, getSiswaByNis, addSiswa, updateSiswa, deleteSiswa } from '../controllers/siswaController.js';
-const userRoutes = Router();
+const siswaRoutes = Router();
 // Rute untuk mendapatkan semua pengguna
-userRoutes.get('/siswa', getAllSiswa); //Passed
+siswaRoutes.get('/siswa', getAllSiswa); //Passed
 // Rute untuk mendapatkan pengguna berdasarkan ID
-userRoutes.get('/siswa/:id', getSiswaByNis); //Passed
+siswaRoutes.get('/siswa/:id', getSiswaByNis); //Passed
 // Rute untuk menambahkan pengguna baru
-userRoutes.post('/siswa', addSiswa); //Passed
+siswaRoutes.post('/siswa', addSiswa); //Passed
 // Rute untuk memperbarui pengguna
-userRoutes.put('/siswa/:id', updateSiswa); //Passed
+siswaRoutes.put('/siswa/:id', updateSiswa); //Passed
 // Rute untuk menghapus pengguna
-userRoutes.delete('/siswa/:id', deleteSiswa); //Passed
-export default userRoutes; //ini komen
+siswaRoutes.delete('/siswa/:id', deleteSiswa); //Passed
+export default siswaRoutes; //ini komen
