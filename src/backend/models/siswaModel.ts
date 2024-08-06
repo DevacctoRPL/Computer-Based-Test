@@ -1,5 +1,5 @@
 import pool from "../database/connection.js";
-import { RowDataPacket, ResultSetHeader } from "mysql2/promise";
+import {RowDataPacket, ResultSetHeader} from "mysql2/promise";
 
 // Definisikan interface untuk tipe data pengguna
 interface User {
@@ -13,16 +13,16 @@ interface User {
 
 // Class UserModel untuk operasi CRUD
 class SiswaModel {
-  //LOGIN HANDLER
+  // LOGIN HANDLER
   static async getCredentialSiswaByNisPassword(nis: number, sandi: string): Promise<User | null> {
     try {
       const [rows] = await pool.query<RowDataPacket[]>(
-        "SELECT * FROM siswa WHERE nis = ? AND sandi = ?",
-        [nis, sandi]
+          "SELECT * FROM siswa WHERE nis = ? AND sandi = ?",
+          [nis, sandi],
       );
       return rows.length > 0 ? (rows[0] as User) : null;
     } catch (error) {
-      console.error(error)
+      console.error(error);
       return null;
     }
   }
@@ -36,8 +36,8 @@ class SiswaModel {
   // Method untuk mendapatkan pengguna berdasarkan nis
   static async getSiswaByNis(nis: number): Promise<User | null> {
     const [rows] = await pool.query<RowDataPacket[]>(
-      "SELECT * FROM siswa WHERE nis = ?",
-      [nis]
+        "SELECT * FROM siswa WHERE nis = ?",
+        [nis],
     );
     return (rows[0] as User) || null;
   }
@@ -45,23 +45,23 @@ class SiswaModel {
   // Method untuk menambahkan pengguna baru
   static async addSiswa(user: User): Promise<void> {
     await pool.query<ResultSetHeader>(
-      "INSERT INTO siswa (nis, id_kelas, nama, panggilan, sandi, lulus) VALUES (?, ?, ?, ?, ?, ?)",
-      [
-        user.nis,
-        user.id_kelas,
-        user.nama,
-        user.panggilan,
-        user.sandi,
-        user.lulus,
-      ]
+        "INSERT INTO siswa (nis, id_kelas, nama, panggilan, sandi, lulus) VALUES (?, ?, ?, ?, ?, ?)",
+        [
+          user.nis,
+          user.id_kelas,
+          user.nama,
+          user.panggilan,
+          user.sandi,
+          user.lulus,
+        ],
     );
   }
 
   // Method untuk memperbarui pengguna
   static async updateSiswa(nis: number, user: User): Promise<void> {
     await pool.query<ResultSetHeader>(
-      "UPDATE siswa SET panggilan = ?, sandi = ? WHERE nis = ?",
-      [user.panggilan, user.sandi, nis]
+        "UPDATE siswa SET panggilan = ?, sandi = ? WHERE nis = ?",
+        [user.panggilan, user.sandi, nis],
     );
   }
 
@@ -72,4 +72,4 @@ class SiswaModel {
 }
 
 export default SiswaModel;
-//ini komen
+// ini komen

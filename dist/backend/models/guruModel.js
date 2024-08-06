@@ -11,29 +11,29 @@ import pool from "../database/connection.js";
 class GuruModel {
     static getAllGuru() {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM guru`);
+            const [rows] = yield pool.query("SELECT * FROM guru");
             return rows;
         });
     }
     static getGuruByNig(nig) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM guru WHERE nig = ?`, [nig]);
+            const [rows] = yield pool.query("SELECT * FROM guru WHERE nig = ?", [nig]);
             return rows[0] || null;
         });
     }
     static addGuru(guru) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`INSERT INTO guru (nig, nama, kode_guru, id_mapel_kelas, sandi) VALUES (?, ?, ?, ?, ?)`, [guru.nig, guru.nama, guru.kode_guru, guru.id_mapel_kelas, guru.sandi]);
+            yield pool.query("INSERT INTO guru (nig, nama, kode_guru, id_mapel_kelas, sandi) VALUES (?, ?, ?, ?, ?)", [guru.nig, guru.nama, guru.kode_guru, guru.id_mapel_kelas, guru.sandi]);
         });
     }
     static updateGuru(nig, guru) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`UPDATE guru SET sandi = ? WHERE nig = ?`, [guru.sandi, nig]);
+            yield pool.query("UPDATE guru SET sandi = ? WHERE nig = ?", [guru.sandi, nig]);
         });
     }
     static deleteGuru(nig) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`DELETE FROM guru WHERE nig = ?`, [nig]);
+            yield pool.query("DELETE FROM guru WHERE nig = ?", [nig]);
         });
     }
 }

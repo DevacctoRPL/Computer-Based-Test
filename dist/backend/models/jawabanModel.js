@@ -11,29 +11,29 @@ import pool from "../database/connection.js";
 class JawabanModel {
     static getAllJawaban() {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM jawaban`);
+            const [rows] = yield pool.query("SELECT * FROM jawaban");
             return rows;
         });
     }
     static getJawabanById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM jawaban WHERE id = ?`, [id]);
+            const [rows] = yield pool.query("SELECT * FROM jawaban WHERE id = ?", [id]);
             return rows[0] || null;
         });
     }
     static addJawaban(jawaban) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`INSERT INTO jawaban (id, id_soal, pilihan, isi_jawaban) VALUES (?, ?, ?, ?)`, [jawaban.id, jawaban.id_soal, jawaban.pilihan, jawaban.isi_jawaban]);
+            yield pool.query("INSERT INTO jawaban (id, id_soal, pilihan, isi_jawaban) VALUES (?, ?, ?, ?)", [jawaban.id, jawaban.id_soal, jawaban.pilihan, jawaban.isi_jawaban]);
         });
     }
     static updateJawaban(id, jawaban) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`UPDATE jawaban SET pilihan = ?, isi_jawaban = ? WHERE id = ?`, [jawaban.pilihan, jawaban.isi_jawaban, id]);
+            yield pool.query("UPDATE jawaban SET pilihan = ?, isi_jawaban = ? WHERE id = ?", [jawaban.pilihan, jawaban.isi_jawaban, id]);
         });
     }
     static deleteJawaban(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`DELETE FROM jawaban WHERE id = ?`, [id]);
+            yield pool.query("DELETE FROM jawaban WHERE id = ?", [id]);
         });
     }
 }

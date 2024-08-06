@@ -1,5 +1,5 @@
 import pool from "../database/connection.js";
-import { RowDataPacket, ResultSetHeader } from "mysql2";
+import {RowDataPacket, ResultSetHeader} from "mysql2";
 
 interface Guru {
   nig?: number;
@@ -11,35 +11,35 @@ interface Guru {
 
 class GuruModel {
   static async getAllGuru(): Promise<Guru[]> {
-    const [rows] = await pool.query<RowDataPacket[]>(`SELECT * FROM guru`);
+    const [rows] = await pool.query<RowDataPacket[]>("SELECT * FROM guru");
     return rows as Guru[];
   }
 
   static async getGuruByNig(nig: number): Promise<Guru | null> {
     const [rows] = await pool.query<RowDataPacket[]>(
-      `SELECT * FROM guru WHERE nig = ?`,
-      [nig]
+        "SELECT * FROM guru WHERE nig = ?",
+        [nig],
     );
     return (rows[0] as Guru) || null;
   }
 
   static async addGuru(guru: Guru): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `INSERT INTO guru (nig, nama, kode_guru, id_mapel_kelas, sandi) VALUES (?, ?, ?, ?, ?)`,
-      [guru.nig, guru.nama, guru.kode_guru, guru.id_mapel_kelas, guru.sandi]
+        "INSERT INTO guru (nig, nama, kode_guru, id_mapel_kelas, sandi) VALUES (?, ?, ?, ?, ?)",
+        [guru.nig, guru.nama, guru.kode_guru, guru.id_mapel_kelas, guru.sandi],
     );
   }
   static async updateGuru(nig: number, guru: Guru): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `UPDATE guru SET sandi = ? WHERE nig = ?`,
-      [guru.sandi, nig]
+        "UPDATE guru SET sandi = ? WHERE nig = ?",
+        [guru.sandi, nig],
     );
   }
   static async deleteGuru(nig: number): Promise<void> {
     await pool.query<ResultSetHeader>(
-        `DELETE FROM guru WHERE nig = ?`, [nig]
+        "DELETE FROM guru WHERE nig = ?", [nig],
     );
   }
 }
 
-export default GuruModel
+export default GuruModel;

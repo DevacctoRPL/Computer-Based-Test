@@ -11,41 +11,41 @@ import pool from "../database/connection.js";
 class KelasModel {
     static getAllKelas() {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM kelas`);
+            const [rows] = yield pool.query("SELECT * FROM kelas");
             return rows;
         });
     }
     static getKelasById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM kelas WHERE id = ?`, [id]);
+            const [rows] = yield pool.query("SELECT * FROM kelas WHERE id = ?", [id]);
             return rows[0] || null;
         });
     }
     static addKelas(kelas) {
         return __awaiter(this, void 0, void 0, function* () {
             // Membuat ID berdasarkan nama_kelas dan angkatan
-            const id = `${kelas.nama_kelas.toLowerCase().replace(/\s+/g, '')}${kelas.angkatan}`;
+            const id = `${kelas.nama_kelas.toLowerCase().replace(/\s+/g, "")}${kelas.angkatan}`;
             console.log(`Generated ID: ${id}`); // Debugging statement
             // Menyimpan data kelas ke dalam database
-            yield pool.query(`INSERT INTO kelas (id, nama_kelas, jurusan, angkatan) VALUES (?, ?, ?, ?)`, [id, kelas.nama_kelas, kelas.jurusan, kelas.angkatan]);
+            yield pool.query("INSERT INTO kelas (id, nama_kelas, jurusan, angkatan) VALUES (?, ?, ?, ?)", [id, kelas.nama_kelas, kelas.jurusan, kelas.angkatan]);
         });
     }
     static updateKelas(oldId, kelas) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`UPDATE kelas SET id = ?, nama_kelas = ?, jurusan = ?, angkatan = ? WHERE id = ?`, [
+            yield pool.query("UPDATE kelas SET id = ?, nama_kelas = ?, jurusan = ?, angkatan = ? WHERE id = ?", [
                 kelas.id,
                 kelas.nama_kelas,
                 kelas.jurusan,
                 kelas.angkatan,
-                oldId
+                oldId,
             ]);
         });
     }
     static deleteKelas(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`DELETE FROM kelas WHERE id = ?`, [id]);
+            yield pool.query("DELETE FROM kelas WHERE id = ?", [id]);
         });
     }
 }
 export default KelasModel;
-//ini komen
+// ini komen

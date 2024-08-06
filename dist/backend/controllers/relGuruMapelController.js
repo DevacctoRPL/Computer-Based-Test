@@ -73,4 +73,4 @@ function deleteRelGuruMapel(req, res) {
         }
     });
 }
-export { getAllRelGuruMapel, getRelGuruMapelById, addRelGuruMapel, updateRelGuruMapel, deleteRelGuruMapel };
+export { getAllRelGuruMapel, getRelGuruMapelById, addRelGuruMapel, updateRelGuruMapel, deleteRelGuruMapel, };

@@ -1,5 +1,5 @@
 import pool from "../database/connection.js";
-import { RowDataPacket, ResultSetHeader } from "mysql2";
+import {RowDataPacket, ResultSetHeader} from "mysql2";
 
 interface RelGuruMapel {
   id: string;
@@ -9,32 +9,32 @@ interface RelGuruMapel {
 
 class RelGuruMapelModel {
   static async getAllRelGuruMapel(): Promise<RelGuruMapel[]> {
-    const [rows] = await pool.query<RowDataPacket[]>(`SELECT * FROM rel_guru_mapel`);
+    const [rows] = await pool.query<RowDataPacket[]>("SELECT * FROM rel_guru_mapel");
     return rows as RelGuruMapel[];
   }
 
   static async getRelGuruMapelById(id: string): Promise<RelGuruMapel | null> {
     const [rows] = await pool.query<RowDataPacket[]>(
-      `SELECT * FROM rel_guru_mapel WHERE id = ?`,
-      [id]
+        "SELECT * FROM rel_guru_mapel WHERE id = ?",
+        [id],
     );
     return (rows[0] as RelGuruMapel) || null;
   }
 
-  static async addRelGuruMapel(data: Omit<RelGuruMapel, 'id'>): Promise<void> {
-    const { nig, id_mapel } = data;
+  static async addRelGuruMapel(data: Omit<RelGuruMapel, "id">): Promise<void> {
+    const {nig, id_mapel} = data;
 
     const [nigRows] = await pool.query<RowDataPacket[]>(
-      `SELECT COUNT(*) AS count FROM guru WHERE nig = ?`,
-      [nig]
+        "SELECT COUNT(*) AS count FROM guru WHERE nig = ?",
+        [nig],
     );
     const [mapelRows] = await pool.query<RowDataPacket[]>(
-      `SELECT COUNT(*) AS count FROM mapel WHERE id = ?`,
-      [id_mapel]
+        "SELECT COUNT(*) AS count FROM mapel WHERE id = ?",
+        [id_mapel],
     );
 
-    const nigCount = (nigRows[0] as any).count;
-    const mapelCount = (mapelRows[0] as any).count;
+    const nigCount = nigRows[0].count;
+    const mapelCount = mapelRows[0].count;
 
     if (nigCount === 0) {
       throw new Error(`ID Kelas ${nig} tidak ditemukan.`);
@@ -49,20 +49,20 @@ class RelGuruMapelModel {
 
     // Menyimpan data rel_mapel_kelas ke dalam database
     await pool.query(
-      `INSERT INTO rel_guru_mapel (id, nig, id_mapel) VALUES (?, ?, ?)`,
-      [id_rel_guru_mapel, nig, id_mapel]
+        "INSERT INTO rel_guru_mapel (id, nig, id_mapel) VALUES (?, ?, ?)",
+        [id_rel_guru_mapel, nig, id_mapel],
     );
   }
 
   static async updateRelGuruMapel(id: string, relGuruMapel: RelGuruMapel): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `UPDATE rel_guru_mapel SET nig = ?, id_mapel = ? WHERE id = ?`,
-      [relGuruMapel.nig, relGuruMapel.id_mapel, id]
+        "UPDATE rel_guru_mapel SET nig = ?, id_mapel = ? WHERE id = ?",
+        [relGuruMapel.nig, relGuruMapel.id_mapel, id],
     );
   }
 
   static async deleteRelGuruMapel(id: string): Promise<void> {
-    await pool.query<ResultSetHeader>(`DELETE FROM rel_guru_mapel WHERE id = ?`, [id]);
+    await pool.query<ResultSetHeader>("DELETE FROM rel_guru_mapel WHERE id = ?", [id]);
   }
 }
 
