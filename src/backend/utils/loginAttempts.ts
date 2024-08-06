@@ -11,9 +11,9 @@ export function getLoginAttempt(nis: number): LoginAttempt | null {
 }
 
 export function updateLoginAttempt(
-  nis: number,
-  attemptCount: number,
-  blockUntil: Date | null
+    nis: number,
+    attemptCount: number,
+    blockUntil: Date | null,
 ): void {
-  loginAttempts[nis] = { attemptCount, lastAttempt: new Date(), blockUntil };
+  loginAttempts[nis] = {attemptCount, lastAttempt: new Date(), blockUntil};
 }

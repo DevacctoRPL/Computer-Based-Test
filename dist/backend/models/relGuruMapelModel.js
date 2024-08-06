@@ -11,21 +11,21 @@ import pool from "../database/connection.js";
 class RelGuruMapelModel {
     static getAllRelGuruMapel() {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM rel_guru_mapel`);
+            const [rows] = yield pool.query("SELECT * FROM rel_guru_mapel");
             return rows;
         });
     }
     static getRelGuruMapelById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM rel_guru_mapel WHERE id = ?`, [id]);
+            const [rows] = yield pool.query("SELECT * FROM rel_guru_mapel WHERE id = ?", [id]);
             return rows[0] || null;
         });
     }
     static addRelGuruMapel(data) {
         return __awaiter(this, void 0, void 0, function* () {
             const { nig, id_mapel } = data;
-            const [nigRows] = yield pool.query(`SELECT COUNT(*) AS count FROM guru WHERE nig = ?`, [nig]);
-            const [mapelRows] = yield pool.query(`SELECT COUNT(*) AS count FROM mapel WHERE id = ?`, [id_mapel]);
+            const [nigRows] = yield pool.query("SELECT COUNT(*) AS count FROM guru WHERE nig = ?", [nig]);
+            const [mapelRows] = yield pool.query("SELECT COUNT(*) AS count FROM mapel WHERE id = ?", [id_mapel]);
             const nigCount = nigRows[0].count;
             const mapelCount = mapelRows[0].count;
             if (nigCount === 0) {
@@ -37,17 +37,17 @@ class RelGuruMapelModel {
             // Menghasilkan ID untuk rel_mapel_kelas
             const id_rel_guru_mapel = `${nig}-${id_mapel}`;
             // Menyimpan data rel_mapel_kelas ke dalam database
-            yield pool.query(`INSERT INTO rel_guru_mapel (id, nig, id_mapel) VALUES (?, ?, ?)`, [id_rel_guru_mapel, nig, id_mapel]);
+            yield pool.query("INSERT INTO rel_guru_mapel (id, nig, id_mapel) VALUES (?, ?, ?)", [id_rel_guru_mapel, nig, id_mapel]);
         });
     }
     static updateRelGuruMapel(id, relGuruMapel) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`UPDATE rel_guru_mapel SET nig = ?, id_mapel = ? WHERE id = ?`, [relGuruMapel.nig, relGuruMapel.id_mapel, id]);
+            yield pool.query("UPDATE rel_guru_mapel SET nig = ?, id_mapel = ? WHERE id = ?", [relGuruMapel.nig, relGuruMapel.id_mapel, id]);
         });
     }
     static deleteRelGuruMapel(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`DELETE FROM rel_guru_mapel WHERE id = ?`, [id]);
+            yield pool.query("DELETE FROM rel_guru_mapel WHERE id = ?", [id]);
         });
     }
 }

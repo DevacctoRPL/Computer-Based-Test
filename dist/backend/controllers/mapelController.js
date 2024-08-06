@@ -80,4 +80,4 @@ export function deleteMapel(req, res) {
         }
     });
 }
-//ini komen
+// ini komen

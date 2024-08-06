@@ -11,31 +11,31 @@ import pool from "../database/connection.js";
 class MapelModel {
     static getAllMapel() {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM mapel`);
+            const [rows] = yield pool.query("SELECT * FROM mapel");
             return rows;
         });
     }
     static getMapelById(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const [rows] = yield pool.query(`SELECT * FROM mapel WHERE id = ?`, [id]);
+            const [rows] = yield pool.query("SELECT * FROM mapel WHERE id = ?", [id]);
             return rows[0] || null;
         });
     }
     static addMapel(mapel) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`INSERT INTO mapel (id, nama_mapel) VALUES (?, ?)`, [mapel.id, mapel.nama_mapel]);
+            yield pool.query("INSERT INTO mapel (id, nama_mapel) VALUES (?, ?)", [mapel.id, mapel.nama_mapel]);
         });
     }
     static updateMapel(oldId, mapel) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`UPDATE mapel SET id = ?, nama_mapel = ? WHERE id = ?`, [mapel.id, mapel.nama_mapel, oldId]);
+            yield pool.query("UPDATE mapel SET id = ?, nama_mapel = ? WHERE id = ?", [mapel.id, mapel.nama_mapel, oldId]);
         });
     }
     static deleteMapel(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`DELETE FROM mapel WHERE id = ?`, [id]);
+            yield pool.query("DELETE FROM mapel WHERE id = ?", [id]);
         });
     }
 }
 export default MapelModel;
-//ini komen
+// ini komen

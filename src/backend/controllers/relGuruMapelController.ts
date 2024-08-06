@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import RelGuruMapelModel from "../models/relGuruMapelModel.js";
 
 async function getAllRelGuruMapel(req: Request, res: Response): Promise<void> {
@@ -6,7 +6,7 @@ async function getAllRelGuruMapel(req: Request, res: Response): Promise<void> {
     const relGuruMapel = await RelGuruMapelModel.getAllRelGuruMapel();
     res.json(relGuruMapel);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching data", error });
+    res.status(500).json({message: "Error fetching data", error});
   }
 }
 
@@ -17,31 +17,31 @@ async function getRelGuruMapelById(req: Request, res: Response): Promise<void> {
     if (relGuruMapel) {
       res.json(relGuruMapel);
     } else {
-      res.status(404).json({ message: "Relation not found" });
+      res.status(404).json({message: "Relation not found"});
     }
   } catch (error) {
-    res.status(500).json({ message: "Error fetching data", error });
+    res.status(500).json({message: "Error fetching data", error});
   }
 }
 
 async function addRelGuruMapel(req: Request, res: Response): Promise<void> {
-  const { nig, id_mapel } = req.body;
+  const {nig, id_mapel} = req.body;
   try {
-    await RelGuruMapelModel.addRelGuruMapel({ nig, id_mapel });
-    res.status(201).json({ message: "Relation added successfully" });
+    await RelGuruMapelModel.addRelGuruMapel({nig, id_mapel});
+    res.status(201).json({message: "Relation added successfully"});
   } catch (error) {
-    res.status(500).json({ message: "Error adding relation", error });
+    res.status(500).json({message: "Error adding relation", error});
   }
 }
 
 async function updateRelGuruMapel(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
-  const { nig, id_mapel } = req.body;
+  const {nig, id_mapel} = req.body;
   try {
-    await RelGuruMapelModel.updateRelGuruMapel(id, { id, nig, id_mapel });
-    res.json({ message: "Relation updated successfully" });
+    await RelGuruMapelModel.updateRelGuruMapel(id, {id, nig, id_mapel});
+    res.json({message: "Relation updated successfully"});
   } catch (error) {
-    res.status(500).json({ message: "Error updating relation", error });
+    res.status(500).json({message: "Error updating relation", error});
   }
 }
 
@@ -49,9 +49,9 @@ async function deleteRelGuruMapel(req: Request, res: Response): Promise<void> {
   const id = req.params.id;
   try {
     await RelGuruMapelModel.deleteRelGuruMapel(id);
-    res.json({ message: "Relation deleted successfully" });
+    res.json({message: "Relation deleted successfully"});
   } catch (error) {
-    res.status(500).json({ message: "Error deleting relation", error });
+    res.status(500).json({message: "Error deleting relation", error});
   }
 }
 
@@ -60,5 +60,5 @@ export {
   getRelGuruMapelById,
   addRelGuruMapel,
   updateRelGuruMapel,
-  deleteRelGuruMapel
+  deleteRelGuruMapel,
 };

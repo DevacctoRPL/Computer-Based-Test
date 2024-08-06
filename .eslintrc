@@ -32,5 +32,6 @@
         "@typescript-eslint/await-thenable": 2,
         "linebreak-style": "off",
         "camelcase": "off"
-    }
+    },
+    "ignorePatterns":["dist","src/frontend"]
 }

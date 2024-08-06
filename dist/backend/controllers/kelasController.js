@@ -15,7 +15,7 @@ export function getAllKelas(req, res) {
             res.json(mapel);
         }
         catch (error) {
-            res.status(500).json({ message: 'Error when retrieving mapel', error });
+            res.status(500).json({ message: "Error when retrieving mapel", error });
             console.log(error);
         }
     });
@@ -56,7 +56,7 @@ export function updateKelas(req, res) {
         const { id, nama_kelas, jurusan, angkatan } = req.body;
         try {
             yield KelasModel.updateKelas(kelasId, {
-                id, nama_kelas, jurusan, angkatan
+                id, nama_kelas, jurusan, angkatan,
             });
             res.json({ message: "kelas updated successfully" });
         }
@@ -77,4 +77,4 @@ export function deleteKelas(req, res) {
         }
     });
 }
-//ini komen
+// ini komen

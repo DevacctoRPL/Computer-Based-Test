@@ -74,4 +74,4 @@ function deleteRelMapelKelas(req, res) {
         }
     });
 }
-export { getAllRelMapelKelas, getRelMapelKelasById, addRelMapelKelas, updateRelMapelKelas, deleteRelMapelKelas };
+export { getAllRelMapelKelas, getRelMapelKelasById, addRelMapelKelas, updateRelMapelKelas, deleteRelMapelKelas, };

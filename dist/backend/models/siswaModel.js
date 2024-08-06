@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import pool from "../database/connection.js";
 // Class UserModel untuk operasi CRUD
 class SiswaModel {
-    //LOGIN HANDLER
+    // LOGIN HANDLER
     static getCredentialSiswaByNisPassword(nis, sandi) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
@@ -64,4 +64,4 @@ class SiswaModel {
     }
 }
 export default SiswaModel;
-//ini komen
+// ini komen

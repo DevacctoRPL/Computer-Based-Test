@@ -2,4 +2,4 @@ package-lock.json
 .env
 node_modules
 test
-
+dist
