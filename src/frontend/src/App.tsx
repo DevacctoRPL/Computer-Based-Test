@@ -11,9 +11,9 @@ const App: React.FC = () => {
     if (token) {
       navigate('/');
     }
-    else {
-      navigate('/login')
-    }
+    // else {
+    //   navigate('/login')
+    // }
   }, [navigate]);
 
   return (
