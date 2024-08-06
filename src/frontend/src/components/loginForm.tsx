@@ -44,7 +44,7 @@ const LoginForm: React.FC = () => {
                     <img src={Padlock} className='w-12 h-12 m-2 ' alt='padlock' />
                 </span>
             </div>
-            <button type="submit" className='w-full self-center p-2 rounded-full bg-white text-center font-bold text-2xl' disabled={loading}>
+            <button type="submit" className='w-full self-center p-2.5 rounded-full bg-[#fff] text-center font-bold text-2xl hover:scale-105 transition-all duration-150' disabled={loading}>
                 {loading ? 'Logging in...' : 'Login'}
             </button>
             {error && <p style={{ color: 'red' }}>{error}</p>}
