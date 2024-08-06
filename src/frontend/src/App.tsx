@@ -27,16 +27,16 @@ const App = () => {
   }, []);
 
   return (
-    // <div>
-    //   {users.map(u => (
-    //     <h4 key={u._id}>userName: {u.nama}</h4>
-    //   ))}
-    // </div>
+    <div>
+      {users.map(u => (
+        <h4 key={u._id}>userName: {u.nama}</h4>
+      ))}
+    </div>
 
-    <>
-    <Navbar />
-    <Login />
-    </>
+    // <>
+    // <Navbar />
+    // <Login />
+    // </>
   );
 };
 
