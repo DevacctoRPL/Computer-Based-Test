@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
 
 interface UseAuthReturn {
   isAuthenticated: boolean;
@@ -16,7 +17,7 @@ const useAuth = (): UseAuthReturn => {
   const navigate = useNavigate();
 
   const localAPI = 'http://localhost:7772';
-  const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms'
+  const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms';
 
   const login = async (nis: number, sandi: string) => {
     setLoading(true);
@@ -28,6 +29,13 @@ const useAuth = (): UseAuthReturn => {
     try {
       const response = await axios.post(`${localAPI}/api/auth`, { nis, sandi });
       const { token } = response.data;
+
+      // Check if token is expired
+      const decodedToken = jwt.decode(token) as { exp: number };
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (decodedToken.exp < currentTime) {
+        throw new Error('Token expired');
+      }
 
       // Save token to local storage
       localStorage.setItem('token', token);
@@ -48,7 +56,3 @@ const useAuth = (): UseAuthReturn => {
 };
 
 export default useAuth;
-
-
-
-// https://49kdgk28-7772.asse.devtunnels.ms/api/auth

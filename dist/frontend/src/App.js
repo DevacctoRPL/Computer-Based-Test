@@ -11,7 +11,7 @@ const App = () => {
         }
     }, [navigate]);
     return (React.createElement(Routes, null,
-        React.createElement(Route, { path: "/", element: React.createElement(Login, null) }),
+        React.createElement(Route, { path: "/login", element: React.createElement(Login, null) }),
         React.createElement(Route, { path: "/dashboard", element: React.createElement(Dashboard, null) })));
 };
 export default App;

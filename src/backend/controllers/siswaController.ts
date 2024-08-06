@@ -4,7 +4,7 @@ import { getLoginAttempt, updateLoginAttempt } from '../utils/loginAttempts.js';
 import SiswaModel from '../models/siswaModel.js'; // Sesuaikan dengan jalur impor
 
 const MAX_ATTEMPTS = 3; // Maksimal percobaan login
-const BLOCK_DURATION = 5 * 60 * 1000; // 5 menit dalam milidetik
+const BLOCK_DURATION = 5 * 1000; // 5 menit dalam milidetik
 
 export async function login(req: Request, res: Response): Promise<void> {
   const { nis, sandi } = req.body;
@@ -48,9 +48,12 @@ export async function login(req: Request, res: Response): Promise<void> {
       const newBlockUntil = (newAttemptCount >= MAX_ATTEMPTS) 
         ? new Date(Date.now() + BLOCK_DURATION) 
         : null;
+      console.log(newBlockUntil)
 
       updateLoginAttempt(nis, newAttemptCount, newBlockUntil);
       res.status(401).json({ message: "Invalid credentials" });
+      console.log('nis: ', nis)
+      console.log('sandi: ', sandi)
     }
   } catch (error) {
     console.error('Error during login:', error);
