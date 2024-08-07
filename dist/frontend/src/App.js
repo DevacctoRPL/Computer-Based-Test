@@ -9,9 +9,9 @@ const App = () => {
         if (token) {
             navigate('/');
         }
-        else {
-            navigate('/login');
-        }
+        // else {
+        //   navigate('/login')
+        // }
     }, [navigate]);
     return (React.createElement(Routes, null,
         React.createElement(Route, { path: "/login", element: React.createElement(Login, null) }),
