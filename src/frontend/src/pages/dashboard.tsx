@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import jwt from 'jsonwebtoken';
 import { useNavigate } from 'react-router-dom';
 
+import Sidebar from '../components/sidebar';
+import Navbar from '../components/navbar';
+
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
 
@@ -26,10 +29,21 @@ const Dashboard: React.FC = () => {
   }, [navigate]);
 
   return (
-    <div className='bg-black h-screen w-screen flex justify-center items-center flex-col'>
-      <h1 className='text-slate-300 text-[64px] mb-12'>Welcome to the Dashboard</h1>
-      <p className='text-slate-300'>You are logged in!</p>
+    <>
+
+<main className="h-dvh w-dvh">
+    <Navbar />
+    <div className='flex h- bg-purple-200'>
+      <div className="h-full">
+        <Sidebar />
+      </div>
+        <div className='flex'>
+            <h1 className='text-slate-300 text-[64px] mb-12'>Welcome to the Dashboard</h1>
+            <p className='text-slate-300'>You are logged in!</p>
+        </div>
     </div>
+</main>
+    </>
   );
 };
 
