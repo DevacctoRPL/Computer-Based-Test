@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/sidebar.js';
 import Navbar from '../components/navbar.js';
+import Teacher from './teacher.js';
 const Dashboard = () => {
     const navigate = useNavigate();
     useEffect(() => {
@@ -25,14 +26,13 @@ const Dashboard = () => {
             }
         }
     }, [navigate]);
-    return (React.createElement(React.Fragment, null,
-        React.createElement("main", { className: "h-dvh w-dvh" },
-            React.createElement(Navbar, null),
-            React.createElement("div", { className: 'flex h- bg-purple-200' },
-                React.createElement("div", { className: "h-full" },
-                    React.createElement(Sidebar, null)),
-                React.createElement("div", { className: 'flex' },
-                    React.createElement("h1", { className: 'text-slate-300 text-[64px] mb-12' }, "Welcome to the Dashboard"),
-                    React.createElement("p", { className: 'text-slate-300' }, "You are logged in!"))))));
+    return (React.createElement("main", { className: 'flex flex-col h-screen ' },
+        React.createElement(Navbar, null),
+        React.createElement("div", { className: 'flex flex-1 border-b-[52px] border-red-100' },
+            React.createElement(Sidebar, null),
+            React.createElement("section", { className: 'flex flex-1 flex-col p-4 justify-start items-start gap-12 ml-5' },
+                React.createElement("div", { className: 'h-11 w-56 bg-purple-100 rounded-lg mt-auto text-center ' }, "Class Name"),
+                React.createElement("div", { className: 'my-auto' },
+                    React.createElement(Teacher, null))))));
 };
 export default Dashboard;

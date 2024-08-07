@@ -2,8 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  .clippath {
-    clip-path: polygon(5% 0, 100% 0%, 100% 100%, 18% 100%);
-  }
+*::-webkit-scrollbar{
+  display: none;
+}
+
+.clippath {
+  clip-path: polygon(5% 0, 100% 0%, 100% 100%, 18% 100%);
+}
+
+input[type="radio"]:checked + label .radio {
+  background: #000;
 }
