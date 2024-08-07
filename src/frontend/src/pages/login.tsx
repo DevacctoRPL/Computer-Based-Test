@@ -1,32 +1,16 @@
-import React from "react";
-
-import User from "/assets/user.png";
-import Padlock from "/assets/padlock.png";
+import React from 'react';
+import LoginForm from '../components/loginForm.js';
 
 const Login: React.FC = () => {
-
     return (
-      <>
-        <div className='bg-black h-screen w-screen flex justify-center items-center flex-col'>
-        <h1 className='text-slate-300 text-[64px] mb-12'>USER LOGIN</h1>
-        <form className='flex flex-col gap-12 w-1/3'>
-          <div className='relative flex items-center justify-center'>
-            <input type="text" placeholder="Username" className='h-14 w-[530px] p-2 rounded-full bg-[#242424] text-white text-center relative duration-700' />
-            <span className='absolute right-4 bg-slate-50 rounded-full'>
-              <img src={User} className='w-12 h-12 m-2' alt='user' />
-            </span>
-          </div>
-          <div className='relative flex justify-center items-center'>
-            <input type="password" placeholder="Password" className='h-14 w-[530px] p-2 rounded-full bg-[#242424] text-white text-center relative duration-700' />
-            <span className='absolute left-4 bg-slate-50 rounded-full'>
-              <img src={Padlock} className='w-12 h-12 m-2 ' alt='padlock' />
-            </span>
-          </div>
-          <button type="submit" className='w-[530px] self-center p-2 rounded-full bg-white text-center font-bold text-2xl'>Login</button>
-        </form>
-      </div>
-      </>
-    )
+        <div className='bg-gradient-to-t from-[#280A46] from-25% via-[#3D1367] via-80% to-[#511C86] h-screen w-screen flex justify-center items-center flex-col relative'>
+            {/* <div className="flex items-center justify-between w-screen absolute top-0">
+                <div className="clippath bg-orange-500 w-1/2 h-16 transform scale-y-100 -scale-x-100"></div>
+            </div> */}
+            <h1 className='text-slate-300 text-[64px] mb-12'>USER LOGIN</h1>
+            <LoginForm />
+        </div>
+    );
 }
 
 export default Login;

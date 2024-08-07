@@ -23,7 +23,11 @@ class KelasModel {
     }
     static addKelas(kelas) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`INSERT INTO kelas (id, nama_kelas, jurusan, angkatan) VALUES (?, ?, ?, ?)`, [kelas.id, kelas.nama_kelas, kelas.jurusan, kelas.angkatan]);
+            // Membuat ID berdasarkan nama_kelas dan angkatan
+            const id = `${kelas.nama_kelas.toLowerCase().replace(/\s+/g, '')}${kelas.angkatan}`;
+            console.log(`Generated ID: ${id}`); // Debugging statement
+            // Menyimpan data kelas ke dalam database
+            yield pool.query(`INSERT INTO kelas (id, nama_kelas, jurusan, angkatan) VALUES (?, ?, ?, ?)`, [id, kelas.nama_kelas, kelas.jurusan, kelas.angkatan]);
         });
     }
     static updateKelas(oldId, kelas) {

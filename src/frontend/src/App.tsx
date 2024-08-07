@@ -1,43 +1,27 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import Login from './pages/login.js';
+import Dashboard from './pages/dashboard.js';
 
-import Login from './pages/login.tsx';
-import Navbar from './component/navbar.tsx';
-
-interface User {
-  _id: string;
-  nama: string;
-}
-
-const App = () => {
-  const [users, setUsers] = useState<User[]>([]);
-
-  const getData = async () => {
-    try {
-      const res = await axios.get<User[]>('https://49kdgk28-7772.asse.devtunnels.ms/api/siswa');
-      console.log('Fetched data:', res.data); // Check the structure of the fetched data
-      setUsers(res.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+const App: React.FC = () => {
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getData();
-  }, []);
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/');
+    }
+    else {
+      navigate('/login')
+    }
+  }, [navigate]);
 
   return (
-    <div>
-      {users.map(u => (
-        <h4 key={u._id}>userName: {u.nama}</h4>
-      ))}
-    </div>
-
-    // <>
-    // <Navbar />
-    // <Login />
-    // </>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Dashboard />} />
+    </Routes>
   );
-};
+}
 
 export default App;
