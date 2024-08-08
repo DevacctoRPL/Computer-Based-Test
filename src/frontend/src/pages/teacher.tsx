@@ -24,91 +24,12 @@ const Teacher : React.FC = () => {
             <td className="px-6 py-2 border border-black text-sm text-black"></td>
             <td className="px-6 py-2 border border-black text-sm text-black"></td>
             <td className="px-6 py-2 border border-black text-sm text-black"></td>
-            <td className="px-6 py-2 border border-black text-sm text-black">New York</td>
+            <td className="px-6 py-2 border border-black text-sm text-black">
+              <button className="bg-">
+                EDIT
+              </button>
+            </td>
           </tr>
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium text-gray-900"></td>
-            <td className="px-6 py-2 border border-black text-sm text-black">25</td>
-            <td className="px-6 py-2 border border-black text-sm text-black">Los Angeles</td>
-            <td className="px-6 py-2 border border-black text-sm text-black">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black">New York</td>
-          </tr>
-
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium text-gray-900">John Doe</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">30</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium text-gray-900">Jane Smith</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">25</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">Los Angeles</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium ext-gray-900">John Doe</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">30</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium text-gray-900">Jane Smith</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">25</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">Los Angeles</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium text-gray-900">John Doe</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">30</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm  font-medium text-gray-900">Jane Smith</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">25</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">Los Angeles</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium text-gray-900">John Doe</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">30</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium text-gray-900">Jane Smith</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">25</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">Los Angeles</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium rext-gray-900">John Doe</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">30</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-          <tr>
-            <td className="px-6 py-2 border border-black text-sm font-medium rext-gray-900">Jane Smith</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">25</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">Los Angeles</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-            <td className="px-6 py-2 border border-black text-sm text-black ">New York</td>
-          </tr>
-
 
         </tbody>
       </table>

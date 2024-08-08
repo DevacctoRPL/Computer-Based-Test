@@ -1,7 +1,7 @@
 import React from "react";
 import Penus from "/assets/penus.png";
 const Navbar = () => {
-    return (React.createElement("nav", { className: "w-screen flex flex-col justify-between bg-transparent" },
+    return (React.createElement("nav", { className: "w-full flex flex-col justify-between bg-transparent" },
         React.createElement("div", { className: "flex justify-between border-b-2" },
             React.createElement("span", { className: "bg-white rounded-full w-14 h-14 place-self-center ml-11" },
                 React.createElement("img", { src: Penus, alt: "logo penus", className: "w-full" })),

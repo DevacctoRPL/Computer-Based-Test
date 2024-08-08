@@ -4,15 +4,15 @@ import Navbar from "../components/navbar.js";
 const SoalSiswa: React.FC = () => {
     return (
         <>
-            <div className="h-screen bg-slate-800 overflow-y-hidden">
+            <div className="h-screen">
                 <Navbar />
                 <main className="flex justify-between mt-6 h-[85%]">
-                    <div className="flex flex-col w-1/4 bg-purple-100 p-4 space-y-4 h-full">
-                        <div className="bg-purple-200 h-48"></div>
-                        <div className="bg-purple-200 h-48"></div>
+                    <div className="flex flex-col w-1/5 p-4 space-y-4 fixed">
+                        <div className="bg-purple-100 rounded-lg h-[400px]"></div>
+                        <div className="bg-purple-100 rounded-lg h-[220px]"></div>
                     </div>
-                    <div className="flex flex-col w-1/2 bg-white p-4 space-y-4 h-full] overflow-y-scroll">
-                        <div className="bg-purple-100 p-4 max-h-80 min-h-80 overflow-scroll">
+                    <div className="soal flex flex-col w-1/2 bg-purple-100 p-3 space-y-6 my-4 mx-auto rounded-md">
+                        <div className="bg-white p-4 max-h-[310px] min-h-[310px] overflow-scroll overflow-x-hidden rounded-md">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa perferendis, praesentium, est laboriosam, aperiam molestiae recusandae optio tenetur facere fugiat explicabo dignissimos corporis quis ex eaque aut quia eum modi!
                             Nesciunt quae illo rem laborum quo commodi ipsam maiores iusto, vel esse consequuntur sit quibusdam impedit cum? Animi quo, dolore commodi consequatur repudiandae laboriosam ex, doloribus beatae asperiores, quos quas.
                             Repudiandae quasi ullam dolor sit sint unde impedit fugiat, laborum porro mollitia totam magni laudantium doloribus in exercitationem reprehenderit provident ad repellat iure perspiciatis quos consequuntur deleniti cupiditate? Magnam, asperiores.
@@ -23,11 +23,11 @@ const SoalSiswa: React.FC = () => {
                             Beatae obcaecati blanditiis magnam temporibus incidunt. Et provident ullam impedit consequatur consectetur, aut id labore adipisci numquam reiciendis atque magnam obcaecati, eligendi maiores veritatis error dignissimos eius odit ut voluptatem!
                             Cumque, tenetur nostrum. Maiores atque necessitatibus beatae alias, culpa veniam numquam voluptatibus iusto, ea nisi, repellendus corrupti laborum! Ratione fugit, incidunt numquam consectetur impedit aspernatur beatae. Nemo hic illo quam!
                         </div>
-                        <div className="flex flex-col space-y-2 ">
-                            {Array(5).fill(null).map((_, index) => {
+                        <div className="flex flex-col space-y-2 h-72 overflow-y-scroll rounded-md">
+                            {Array(9).fill(null).map((_, index) => {
                               const abcde = String.fromCharCode(65 + index);
                               return (
-                                <div key={index} className="flex items-center bg-purple-100 p-2">
+                                <div key={index} className="flex items-center bg-white p-2 rounded-md ">
                                     <input
                                         type="radio"
                                         name="answer"
@@ -36,9 +36,9 @@ const SoalSiswa: React.FC = () => {
                                     />
                                     <label
                                         htmlFor={`answer${index}`}
-                                        className="flex-grow flex items-center pl-2 p-3">
+                                        className="flex-grow flex items-center px-3 group">
                                         <div className="flex justify-center items-center pr-3">
-                                          <span className="radio w-2 h-2 border-2 border-black p-2 flex items-center justify-center mr-2" ></span>
+                                          <span className="radio w-2 h-2  border-black p-2 flex items-center justify-center mr-2 transition-all duration-300 bg-black/50 group-hover:p-2.5" ></span>
                                           <span className="font-semibold">{abcde}. </span>
                                         </div>
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem maiores cumque vitae nam accusantium dignissimos, minus nesciunt voluptatibus soluta ut excepturi quia amet ab magni deleniti voluptatum numquam maxime facere?
@@ -49,7 +49,7 @@ const SoalSiswa: React.FC = () => {
                             })}
                         </div>
                     </div>
-                    <div className="flex flex-col w-[282px] h-full bg-purple-100 p-4 space-y-4">
+                    <div className="flex flex-col w-1/6 bg-purple-100 p-4 space-y-4 my-4 fixed right-0">
                         <div className="bg-purple-200 text-center py-2">daftar soal</div>
                         <div className="grid grid-cols-3 gap-2">
                             {Array(30).fill(null).map((_, index) => (
