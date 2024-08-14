@@ -23,7 +23,7 @@ class JawabanModel {
     }
     static addJawaban(jawaban) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`INSERT INTO jawaban (id, id_soal, pilihan, isi_jawaban) VALUES (?, ?, ?, ?)`, [jawaban.id, jawaban.id_soal, jawaban.pilihan, jawaban.isi_jawaban]);
+            yield pool.query("INSERT INTO jawaban (id, id_soal, pilihan, isi_jawaban) VALUES (?, ?, ?, ?)", [jawaban.id, jawaban.id_soal, jawaban.pilihan, jawaban.isi_jawaban]);
         });
     }
     static updateJawaban(id, jawaban) {

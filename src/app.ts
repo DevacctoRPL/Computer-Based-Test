@@ -1,7 +1,10 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from 'dotenv'
+import multer from 'multer'
+import fs from 'fs/promises';
+import mammoth from 'mammoth'
 
 import adminRoutes from "./backend/routes/adminRoutes.js";
 import guruRoutes from "./backend/routes/guruRoutes.js";
@@ -21,9 +24,15 @@ import relSoalMapelKelasRoutes from "./backend/routes/relSoalMapelKelasRoutes.js
 
 dotenv.config();
 
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // Jika Anda membutuhkan cookie atau header lainnya dari client
+};
+
 const app = express();
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(helmet()) // biar keren
 
@@ -41,6 +50,37 @@ app.use("/api/", relGuruMapelRoutes); // Testing passed
 app.use("/api/", relMapelKelasRoutes); // Testing passed
 app.use("/api/", relSiswaSoalRoutes); // Untested!
 app.use("/api/", relSoalMapelKelasRoutes); // Untested!
+
+app.get('/input', (req, res) => {
+  res.setHeader("Content-Security-Policy", "script-src 'self' 'nonce-randomNonce';");
+  res.render('inputSoal')
+})
+
+//konfigurasi multer untuk penyimpanan sementara file yang di unggah
+const upload = multer({dest: 'uploads/'})
+
+// app.post('/submit', async (res,req) => {
+//   const {answer} = req.body
+// })
+
+app.post('/convert', upload.single('file'), async (req: Request, res: Response) => {
+  try {
+      if (!req.file) {
+          return res.status(400).send('No file uploaded');
+      }
+
+      const inputPath = req.file.path;
+      const dataBuffer = await fs.readFile(inputPath);
+      const { value: html } = await mammoth.convertToHtml({ buffer: dataBuffer });
+
+      // Hapus file yang diunggah setelah konversi
+      await fs.unlink(inputPath);
+
+      res.send(html);
+  } catch (error: any) {
+      res.status(500).send('Error: ' + error.message);
+  }
+});
 
 //====================UNIT TESTING==================================
 //01. Testing Passed! [NEEED REVIEW]

@@ -23,7 +23,7 @@ class JawabanModel {
   }
   static async addJawaban(jawaban: Jawaban): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `INSERT INTO jawaban (id, id_soal, pilihan, isi_jawaban) VALUES (?, ?, ?, ?)`,
+      "INSERT INTO jawaban (id, id_soal, pilihan, isi_jawaban) VALUES (?, ?, ?, ?)",
       [jawaban.id, jawaban.id_soal, jawaban.pilihan, jawaban.isi_jawaban]
     );
   }
@@ -35,7 +35,7 @@ class JawabanModel {
     );
   }
 
-  static async deleteJawaban(id: String): Promise<void> {
+  static async deleteJawaban(id: string): Promise<void> {
     await pool.query<ResultSetHeader>(`DELETE FROM jawaban WHERE id = ?`, [id]);
   }
 }

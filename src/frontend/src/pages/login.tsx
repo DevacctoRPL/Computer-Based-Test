@@ -1,7 +1,9 @@
 import React from 'react';
 import LoginForm from '../components/loginForm.js';
+import forceDirect from '../utils/directLogin.js';
 
 const Login: React.FC = () => {
+    forceDirect()
     return (
         <div className='bg-gradient-to-t from-[#280A46] from-25% via-[#3D1367] via-80% to-[#511C86] h-screen w-screen flex justify-center items-center flex-col relative'>
             {/* <div className="flex items-center justify-between w-screen absolute top-0">
