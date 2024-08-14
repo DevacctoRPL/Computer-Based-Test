@@ -4,15 +4,16 @@ import Penus from "/assets/penus.png";
 
 const Navbar: React.FC = () => {
     return (
-        <nav className="w-screen fixed flex flex-col justify-between  gap-5">
-        <div className="flex justify-between border-b-[20px] my-3 border-orange-500 pb-3">
-            <span className="bg-white rounded-full flex self-center ml-16 bottom-0">
-                <img src={Penus} alt="logo penus" className="w-14" />
+        <nav className="w-full flex flex-col justify-between bg-white sticky top-0">
+        <div className="flex justify-between border-b-2">
+            <span className="bg-white rounded-full w-14 h-14 place-self-center ml-11" >
+                <img src={Penus} alt="logo penus" className="w-full" />
             </span>
-            <div className="flex items-center justify-between relative w-screen">
-                <div className="clippath bg-orange-500 w-1/2 h-16 absolute right-0 -top-3"></div>
+            <div className="flex items-center justify-between">
+                <div className="clippath bg-purple-600 w-[800px] h-16 "></div>
             </div>
         </div>
+        <div className="w-full h-12 bg-purple-300 mt-3"></div>
         </nav>
     )
 }
