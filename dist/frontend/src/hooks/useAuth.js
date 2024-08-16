@@ -17,7 +17,7 @@ const useAuth = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const localAPI = 'http://localhost:7772';
-    const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms';
+    // const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms';
     const login = (nis, sandi) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         setLoading(true);
@@ -37,7 +37,7 @@ const useAuth = () => {
             localStorage.setItem('token', token);
             setIsAuthenticated(true);
             // Redirect to dashboard
-            navigate('/dashboard');
+            navigate('/');
         }
         catch (err) {
             console.error('Error during login:', err);

@@ -17,7 +17,7 @@ const useAuth = (): UseAuthReturn => {
   const navigate = useNavigate();
 
   const localAPI = 'http://localhost:7772';
-  const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms';
+  // const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms';
 
   const login = async (nis: number, sandi: string) => {
     setLoading(true);
@@ -42,7 +42,7 @@ const useAuth = (): UseAuthReturn => {
       setIsAuthenticated(true);
 
       // Redirect to dashboard
-      navigate('/dashboard');
+      navigate('/');
     } catch (err: any) {
       console.error('Error during login:', err);
       setError(err.response?.data?.message || 'Login failed');

@@ -1,33 +1,12 @@
-import React, { useEffect } from 'react';
-import jwt from 'jsonwebtoken';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import useSessionChecking from '../hooks/useSessionChecking.js';
 
 import Sidebar from '../components/sidebar.js';
 import Navbar from '../components/navbar.js';
 import Teacher from './teacher.js';
 
 const Dashboard: React.FC = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      try {
-        const decodedToken = jwt.decode(token) as { exp: number };
-        const currentTime = Math.floor(Date.now() / 1000);
-        if (decodedToken.exp < currentTime) {
-          alert('Session expired. Please log in again.');
-          localStorage.removeItem('token');
-          navigate('/login');
-        }
-      } catch (error) {
-        console.error('Error decoding token:', error);
-        alert('Session expired. Please log in again.');
-        localStorage.removeItem('token');
-        navigate('/login');
-      }
-    }
-  }, [navigate]);
+  useSessionChecking();
 
   return (
     <main className='flex flex-col h-screen '>

@@ -34,7 +34,7 @@ class MapelModel {
     );
   }
 
-  static async deleteMapel(id: String): Promise<void> {
+  static async deleteMapel(id: string): Promise<void> {
     await pool.query<ResultSetHeader>(
       `DELETE FROM mapel WHERE id = ?`,
       [id]

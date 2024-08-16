@@ -37,7 +37,7 @@ class NilaiModel {
     );
   }
 
-  static async deleteNilai(id: String): Promise<void> {
+  static async deleteNilai(id: string): Promise<void> {
     await pool.query<ResultSetHeader>(
       `DELETE FROM nilai WHERE id = ?`,
       [id]
