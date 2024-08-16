@@ -1,8 +1,10 @@
 import React from "react";
 import GuruTable from "../../components/admin/guruTable.js";
 import Sidebar from "../../components/admin/sidebar.js"; // Pastikan path sesuai
+import useSessionChecking from "../../hooks/useSessionChecking.js";
 
 const GuruAdminPages: React.FC = () => {
+  useSessionChecking();
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar

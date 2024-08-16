@@ -37,7 +37,7 @@ const useAuth = () => {
             localStorage.setItem('token', token);
             setIsAuthenticated(true);
             // Redirect to dashboard
-            navigate('/dashboard');
+            navigate('/');
         }
         catch (err) {
             console.error('Error during login:', err);

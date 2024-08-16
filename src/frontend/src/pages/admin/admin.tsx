@@ -1,10 +1,9 @@
 import React from 'react';
-// import { Routes, Route } from 'react-router-dom';
 import Sidebar from '../../components/admin/sidebar.js'; // Pastikan path sesuai
-// import GuruAdminPages from './guruPages.js';
-// import SiswaAdminPages from './siswaPages.js';
+import useSessionChecking from '../../hooks/useSessionChecking.js';
 
 const AdminPages: React.FC = () => {
+  useSessionChecking();
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar isOpen={true} items={[

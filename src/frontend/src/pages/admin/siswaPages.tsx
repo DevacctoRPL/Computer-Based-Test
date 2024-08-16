@@ -1,8 +1,10 @@
 import React from "react";
 import SiswaTable from "../../components/admin/siswaTable.js";
 import Sidebar from "../../components/admin/sidebar.js"; // Pastikan path sesuai
+import useSessionChecking from "../../hooks/useSessionChecking.js";
 
 const SiswaAdminPages: React.FC = () => {
+  useSessionChecking()
   return (
     <div className="flex h-screen bg-gray-100">
       <Sidebar
