@@ -4,7 +4,7 @@ const pool = mysql2.createPool({
   host: "localhost",
   user: "root",
   password: "",
-  database: "cbt-unit_test_dillon",
+  database: "cbt_v2_beta",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

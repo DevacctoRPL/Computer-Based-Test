@@ -3,6 +3,8 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import Login from './pages/login.js';
 import Dashboard from './pages/dashboard.js';
+import SoalSiswa from './pages/pageSoalSiswa.js';
+import Teacher from './pages/teacher.js';
 
 import InputQuestion from './pages/inputSoal.js'
 
@@ -23,6 +25,8 @@ const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/soal" element={<SoalSiswa />} />
+      <Route path="/teacher" element={<Teacher />} />
 
       <Route path="/" element={<Dashboard />} />
 
