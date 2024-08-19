@@ -4,10 +4,6 @@ import Sidebar from '../components/sidebar.js';
 import Navbar from '../components/navbar.js';
 import Teacher from './teacher.js';
 
-import Sidebar from '../components/sidebar.js';
-import Navbar from '../components/navbar.js';
-import Teacher from './teacher.js';
-
 const Dashboard: React.FC = () => {
   useSessionChecking();
 

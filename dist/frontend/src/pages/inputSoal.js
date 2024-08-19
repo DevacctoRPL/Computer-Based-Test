@@ -8,7 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import React, { useState, useRef } from 'react';
+import useClearNullList from '../hooks/useClearNullList.js';
 const InputQuestion = () => {
+    useClearNullList();
     const [soal, setSoal] = useState('');
     const fileInputRef = useRef(null);
     const outputRef = useRef(null);
@@ -20,7 +22,7 @@ const InputQuestion = () => {
             const formData = new FormData();
             formData.append("file", file);
             try {
-                const response = yield fetch("https://49kdgk28-7771.asse.devtunnels.ms/convert", {
+                const response = yield fetch("http://localhost:7772/convert", {
                     method: "POST",
                     body: formData,
                 });
@@ -45,16 +47,27 @@ const InputQuestion = () => {
         let currentSoal = null;
         let localQuestionIndex = 1; // Inisialisasi indeks soal lokal
         listItems.forEach((item, index) => {
+            var _a;
             const listAnswerDiv = document.createElement("div");
             listAnswerDiv.classList.add("list-answer");
+            listAnswerDiv.classList.add("ml-2");
+            // Hapus elemen list yang kosong
+            if (((_a = item.textContent) === null || _a === void 0 ? void 0 : _a.trim()) === '') {
+                item.remove();
+                return;
+            }
             if (index % 6 === 0) {
                 const soalText = item.innerHTML;
                 item.id = `soal-${localQuestionIndex}`; // Gunakan indeks lokal
+                item.classList.add('border-b-2', 'border-red-600', 'mb-4');
                 const soalP = document.createElement("p");
                 soalP.id = item.id;
                 soalP.innerHTML = soalText;
                 item.innerHTML = "";
                 item.appendChild(soalP);
+                // Tambahin border ke elemen soal
+                // soalP.style.border = "2px solid #000";  // Buat Developing jarak soal ke Jawaban
+                soalP.classList.add("mb-6");
                 localQuestionIndex++; // Increment indeks lokal
                 answerIndex = 0;
                 currentSoal = item;
@@ -62,6 +75,8 @@ const InputQuestion = () => {
             else {
                 const radioLabel = document.createElement("label");
                 radioLabel.classList.add("radio-label");
+                radioLabel.classList.add("flex");
+                radioLabel.classList.add("mb-6");
                 const radioInput = document.createElement("input");
                 radioInput.type = "radio";
                 radioInput.name = `jawaban-${localQuestionIndex - 1}`; // Gunakan indeks lokal
@@ -166,7 +181,7 @@ const InputQuestion = () => {
             }
         }
         try {
-            const response = yield fetch("https://49kdgk28-7771.asse.devtunnels.ms/submit", {
+            const response = yield fetch("https://49kdgk28-7772.asse.devtunnels.ms/submit", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -188,15 +203,15 @@ const InputQuestion = () => {
             console.error("Error submitting form:", error);
         }
     });
-    return (React.createElement("div", null,
-        React.createElement("h1", null, "Convert DOCX to HTML"),
-        React.createElement("form", { onSubmit: handleFileUpload, encType: "multipart/form-data" },
-            React.createElement("input", { type: "file", ref: fileInputRef, accept: ".docx", required: true }),
-            React.createElement("button", { type: "submit" }, "Convert")),
-        React.createElement("form", { onSubmit: handleSave },
-            React.createElement("label", { htmlFor: "soal" }, "Letakkan Nama Mapel Anda"),
-            React.createElement("input", { type: "text", name: "soal", id: "soal", value: soal, onChange: (e) => setSoal(e.target.value) }),
-            React.createElement("div", { ref: outputRef, id: "output" }),
-            React.createElement("button", { type: "submit" }, "Save"))));
+    return (React.createElement("div", { className: "max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg" },
+        React.createElement("h1", { className: "text-2xl font-bold mb-6 text-center text-gray-800" }, "Convert DOCX to HTML"),
+        React.createElement("form", { onSubmit: handleFileUpload, encType: "multipart/form-data", className: "flex flex-col items-center mb-6" },
+            React.createElement("input", { type: "file", ref: fileInputRef, accept: ".docx", required: true, className: "border border-gray-300 rounded-md p-2 mb-4" }),
+            React.createElement("button", { type: "submit", className: "px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600" }, "Convert")),
+        React.createElement("form", { onSubmit: handleSave, className: "flex flex-col space-y-4" },
+            React.createElement("label", { htmlFor: "soal", className: "block text-sm font-medium text-gray-700" }, "Letakkan Nama Mapel Anda"),
+            React.createElement("input", { type: "text", name: "soal", id: "soal", value: soal, onChange: (e) => setSoal(e.target.value), className: "border border-red-600 rounded-md p-2 mb-4" }),
+            React.createElement("div", { ref: outputRef, id: "output", className: "space-y-4 bg-gray-100 border-red-600 p-4 rounded-md" }),
+            React.createElement("button", { type: "submit", className: "px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600" }, "Save"))));
 };
 export default InputQuestion;
