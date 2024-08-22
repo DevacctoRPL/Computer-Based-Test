@@ -11,6 +11,6 @@ interface JwtPayload {
 }
 
 export function generateAccessToken(payload: JwtPayload): string {
-    return jwt.sign(payload, ts, { expiresIn: '5m' });
+    return jwt.sign(payload, ts, { expiresIn: '1d' });
 }
 

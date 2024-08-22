@@ -39,9 +39,9 @@ export function getGuruByNig(req, res) {
 }
 export function addGuru(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { nig, nama, kode_guru, id_mapel_kelas, sandi } = req.body;
+        const { nig, nama, kode_guru, id_kelas, sandi } = req.body;
         try {
-            yield GuruModel.addGuru({ nig, nama, kode_guru, id_mapel_kelas, sandi });
+            yield GuruModel.addGuru({ nig, nama, kode_guru, id_kelas, sandi });
             res.status(201).json({ message: "Guru added successfully" });
         }
         catch (error) {
@@ -52,10 +52,10 @@ export function addGuru(req, res) {
 export function updateGuru(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const guruId = parseInt(req.params.id, 10);
-        const { nig, nama, kode_guru, id_mapel_kelas, sandi } = req.body;
+        const { nig, nama, kode_guru, sandi, id_kelas } = req.body;
         try {
             yield GuruModel.updateGuru(guruId, {
-                nig, nama, kode_guru, id_mapel_kelas, sandi
+                nig, nama, kode_guru, sandi, id_kelas
             });
             res.json({ message: "Guru updated successfully" });
         }

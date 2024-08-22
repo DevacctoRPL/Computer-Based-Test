@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllUjian, getUjianById, addUjian, updateUjian, deleteUjian } from '../controllers/ujianController.js';
+import { getAllUjian, getUjianById, addUjian, updateUjian, deleteUjian } from '../test/controllers/ujianController.js';
 const ujianRoutes = Router();
 // Rute untuk mendapatkan semua pengguna
 ujianRoutes.get('/ujian', getAllUjian);

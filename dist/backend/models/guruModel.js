@@ -23,7 +23,7 @@ class GuruModel {
     }
     static addGuru(guru) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`INSERT INTO guru (nig, nama, kode_guru, id_mapel_kelas, sandi) VALUES (?, ?, ?, ?, ?)`, [guru.nig, guru.nama, guru.kode_guru, guru.id_mapel_kelas, guru.sandi]);
+            yield pool.query(`INSERT INTO guru (nig, nama, kode_guru, sandi, id_kelas) VALUES (?, ?, ?, ?, ?)`, [guru.nig, guru.nama, guru.kode_guru, guru.sandi, guru.id_kelas]);
         });
     }
     static updateGuru(nig, guru) {

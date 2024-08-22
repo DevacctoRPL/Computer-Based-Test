@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { login } from '../../controllers/siswaController.js';
+import { login } from '../../test/controllers/siswaController.js';
 
 const authRoutes = Router();
 

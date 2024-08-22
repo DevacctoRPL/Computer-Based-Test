@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllGuru, getGuruByNig, addGuru, updateGuru, deleteGuru } from '../controllers/guruController.js';
+import { getAllGuru, getGuruByNig, addGuru, updateGuru, deleteGuru } from '../test/controllers/guruController.js';
 const guruRoutes = Router();
 // Rute untuk mendapatkan semua pengguna
 guruRoutes.get('/guru', getAllGuru); //Passed
