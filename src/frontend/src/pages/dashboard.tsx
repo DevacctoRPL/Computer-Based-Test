@@ -1,6 +1,5 @@
 import React from 'react';
 import useSessionChecking from '../hooks/useSessionChecking.js';
-
 import Sidebar from '../components/sidebar.js';
 import Navbar from '../components/navbar.js';
 import Teacher from './teacher.js';

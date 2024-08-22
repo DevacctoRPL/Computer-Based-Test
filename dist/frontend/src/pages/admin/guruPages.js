@@ -1,7 +1,9 @@
 import React from "react";
 import GuruTable from "../../components/admin/guruTable.js";
 import Sidebar from "../../components/admin/sidebar.js"; // Pastikan path sesuai
+import useSessionChecking from "../../hooks/useSessionChecking.js";
 const GuruAdminPages = () => {
+    useSessionChecking();
     return (React.createElement("div", { className: "flex h-screen bg-gray-100" },
         React.createElement(Sidebar, { isOpen: true, items: [
                 { name: "Beranda", href: "/admin" },

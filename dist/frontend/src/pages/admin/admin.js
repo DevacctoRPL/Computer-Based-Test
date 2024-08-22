@@ -1,9 +1,8 @@
 import React from 'react';
-// import { Routes, Route } from 'react-router-dom';
 import Sidebar from '../../components/admin/sidebar.js'; // Pastikan path sesuai
-// import GuruAdminPages from './guruPages.js';
-// import SiswaAdminPages from './siswaPages.js';
+import useSessionChecking from '../../hooks/useSessionChecking.js';
 const AdminPages = () => {
+    useSessionChecking();
     return (React.createElement("div", { className: "flex h-screen bg-gray-100" },
         React.createElement(Sidebar, { isOpen: true, items: [
                 { name: 'Beranda', href: '/admin' },

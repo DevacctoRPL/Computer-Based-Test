@@ -1,4 +1,5 @@
 import React, { useState, useRef, FormEvent, ChangeEvent } from 'react';
+import useClearNullList from '../hooks/useClearNullList.js';
 // import './App.css';
 
 interface Answer {
@@ -13,6 +14,7 @@ interface Answer {
 }
 
 const InputQuestion: React.FC = () => {
+  useClearNullList()
   const [soal, setSoal] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
@@ -25,7 +27,7 @@ const InputQuestion: React.FC = () => {
       formData.append("file", file);
 
       try {
-        const response = await fetch("https://49kdgk28-7771.asse.devtunnels.ms/convert", {
+        const response = await fetch("http://localhost:7772/convert", {
           method: "POST",
           body: formData,
         });
@@ -41,59 +43,74 @@ const InputQuestion: React.FC = () => {
 
   const processHTML = (html: string) => {
     if (!outputRef.current) return;
-
+  
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = html;
-
+  
     const listItems = tempDiv.querySelectorAll("ol li, ul li");
     let answerIndex = 0;
     const labels = ["A", "B", "C", "D", "E"];
     let currentSoal: HTMLElement | null = null;
     let localQuestionIndex = 1;  // Inisialisasi indeks soal lokal
-
+  
     listItems.forEach((item, index) => {
       const listAnswerDiv = document.createElement("div");
       listAnswerDiv.classList.add("list-answer");
-
+      listAnswerDiv.classList.add("ml-2");
+  
+      // Hapus elemen list yang kosong
+      if (item.textContent?.trim() === '') {
+        item.remove();
+        return;
+      }
+  
       if (index % 6 === 0) {
         const soalText = item.innerHTML;
         item.id = `soal-${localQuestionIndex}`;  // Gunakan indeks lokal
-
+        item.classList.add('border-b-2', 'border-red-600', 'mb-4')
+  
         const soalP = document.createElement("p");
         soalP.id = item.id;
         soalP.innerHTML = soalText;
-
+  
         item.innerHTML = "";
         item.appendChild(soalP);
-
+  
+        // Tambahin border ke elemen soal
+        // soalP.style.border = "2px solid #000";  // Buat Developing jarak soal ke Jawaban
+        soalP.classList.add("mb-6")
+  
         localQuestionIndex++;  // Increment indeks lokal
         answerIndex = 0;
         currentSoal = item as HTMLElement;
       } else {
         const radioLabel = document.createElement("label");
         radioLabel.classList.add("radio-label");
-
+        radioLabel.classList.add("flex");
+        radioLabel.classList.add("mb-6");
+  
         const radioInput = document.createElement("input");
         radioInput.type = "radio";
         radioInput.name = `jawaban-${localQuestionIndex - 1}`;  // Gunakan indeks lokal
         radioInput.classList.add("radio-input");
         radioInput.value = labels[answerIndex];
-
+  
         listAnswerDiv.innerHTML = item.innerHTML;
         item.innerHTML = "";
         item.appendChild(listAnswerDiv);
-
+  
         radioLabel.appendChild(radioInput);
         radioLabel.appendChild(listAnswerDiv);
-
+  
         if (currentSoal) currentSoal.appendChild(radioLabel);
         answerIndex += 1;
       }
     });
-
+  
     outputRef.current.innerHTML = '';  // Bersihkan output sebelum menambahkan yang baru
     outputRef.current.appendChild(tempDiv);
   };
+  
 
   const handleSave = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -194,7 +211,7 @@ const InputQuestion: React.FC = () => {
     }
 
     try {
-      const response = await fetch("https://49kdgk28-7771.asse.devtunnels.ms/submit", {
+      const response = await fetch("https://49kdgk28-7772.asse.devtunnels.ms/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -220,23 +237,56 @@ const InputQuestion: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Convert DOCX to HTML</h1>
-      <form onSubmit={handleFileUpload} encType="multipart/form-data">
-        <input type="file" ref={fileInputRef} accept=".docx" required />
-        <button type="submit">Convert</button>
+    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
+      <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Convert DOCX to HTML</h1>
+      <form
+        onSubmit={handleFileUpload}
+        encType="multipart/form-data"
+        className="flex flex-col items-center mb-6"
+      >
+        <input
+          type="file"
+          ref={fileInputRef}
+          accept=".docx"
+          required
+          className="border border-gray-300 rounded-md p-2 mb-4"
+        />
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Convert
+        </button>
       </form>
-      <form onSubmit={handleSave}>
-        <label htmlFor="soal">Letakkan Nama Mapel Anda</label>
+
+      <form onSubmit={handleSave} className="flex flex-col space-y-4">
+        <label
+          htmlFor="soal"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Letakkan Nama Mapel Anda
+        </label>
         <input
           type="text"
           name="soal"
           id="soal"
           value={soal}
           onChange={(e: ChangeEvent<HTMLInputElement>) => setSoal(e.target.value)}
+          className="border border-red-600 rounded-md p-2 mb-4"
         />
-        <div ref={outputRef} id="output"></div>
-        <button type="submit">Save</button>
+        
+        <div
+          ref={outputRef}
+          id="output"
+          className="space-y-4 bg-gray-100 border-red-600 p-4 rounded-md"
+        ></div>
+        
+        <button
+          type="submit"
+          className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+        >
+          Save
+        </button>
       </form>
     </div>
   );
