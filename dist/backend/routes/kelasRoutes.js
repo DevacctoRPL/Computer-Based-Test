@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllKelas, getKelasById, addKelas, updateKelas, deleteKelas } from '../controllers/kelasController.js';
+import { getAllKelas, getKelasById, addKelas, updateKelas, deleteKelas } from '../test/controllers/kelasController.js';
 const kelasRoutes = Router();
 // Rute untuk mendapatkan semua pengguna
 kelasRoutes.get('/kelas', getAllKelas); //Passed

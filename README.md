@@ -11,6 +11,12 @@
 - Memperbarui Frontend dengan  menggunakan Vite
 - Memberi batasan percobaan login
 
+## Update on 22 August 2024
+
+- Menambahkan folder test dan unit test untuk pengembangan fitur
+- Menyediakan 2 lingkungan (production dan development)
+- Menghapus package yang tidak dipakai
+
 ## Tech
 Menggunakan MERN Stack (MySQL, Express, ReactJS, NodeJS)
 
@@ -30,16 +36,27 @@ cd computer-based-test/src/frontend
 npm install
 ```
 
-## Running
+## Running on Development Environtment
 
-Menjalankan server app.ts
+Menjalankan server app.ts dalam lingkungan development (port 7774)
 
 ```sh
 cd computer-based-test
-npm run start
+npm run start-dev
 ```
 
-menjalankan ReactJS di frontend
+## Running on Production Environtment
+
+Menjalankan server app.ts dalam lingkungan development (port 7772)
+
+```sh
+cd computer-based-test
+npm run start-prod
+```
+
+## Running on React
+
+menjalankan ReactJS di frontend (def port 5173)
 
 ```sh
 cd src/frontend

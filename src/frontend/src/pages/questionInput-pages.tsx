@@ -64,7 +64,8 @@ const InputQuestion: React.FC = () => {
         return;
       }
   
-      if (index % 6 === 0) {
+      if (index % 5 === 0) {
+        //5 adalah = 1 soal, 4 jawaban (a,b,c,d)
         const soalText = item.innerHTML;
         item.id = `soal-${localQuestionIndex}`;  // Gunakan indeks lokal
         item.classList.add('border-b-2', 'border-red-600', 'mb-4')

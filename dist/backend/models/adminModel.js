@@ -28,7 +28,7 @@ class AdminModel {
     }
     static updateAdmin(id, Admin) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield pool.query(`UPDATE admin SET nama = ? , sandi = ? WHERE nig = ?`, [Admin.nama, Admin.sandi, id]);
+            yield pool.query(`UPDATE admin SET nama = ? , sandi = ? WHERE id = ?`, [Admin.nama, Admin.sandi, id]);
         });
     }
     static deleteAdmin(id) {

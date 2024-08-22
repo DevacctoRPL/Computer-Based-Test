@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllSiswa, getSiswaByNis, addSiswa, updateSiswa, deleteSiswa } from '../controllers/siswaController.js';
+import { getAllSiswa, getSiswaByNis, addSiswa, updateSiswa, deleteSiswa } from '../test/controllers/siswaController.js';
 const siswaRoutes = Router();
 // Rute untuk mendapatkan semua pengguna
 siswaRoutes.get('/siswa', getAllSiswa); //Passed
