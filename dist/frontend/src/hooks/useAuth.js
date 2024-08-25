@@ -17,15 +17,15 @@ const useAuth = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     // const localAPI = 'http://localhost:7772';
-    const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms';
-    const login = (nis, sandi) => __awaiter(void 0, void 0, void 0, function* () {
+    const devTunnelAPI = 'https://49kdgk28-7774.asse.devtunnels.ms';
+    const login = (niu, sandi) => __awaiter(void 0, void 0, void 0, function* () {
         var _a, _b;
         setLoading(true);
         setError(null);
-        console.log('Sending NIS:', nis);
+        console.log('Sending niu:', niu);
         console.log('Sending Password:', sandi);
         try {
-            const response = yield axios.post(`${devTunnelAPI}/api/auth`, { nis, sandi });
+            const response = yield axios.post(`${devTunnelAPI}/api/auth`, { niu, sandi });
             const { token } = response.data;
             // Check if token is expired
             const decodedToken = jwt.decode(token);

@@ -13,17 +13,17 @@ import useAuth from '../hooks/useAuth.js';
 import User from "/assets/user.png";
 import Padlock from "/assets/padlock.png";
 const LoginForm = () => {
-    const [nis, setNis] = useState('');
+    const [niu, setNiu] = useState('');
     const [sandi, setSandi] = useState('');
     const { isAuthenticated, loading, error, login } = useAuth();
     const handleSubmit = (e) => __awaiter(void 0, void 0, void 0, function* () {
         e.preventDefault();
         console.log('button clicked!');
-        yield login(Number(nis), sandi);
+        yield login(Number(niu), sandi);
     });
     return (React.createElement("form", { className: 'flex flex-col gap-12 w-1/3', onSubmit: handleSubmit },
         React.createElement("div", { className: 'relative flex items-center justify-center' },
-            React.createElement("input", { type: "number", placeholder: "NIS", value: nis, onChange: (e) => setNis(e.target.value), className: 'h-14 p-2 rounded-full bg-[#242424] text-white text-center relative duration-700 w-full', required: true }),
+            React.createElement("input", { type: "number", placeholder: "niu", value: niu, onChange: (e) => setNiu(e.target.value), className: 'h-14 p-2 rounded-full bg-[#242424] text-white text-center relative duration-700 w-full', required: true }),
             React.createElement("span", { className: 'absolute -right-1 bg-slate-50 rounded-full' },
                 React.createElement("img", { src: User, className: 'w-12 h-12 m-2', alt: 'user' }))),
         React.createElement("div", { className: 'relative flex justify-center items-center' },

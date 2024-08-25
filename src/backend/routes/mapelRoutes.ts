@@ -1,12 +1,21 @@
 import { Router } from 'express';
-import MapelController from '../test/controllers/mapelController.js';
+import { getAllMapel, getMapelById, addMapel, updateMapel, deleteMapel } from '../controllers/mapelController.js';
 
 const mapelRoutes = Router();
 
-mapelRoutes.get('/mapel', MapelController.getAll);
-mapelRoutes.get('/mapel/:id', MapelController.getById);
-mapelRoutes.post('/mapel', MapelController.add);
-mapelRoutes.put('/mapel/:id', MapelController.update);
-mapelRoutes.delete('/mapel/:id', MapelController.delete);
+// Rute untuk mendapatkan semua pengguna
+mapelRoutes.get('/mapel', getAllMapel); //Passed
 
-export default mapelRoutes;
+// Rute untuk mendapatkan pengguna berdasarkan ID
+mapelRoutes.get('/mapel/:id', getMapelById); //Passed
+
+// Rute untuk menambahkan pengguna baru
+mapelRoutes.post('/mapel', addMapel); //Passed
+
+// Rute untuk memperbarui pengguna
+mapelRoutes.put('/mapel/:id', updateMapel); //Passed
+
+// Rute untuk menghapus pengguna
+mapelRoutes.delete('/mapel/:id', deleteMapel); //Passed
+
+export default mapelRoutes; //ini komen

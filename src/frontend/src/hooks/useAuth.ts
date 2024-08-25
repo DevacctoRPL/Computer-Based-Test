@@ -7,7 +7,7 @@ interface UseAuthReturn {
   isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
-  login: (nis: number, sandi: string) => Promise<void>;
+  login: (niu: number, sandi: string) => Promise<void>;
 }
 
 const useAuth = (): UseAuthReturn => {
@@ -17,17 +17,17 @@ const useAuth = (): UseAuthReturn => {
   const navigate = useNavigate();
 
   // const localAPI = 'http://localhost:7772';
-  const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms';
+  const devTunnelAPI = 'https://49kdgk28-7774.asse.devtunnels.ms';
 
-  const login = async (nis: number, sandi: string) => {
+  const login = async (niu: number, sandi: string) => {
     setLoading(true);
     setError(null);
 
-    console.log('Sending NIS:', nis);
+    console.log('Sending niu:', niu);
     console.log('Sending Password:', sandi);
 
     try {
-      const response = await axios.post(`${devTunnelAPI}/api/auth`, { nis, sandi });
+      const response = await axios.post(`${devTunnelAPI}/api/auth`, { niu, sandi });
       const { token } = response.data;
 
       // Check if token is expired
