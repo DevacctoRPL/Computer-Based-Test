@@ -15,10 +15,10 @@ import pertanyaanRoutes from "./backend/routes/pertanyaanRoutes.js";
 import siswaRoutes from "./backend/routes/siswaRoutes.js";
 import ujianRoutes from "./backend/routes/ujianRoutes.js";
 
-import relGuruKelasRoutes from "./backend/routes/rel_guru_kelasRoutes.js";
-import relGuruMapelRoutes from "./backend/routes/rel_guru_mapelRoutes.js";
-import relKelasMapelRoutes from "./backend/routes/rel_kelas_mapelRoutes.js";
-import relSoalKelasRoutes from "./backend/routes/rel_soal_kelasRoutes.js";
+// import relGuruKelasRoutes from "./backend/routes/rel_guru_kelasRoutes.js";
+// import relGuruMapelRoutes from "./backend/routes/rel_guru_mapelRoutes.js";
+// import relKelasMapelRoutes from "./backend/routes/rel_kelas_mapelRoutes.js";
+// import relSoalKelasRoutes from "./backend/routes/rel_soal_kelasRoutes.js";
 
 
 dotenv.config();
@@ -56,10 +56,10 @@ app.use('/api/', pertanyaanRoutes); // Untested!
 app.use('/api/', siswaRoutes); // Untested!
 app.use('/api/', ujianRoutes); // Untested!
 
-app.use('/api/', relGuruKelasRoutes); // Untested!
-app.use('/api/', relGuruMapelRoutes); // Untested!
-app.use('/api/', relKelasMapelRoutes); // Untested!
-app.use('/api/', relSoalKelasRoutes); // Untested!
+// app.use('/api/', relGuruKelasRoutes); // Untested!
+// app.use('/api/', relGuruMapelRoutes); // Untested!
+// app.use('/api/', relKelasMapelRoutes); // Untested!
+// app.use('/api/', relSoalKelasRoutes); // Untested!
 
 
 //====================UNIT TESTING==================================
