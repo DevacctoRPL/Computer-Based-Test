@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import NilaiSiswaController from '../test/controllers/nilai_siswaController.js';
+import NilaiSiswaController from '../controllers/nilai_siswaController.js';
 
 const nilaiSiswaRoutes = Router();
 

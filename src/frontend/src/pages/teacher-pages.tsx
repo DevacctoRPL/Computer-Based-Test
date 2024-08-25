@@ -11,7 +11,7 @@ const Teacher : React.FC = () => {
   const [guru, setGuru] = useState<Guru[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:7772/api/guru')
+    axios.get('https://49kdgk28-7774.asse.devtunnels.ms/api/guru')
       .then(response => {
         setGuru(response.data);
       })

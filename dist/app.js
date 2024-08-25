@@ -13,13 +13,13 @@ import nilaiSiswaRoutes from "./backend/routes/nilai_siswaRoutes.js";
 import pertanyaanRoutes from "./backend/routes/pertanyaanRoutes.js";
 import siswaRoutes from "./backend/routes/siswaRoutes.js";
 import ujianRoutes from "./backend/routes/ujianRoutes.js";
-import relGuruKelasRoutes from "./backend/routes/rel_guru_kelasRoutes.js";
-import relGuruMapelRoutes from "./backend/routes/rel_guru_mapelRoutes.js";
-import relKelasMapelRoutes from "./backend/routes/rel_kelas_mapelRoutes.js";
-import relSoalKelasRoutes from "./backend/routes/rel_soal_kelasRoutes.js";
+// import relGuruKelasRoutes from "./backend/routes/rel_guru_kelasRoutes.js";
+// import relGuruMapelRoutes from "./backend/routes/rel_guru_mapelRoutes.js";
+// import relKelasMapelRoutes from "./backend/routes/rel_kelas_mapelRoutes.js";
+// import relSoalKelasRoutes from "./backend/routes/rel_soal_kelasRoutes.js";
 dotenv.config();
 const corsOptions = {
-    origin: 'http://localhost:5173',
+    origin: 'https://49kdgk28-5173.asse.devtunnels.ms/',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // Jika Anda membutuhkan cookie atau header lainnya dari client
 };
@@ -44,10 +44,10 @@ app.use('/api/', nilaiSiswaRoutes); // Untested!
 app.use('/api/', pertanyaanRoutes); // Untested!
 app.use('/api/', siswaRoutes); // Untested!
 app.use('/api/', ujianRoutes); // Untested!
-app.use('/api/', relGuruKelasRoutes); // Untested!
-app.use('/api/', relGuruMapelRoutes); // Untested!
-app.use('/api/', relKelasMapelRoutes); // Untested!
-app.use('/api/', relSoalKelasRoutes); // Untested!
+// app.use('/api/', relGuruKelasRoutes); // Untested!
+// app.use('/api/', relGuruMapelRoutes); // Untested!
+// app.use('/api/', relKelasMapelRoutes); // Untested!
+// app.use('/api/', relSoalKelasRoutes); // Untested!
 //====================UNIT TESTING==================================
 //01. Authentication Checking Routes : Testing Passed! [NEEED REVIEW]
 import authRoutes from "./backend/routes/middleware/authRoutes.js";
