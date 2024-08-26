@@ -9,7 +9,7 @@
     "start-prod": "tsc && npm run prod",
     "start-dev": "tsc && npm run dev",
     "prod": "node dist/app.js",
-    "dev": "node dist/backend/test/app.js",
+    "dev": "node dist/test/app.js",
     "lint": "eslint ."
   },
   "keywords": [],
