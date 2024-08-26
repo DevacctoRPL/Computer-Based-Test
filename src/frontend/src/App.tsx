@@ -13,7 +13,7 @@ import GuruAdminPages from './pages/admin/guruPages.js';
 import SiswaAdminPages from './pages/admin/siswaPages.js';
 
 //TESTING CODE!
-import InputQuestionTest from './test/inputSoalTest.js';
+// import InputQuestionTest from './test/inputSoalTest.js';
 
 const App: React.FC = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const App: React.FC = () => {
       <Route path="/" element={<Dashboard />} />
 
       {/* <Route path="/input-question" element={<InputQuestion />} /> */}
-      <Route path="/input-question-test" element={<InputQuestionTest />} />
+      <Route path="/input-question-test" element={<InputQuestion />} />
 
       <Route path="/admin" element={<AdminPages />} />
       <Route path="/admin/guru" element={<GuruAdminPages />} />

@@ -32,8 +32,8 @@ class UjianController {
   // Add new ujian
   static async addDetailUjian(req: Request, res: Response): Promise<void> {
     try {
-      const { judul_soal, jumlah_soal, durasi, dibuat_pada, id_mapel, nig_guru, id_kelas } = req.body;
-      const newDetailUjian = { judul_soal, jumlah_soal, durasi, dibuat_pada, id_mapel, nig_guru, id_kelas };
+      const { judul_soal, jumlah_soal, durasi, dibuat_pada, id_mapel, nig_guru, id_ujian, id_kelas } = req.body;
+      const newDetailUjian = { judul_soal, jumlah_soal, durasi, dibuat_pada, id_mapel, id_ujian, nig_guru, id_kelas };
       await DetailUjianModel.addDetailUjian(newDetailUjian);
       res.status(201).json({ message: 'Detail ujian added successfully' });
     } catch (error) {
