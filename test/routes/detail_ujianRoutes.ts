@@ -3,10 +3,10 @@ import UjianController from '../controllers/detail_ujianController.js';
 
 const detailUjianRoutes = Router();
 
-detailUjianRoutes.get('/detil-ujian', UjianController.getAllDetailUjian);
-detailUjianRoutes.get('/detil-ujian/:id', UjianController.getDetailUjianById);
-detailUjianRoutes.post('/detil-ujian', UjianController.addDetailUjian);
-detailUjianRoutes.put('/detil-ujian/:id', UjianController.updateDetailUjian);
-detailUjianRoutes.delete('/detil-ujian/:id', UjianController.deleteDetailUjian);
+detailUjianRoutes.get('/detail-ujian', UjianController.getAllDetailUjian);
+detailUjianRoutes.get('/detail-ujian/:id', UjianController.getDetailUjianById);
+detailUjianRoutes.post('/detail-ujian', UjianController.addDetailUjian);
+detailUjianRoutes.put('/detail-ujian/:id', UjianController.updateDetailUjian);
+detailUjianRoutes.delete('/detail-ujian/:id', UjianController.deleteDetailUjian);
 
 export default detailUjianRoutes;

@@ -30,9 +30,9 @@ export async function getSiswaByNis(req: Request, res: Response): Promise<void> 
 
 // Menambahkan pengguna baru
 export async function addSiswa(req: Request, res: Response): Promise<void> {
-  const { nis, id_kelas, nama, panggilan, sandi, lulus } = req.body;
+  const { nis, nama, panggilan, sandi, is_lulus, is_switch_tab, id_kelas } = req.body;
   try {
-    await SiswaModel.addSiswa({nis, id_kelas, nama, panggilan, sandi, lulus });
+    await SiswaModel.addSiswa({nis, nama, panggilan, sandi, is_lulus, is_switch_tab, id_kelas });
     res.status(201).json({ message: 'User added successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error adding user', error });
@@ -42,9 +42,9 @@ export async function addSiswa(req: Request, res: Response): Promise<void> {
 // Memperbarui pengguna
 export async function updateSiswa(req: Request, res: Response): Promise<void> {
   const siswaId = parseInt(req.params.id, 10);
-  const { nis, id_kelas, nama, panggilan, sandi, lulus } = req.body;
+  const { nis, nama, panggilan, sandi, is_lulus, is_switch_tab, id_kelas } = req.body;
   try {
-    await SiswaModel.updateSiswa(siswaId, { nis, id_kelas, nama, panggilan, sandi, lulus });
+    await SiswaModel.updateSiswa(siswaId, { nis, nama, panggilan, sandi, is_lulus, is_switch_tab, id_kelas});
     res.json({ message: 'User updated successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Error updating user', error });

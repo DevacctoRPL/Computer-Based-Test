@@ -3,10 +3,10 @@ import JawabanPertanyaanController from '../controllers/jawaban_pertanyaanContro
 
 const jawabanPertanyaanRoutes = Router();
 
-jawabanPertanyaanRoutes.get('/jawaban_pertanyaan', JawabanPertanyaanController.getAll);
-jawabanPertanyaanRoutes.get('/jawaban_pertanyaan/:id', JawabanPertanyaanController.getById);
-jawabanPertanyaanRoutes.post('/jawaban_pertanyaan', JawabanPertanyaanController.add);
-jawabanPertanyaanRoutes.put('/jawaban_pertanyaan/:id', JawabanPertanyaanController.update);
-jawabanPertanyaanRoutes.delete('/jawaban_pertanyaan/:id', JawabanPertanyaanController.delete);
+jawabanPertanyaanRoutes.get('/jawaban-pertanyaan', JawabanPertanyaanController.getAll);
+jawabanPertanyaanRoutes.get('/jawaban-pertanyaan/:id', JawabanPertanyaanController.getById);
+jawabanPertanyaanRoutes.post('/jawaban-pertanyaan', JawabanPertanyaanController.add);
+jawabanPertanyaanRoutes.put('/jawaban-pertanyaan/:id', JawabanPertanyaanController.update);
+jawabanPertanyaanRoutes.delete('/jawaban-pertanyaan/:id', JawabanPertanyaanController.delete);
 
 export default jawabanPertanyaanRoutes;
