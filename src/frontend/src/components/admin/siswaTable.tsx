@@ -1,75 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
 
-interface Siswa {
-  nis: number;
+interface Teacher {
+  id: number;
   nama: string;
-  sandi: string;
-  id_kelas: string;
+  panggilan: string;
+  kelas: string;
 }
 
-const SiswaTable: React.FC = () => {
-  const [guru, setGuru] = useState<Siswa[]>([]);
+const Teacher: React.FC = () => {
+  const [teachers, setTeachers] = useState<Teacher[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:7772/api/siswa')
-      .then(response => {
-        setGuru(response.data);
-      })
-      .catch(error => {
-        console.error('There was an error fetching the SISWA data!', error);
-      });
+    fetch("http://localhost:7772/api/siswa")
+      .then((response) => response.json())
+      .then((data) => setTeachers(data))
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const handleEdit = (nis: number) => {
-    // Logic for editing a guru
-    console.log(`Edit siswa with nis: ${nis}`);
-  };
-
-  const handleDelete = (nis: number) => {
-    // Logic for deleting a siswa
-    console.log(`Delete siswa with nis: ${nis}`);
-  };
-
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full bg-white">
-        <thead className="bg-gray-800 text-white">
-          <tr>
-            <th className="w-1/3 px-4 py-2">NIS</th>
-            <th className="w-1/3 px-4 py-2">Nama</th>
-            <th className="w-1/3 px-4 py-2">Sandi</th>
-            <th className="w-1/3 px-4 py-2">Kelas</th>
-            <th className="w-1/3 px-4 py-2">Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          {guru.map((g) => (
-            <tr key={g.nis} className="text-center">
-              <td className="border px-4 py-2">{g.nis}</td>
-              <td className="border px-4 py-2">{g.nama}</td>
-              <td className="border px-4 py-2">{g.sandi}</td>
-              <td className="border px-4 py-2">{g.id_kelas}</td>
-              <td className="border px-4 py-2">
-                <button
-                  onClick={() => handleEdit(g.nis)}
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 mr-2 rounded"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(g.nis)}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+        <div className="flex justify-center py-36">
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-purple-100">
+              <thead>
+                <tr className="border border-black">
+                  <th className="px-12 py-1 text-left text-xs font-medium text-black uppercase tracking-wider">NO</th>
+                  <th className="px-6 py-1 text-left text-xs font-medium text-black uppercase tracking-wider">Nama Lengkap</th>
+                  <th className="px-6 py-1 text-left text-xs font-medium text-black uppercase tracking-wider">Jenis Kelamin</th>
+                  <th className="px-9 py-1 text-left text-xs font-medium text-black uppercase tracking-wider">Kelas</th>
+                  <th className="px-6 py-1 text-left text-xs font-medium text-black uppercase tracking-wider">Action</th>
+                  <button className="absolute mx-6 px-6 border border-black">ADD</button>
+                </tr>
+              </thead>
+              <br/>
+              <tbody>
+                {teachers.map((teacher, index) => (
+                  <tr key={teacher.id}>
+                    <td className="px-6 py-2 text-center border border-black text-sm font-medium text-gray-900">{index + 1}</td>
+                    <td className="px-6 py-2 text-center border border-black text-sm text-black">{teacher.nama}</td>
+                    <td className="px-6 py-2 text-center border border-black text-sm text-black">{teacher.panggilan}</td>
+                    <td className="px-6 py-2 text-center border border-black text-sm text-black">{teacher.kelas}</td>
+                    <td className="px-6 py-2 text-center border border-black text-sm text-black">
+                      <button className="bg-purple-400 hover:bg-purple-500 px-4 py-0 rounded-md ">
+                        Ubah
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </>
   );
 };
 
-export default SiswaTable;
+export default Teacher;

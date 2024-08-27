@@ -5,7 +5,7 @@ import User from "/assets/user.png";
 import Padlock from "/assets/padlock.png";
 
 const LoginForm: React.FC = () => {
-    const [nis, setNis] = useState<number | string>('');
+    const [niu, setNiu] = useState<number | string>('');
     const [sandi, setSandi] = useState<string>('');
     const { isAuthenticated, loading, error, login } = useAuth();
 
@@ -13,7 +13,7 @@ const LoginForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         console.log('button clicked!')
-        await login(Number(nis), sandi);
+        await login(Number(niu), sandi);
     };
 
     return (
@@ -21,9 +21,9 @@ const LoginForm: React.FC = () => {
             <div className='relative flex items-center justify-center'>
                 <input
                     type="number"
-                    placeholder="NIS"
-                    value={nis}
-                    onChange={(e) => setNis(e.target.value)}
+                    placeholder="niu"
+                    value={niu}
+                    onChange={(e) => setNiu(e.target.value)}
                     className='h-14 p-2 rounded-full bg-[#242424] text-white text-center relative duration-700 w-full'
                     required
                 />

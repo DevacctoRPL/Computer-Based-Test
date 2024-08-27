@@ -1,18 +1,19 @@
-import pool from "../database/connection.js";
+import pool from "../../src/backend/database/connection.js";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 interface Mapel {
   id?: string;
   nama_mapel: string;
+  dibuat_pada: Date;
 }
 
 class MapelModel {
-  static async getAllMapel(): Promise<Mapel[]> {
+  static async getAll(): Promise<Mapel[]> {
     const [rows] = await pool.query<RowDataPacket[]>(`SELECT * FROM mapel`);
     return rows as Mapel[];
   }
 
-  static async getMapelById(id: string): Promise<Mapel | null> {
+  static async getById(id: string): Promise<Mapel | null> {
     const [rows] = await pool.query<RowDataPacket[]>(
       `SELECT * FROM mapel WHERE id = ?`,
       [id]
@@ -20,21 +21,21 @@ class MapelModel {
     return (rows[0] as Mapel) || null;
   }
 
-  static async addMapel(mapel: Mapel): Promise<void> {
+  static async add(mapel: Mapel): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `INSERT INTO mapel (id, nama_mapel) VALUES (?, ?)`,
-      [mapel.id, mapel.nama_mapel]
+      `INSERT INTO mapel (id, mapel, dibuat_pada) VALUES (?, ?, ?)`,
+      [mapel.id, mapel.nama_mapel, mapel.dibuat_pada]
     );
   }
 
-  static async updateMapel( oldId: string, mapel: Mapel): Promise<void> {
+  static async update(id: string, mapel: Mapel): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `UPDATE mapel SET id = ?, nama_mapel = ? WHERE id = ?`,
-      [mapel.id, mapel.nama_mapel, oldId]
+      `UPDATE mapel SET mapel = ?, dibuat_pada = ? WHERE id = ?`,
+      [mapel.nama_mapel, mapel.dibuat_pada, id]
     );
   }
 
-  static async deleteMapel(id: String): Promise<void> {
+  static async delete(id: string): Promise<void> {
     await pool.query<ResultSetHeader>(
       `DELETE FROM mapel WHERE id = ?`,
       [id]
@@ -43,4 +44,3 @@ class MapelModel {
 }
 
 export default MapelModel;
-//ini komen

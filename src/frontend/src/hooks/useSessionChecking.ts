@@ -8,6 +8,12 @@ const useSessionChecking = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
+    //   {{
+    //     "nis": 654382901,
+    //     "sandi": "kumaumakan10",
+    //     "iat": 1724249224,
+    //     "exp": 1724335624
+    // }
       try {
         const decodedToken = jwt.decode(token) as { exp: number };
         const currentTime = Math.floor(Date.now() / 1000);
