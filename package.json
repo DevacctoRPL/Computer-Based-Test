@@ -9,7 +9,7 @@
     "start-prod": "tsc && npm run prod",
     "start-dev": "tsc && npm run dev",
     "prod": "node dist/app.js",
-    "dev": "node dist/backend/test/app.js",
+    "dev": "node dist/test/app.js",
     "lint": "eslint ."
   },
   "keywords": [],
@@ -19,6 +19,7 @@
     "@eslint/js": "^9.8.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/multer": "^1.4.11",
     "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "^5.7.0",

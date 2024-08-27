@@ -12,18 +12,17 @@ const SoalSiswa: React.FC = () => {
                         <div className="bg-purple-100 rounded-lg h-[220px]"></div>
                     </div>
                     <div className="soal flex flex-col w-1/2 bg-purple-100 p-3 space-y-6 my-4 mx-auto rounded-md">
-                        <div className="bg-white p-4 max-h-[310px] min-h-[310px] overflow-scroll overflow-x-hidden rounded-md">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa perferendis, praesentium, est laboriosam, aperiam molestiae recusandae optio tenetur facere fugiat explicabo dignissimos corporis quis ex eaque aut quia eum modi!
-                            Nesciunt quae illo rem laborum quo commodi ipsam maiores iusto, vel esse consequuntur sit quibusdam impedit cum? Animi quo, dolore commodi consequatur repudiandae laboriosam ex, doloribus beatae asperiores, quos quas.
-                            Repudiandae quasi ullam dolor sit sint unde impedit fugiat, laborum porro mollitia totam magni laudantium doloribus in exercitationem reprehenderit provident ad repellat iure perspiciatis quos consequuntur deleniti cupiditate? Magnam, asperiores.
-                            Culpa labore repellendus dolorem enim vel est voluptates adipisci veniam? Enim rem fugit architecto? Modi libero repudiandae ullam illum mollitia nisi, est error ad inventore beatae sunt, id repellat reprehenderit?
-                            Sint rem inventore reprehenderit assumenda cupiditate voluptatum repudiandae, facilis corrupti quaerat eaque adipisci. Numquam nihil eaque facere delectus aut voluptate, ipsum autem aspernatur quisquam obcaecati, et consectetur corrupti eos. Ipsum!
-                            Architecto porro nemo cum, autem voluptatum odit amet adipisci magni ipsa voluptatem repellat debitis dolores natus veritatis laudantium eligendi repellendus deserunt reiciendis accusamus! Voluptates nisi hic quidem sapiente explicabo nemo!
-                            Consequatur commodi, officia est inventore, impedit porro fuga quos nisi, unde sit deserunt tempore cum quod cupiditate? Deleniti porro enim harum, rem repellendus cupiditate quis voluptate ut aut cum architecto!
-                            Beatae obcaecati blanditiis magnam temporibus incidunt. Et provident ullam impedit consequatur consectetur, aut id labore adipisci numquam reiciendis atque magnam obcaecati, eligendi maiores veritatis error dignissimos eius odit ut voluptatem!
-                            Cumque, tenetur nostrum. Maiores atque necessitatibus beatae alias, culpa veniam numquam voluptatibus iusto, ea nisi, repellendus corrupti laborum! Ratione fugit, incidunt numquam consectetur impedit aspernatur beatae. Nemo hic illo quam!
+                    <div className="bg-white p-4 py-12 max-h-[310px] min-h-[310px] overflow-scroll overflow-x-hidden    rounded-md flex items-start justify-center text-center">
+                        Lorem Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium id dignissimos aut dolores et aliquid voluptatum enim quis atque consequatur ab, corporis, optio iusto repellendus itaque? Possimus alias ea unde.
+                        Aliquam esse possimus at. Amet odio ratione doloremque atque, harum recusandae, sunt dolorem itaque quo, consequuntur eligendi officiis suscipit dicta sapiente non nisi? Tempore exercitationem porro odio deleniti at labore.
+                        In, officiis! Ipsa officia, vel error reiciendis distinctio eveniet numquam impedit eum soluta illo temporibus suscipit quidem cumque rerum consequuntur eligendi consequatur ipsam, quos aspernatur qui! At commodi fugit ab.
+                        Minima facilis iusto expedita voluptates recusandae qui, porro nihil consequuntur illo, consectetur inventore, id ipsa quis blanditiis minus hic. Magni itaque placeat aliquid ipsa id nulla, facilis atque quam ducimus.
+                        Dolorum corporis, voluptas reprehenderit nihil nesciunt repellat aperiam. Dignissimos minima nostrum fugiat quo sed officia vel ex quidem aliquam sit et culpa dolore sunt impedit, numquam, consequatur eveniet eos corporis!
+                        Distinctio provident asperiores voluptas eaque perspiciatis eos, assumenda dolore quia. Provident quo itaque aperiam adipisci? Necessitatibus ipsam unde voluptas eveniet. Repellat est eius voluptates quisquam magni blanditiis laudantium aliquam non!
+                        Debitis omnis eum asperiores perferendis deleniti aliquid consectetur iusto animi quae dolorem, nesciunt nulla eius exercitationem inventore saepe pariatur neque praesentium ea cupiditate earum eos. Quod modi possimus omnis molestiae?
+                        Reprehenderit sunt assumenda reiciendis earum, libero ab commodi error non qui voluptas recusandae unde, totam laboriosam doloribus veniam ea. Recusandae, debitis voluptas excepturi odio sequi rem alias doloremque molestiae eius.
                         </div>
-                        <div className="flex flex-col space-y-2 h-72 overflow-y-scroll rounded-md">
+                    <div className="flex flex-col space-y-2 h-72 overflow-y-scroll rounded-md">
                             {Array(9).fill(null).map((_, index) => {
                               const abcde = String.fromCharCode(65 + index);
                               return (
