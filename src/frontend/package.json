@@ -16,7 +16,9 @@
     "jsonwebtoken": "^9.0.2",
     "mammoth": "^1.8.0",
     "react": "^18.3.1",
+    "react-daisyui": "^5.0.3",
     "react-dom": "^18.3.1",
+    "react-intersection-observer": "^9.13.0",
     "react-router-dom": "^6.26.0"
   },
   "devDependencies": {
