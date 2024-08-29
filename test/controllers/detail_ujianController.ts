@@ -1,18 +1,8 @@
 import { Request, Response } from 'express';
 import DetailUjianModel from '../models/detail_ujianModel.js';
+import { DetailUjian } from '../models/detail_ujianModel.js';
 
 class UjianController {
-  // Get all ujian
-  static async getAllDetailUjian(req: Request, res: Response): Promise<void> {
-    try {
-      const detailUjian = await DetailUjianModel.getAllDetailUjian();
-      res.json(detailUjian);
-    } catch (error) {
-      res.status(500).json({ message: 'Error when retrieving detail ujian', error });
-      console.log(error);
-    }
-  }
-
   // Get ujian by ID
   static async getDetailUjianById(req: Request, res: Response): Promise<void> {
     try {
@@ -64,6 +54,27 @@ class UjianController {
       res.json({ message: 'Detail ujian deleted successfully' });
     } catch (error) {
       res.status(500).json({ message: 'Error when deleting detail ujian', error });
+      console.log(error);
+    }
+  }
+
+  static async getAllDetailUjian(req: Request, res: Response): Promise<void> {
+    try {
+      const { id_mapel, nig_guru, id_kelas, id_ujian } = req.query;
+
+      // Prepare fields object
+      const fields: Partial<DetailUjian> = {
+        id_mapel: id_mapel as string,
+        nig_guru: nig_guru ? parseInt(nig_guru as string) : undefined,
+        id_kelas: id_kelas as string,
+        id_ujian: id_ujian as string,
+      };
+
+      // Call the new model method with the fields
+      const detailUjian = await DetailUjianModel.getDetailUjianByFields(fields);
+      res.json(detailUjian);
+    } catch (error) {
+      res.status(500).json({ message: 'Error when retrieving detail ujian', error });
       console.log(error);
     }
   }

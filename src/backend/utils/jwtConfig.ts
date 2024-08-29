@@ -14,3 +14,4 @@ export function generateAccessToken(payload: JwtPayload): string {
     return jwt.sign(payload, ts, { expiresIn: '10s' });
 }
 
+export default jwt

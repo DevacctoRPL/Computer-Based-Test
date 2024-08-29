@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import Login from './pages/login-pages.js';
 import Dashboard from './pages/dashboard-pages.js';
-import SoalSiswa from './pages/student-pages.js';
+import SoalSiswa from './pages/studentExam-pages.js';
 import Teacher from './pages/teacher-pages.js';
 
 import InputQuestion from './pages/questionInput-pages.js'

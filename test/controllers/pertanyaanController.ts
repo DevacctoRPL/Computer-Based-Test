@@ -14,7 +14,7 @@ class PertanyaanController {
   static async getById(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
-      const pertanyaan = await PertanyaanModel.getById(Number(id));
+      const pertanyaan = await PertanyaanModel.getById((id));
       if (pertanyaan) {
         res.status(200).json(pertanyaan);
       } else {
@@ -31,6 +31,7 @@ class PertanyaanController {
       await PertanyaanModel.add(pertanyaan);
       res.status(201).json({ message: "Pertanyaan added successfully" });
     } catch (error) {
+      console.log(error )
       res.status(500).json({ message: "Error adding data", error });
     }
   }
@@ -39,7 +40,7 @@ class PertanyaanController {
     try {
       const { id } = req.params;
       const pertanyaan = req.body;
-      await PertanyaanModel.update(Number(id), pertanyaan);
+      await PertanyaanModel.update((id), pertanyaan);
       res.status(200).json({ message: "Pertanyaan updated successfully" });
     } catch (error) {
       res.status(500).json({ message: "Error updating data", error });
@@ -49,7 +50,7 @@ class PertanyaanController {
   static async delete(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
-      await PertanyaanModel.delete(Number(id));
+      await PertanyaanModel.delete((id));
       res.status(200).json({ message: "Pertanyaan deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: "Error deleting data", error });

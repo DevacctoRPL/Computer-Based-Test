@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import useSessionChecking from "../hooks/useSessionChecking.js";
 import Sidebar from "../components/sidebar.js";
 import Navbar from "../components/navbar.js";
-import Teacher from "./teacher-pages.js";
+// import Teacher from "./teacher-pages.js";
 import axios from "axios";
 import jwt from "jsonwebtoken";
+import Teacher from "../components/admin/siswaTable.js";
 
 const Dashboard: React.FC = () => {
   const [nama, setNama] = useState<string | null>(null); // State to store 'nama'
@@ -56,12 +57,12 @@ const Dashboard: React.FC = () => {
       <div className="flex flex-1 border-b-[52px] border-red-100">
         <Sidebar />
         <section className="flex flex-1 flex-col p-4 justify-start items-start gap-12 ml-5">
-          <div className="h-11 w-56 bg-purple-100 rounded-lg mt-auto text-center">
+          <div className="h-11 w-56 bg-purple-100 rounded-lg mt-auto text-center absolute py-14">
             {nama ? nama : "Loading..."} {/* Display 'nama' */}
           </div>
-          <div className="my-auto">
-            <Teacher />
-          </div>
+          {/* <div className="my-auto">
+        <Teacher/>
+          </div> */}
         </section>
       </div>
     </main>

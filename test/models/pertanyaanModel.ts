@@ -2,7 +2,7 @@ import pool from "../../src/backend/database/connection.js";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 interface Pertanyaan {
-  id?: number;
+  id?: string;
   nomor: number;
   pertanyaan: string;
   gambar: string;
@@ -15,7 +15,7 @@ class PertanyaanModel {
     return rows as Pertanyaan[];
   }
 
-  static async getById(id: number): Promise<Pertanyaan | null> {
+  static async getById(id: string): Promise<Pertanyaan | null> {
     const [rows] = await pool.query<RowDataPacket[]>(
       `SELECT * FROM pertanyaan WHERE id = ?`,
       [id]
@@ -25,19 +25,19 @@ class PertanyaanModel {
 
   static async add(pertanyaan: Pertanyaan): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `INSERT INTO pertanyaan (nomor, pertanyaan, gambar, id_detail_ujian) VALUES (?, ?, ?, ?)`,
-      [pertanyaan.nomor, pertanyaan.pertanyaan, pertanyaan.gambar, pertanyaan.id_detail_ujian]
+      `INSERT INTO pertanyaan (id, nomor, pertanyaan, gambar, id_detail_ujian) VALUES (?, ?, ?, ?, ?)`,
+      [pertanyaan.id,pertanyaan.nomor, pertanyaan.pertanyaan, pertanyaan.gambar, pertanyaan.id_detail_ujian]
     );
   }
 
-  static async update(id: number, pertanyaan: Pertanyaan): Promise<void> {
+  static async update(id: string, pertanyaan: Pertanyaan): Promise<void> {
     await pool.query<ResultSetHeader>(
       `UPDATE pertanyaan SET nomor = ?, pertanyaan = ?, gambar = ?, id_detail_ujian = ? WHERE id = ?`,
       [pertanyaan.nomor, pertanyaan.pertanyaan, pertanyaan.gambar, pertanyaan.id_detail_ujian, id]
     );
   }
 
-  static async delete(id: number): Promise<void> {
+  static async delete(id: string): Promise<void> {
     await pool.query<ResultSetHeader>(`DELETE FROM pertanyaan WHERE id = ?`, [id]);
   }
 }

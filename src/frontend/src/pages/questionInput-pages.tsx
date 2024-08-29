@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import ExamDetails from '../components/question/ExamDetail.js';
-import InputQuestion from '../components/question/ConverterDOCX.js';
+import React, { useState } from "react";
+import ExamDetails from "../components/question/ExamDetail.js"; // Pastikan path ini benar
+import InputQuestion from "../components/question/ConverterDOCX.js"
 
-const App: React.FC = () => {
+const QuestionInput: React.FC = () => {
   const [isExamDetailsComplete, setIsExamDetailsComplete] = useState(false);
 
   return (
@@ -20,4 +20,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default QuestionInput;

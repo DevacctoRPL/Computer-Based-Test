@@ -111,34 +111,14 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-
-    if (name === "durasi") {
-      // Update the state with formatted time
-      setExamDetails((prev) => ({ ...prev, [name]: value }));
-    } else {
-      setExamDetails((prev) => ({ ...prev, [name]: value }));
-    }
+    setExamDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  // const minutesToTime = (minutes: number) => {
-  //   const hours = Math.floor(minutes / 60);
-  //   const mins = minutes % 60;
-  //   return `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}:00`;
-  // };
-
-  // Format durasi untuk tampilan
-  // const formatDuration = (time: string) => {
-  //   const [hours, minutes] = time.split(":").map(Number);
-  //   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
-  //     2,
-  //     "0"
-  //   )}`;
-  // };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await axios.post(
-        "https://49kdgk28-7774.asse.devtunnels.ms/api/detil-ujian",
+        "https://49kdgk28-7774.asse.devtunnels.ms/api/detail-ujian",
         examDetails
       );
       console.log("Data submitted successfully:", examDetails);
@@ -204,7 +184,6 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
                 placeholder="00:00:00"
                 required
               />
-              <p className="mt-2">Formatted Duration: {examDetails.durasi}</p>
             </div>
             <div>
               <label className="block mb-2">Mapel</label>
@@ -258,13 +237,30 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
               </select>
             </div>
           </div>
-          <button
-            type="submit"
-            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-            disabled={!isFormComplete()}
-          >
-            Simpan Detail Ujian
-          </button>
+          <div className="flex justify-between mt-4">
+            <button
+              type="submit"
+              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+              onClick={(e) => {
+                if (!isFormComplete()) {
+                  e.preventDefault(); // Mencegah form dari pengiriman
+                  alert("Formulir belum lengkap, silakan lengkapi semua bidang sebelum menyimpan.");
+                }
+              }}
+            >
+              Simpan Detail Ujian
+            </button>
+            <button
+              type="button"
+              className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
+              onClick={() => {
+                onComplete(true);
+                setIsOpen(false);
+              }}
+            >
+              Saya Sudah Membuat Detail Ujian
+            </button>
+          </div>
         </form>
       )}
     </div>

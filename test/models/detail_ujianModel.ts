@@ -2,7 +2,7 @@ import pool from "../../src/backend/database/connection.js";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 type time = `${number}:${number}:${number}`;
 
-interface DetailUjian {
+export interface DetailUjian {
   id?: string;
   judul_soal: string;
   jumlah_soal: number;
@@ -50,6 +50,37 @@ class DetailUjianModel {
 
   static async deleteDetailUjian(id: string): Promise<void> {
     await pool.query<ResultSetHeader>(`DELETE FROM detail_ujian WHERE id = ?`, [id]);
+  }
+
+  static async getDetailUjianByFields(fields: Partial<DetailUjian>): Promise<DetailUjian[]> {
+    let query = `SELECT * FROM detail_ujian WHERE 1=1`;
+    const queryParams: any[] = [];
+
+    // Dynamically add query conditions
+    if (fields.id_mapel) {
+      query += ` AND id_mapel = ?`;
+      queryParams.push(fields.id_mapel);
+    }
+
+    if (fields.nig_guru) {
+      query += ` AND nig_guru = ?`;
+      queryParams.push(fields.nig_guru);
+    }
+
+    if (fields.id_kelas) {
+      query += ` AND id_kelas = ?`;
+      queryParams.push(fields.id_kelas);
+    }
+
+    if (fields.id_ujian) {
+      query += ` AND id_ujian = ?`;
+      queryParams.push(fields.id_ujian);
+    }
+
+    // Add more fields as needed
+
+    const [rows] = await pool.query<RowDataPacket[]>(query, queryParams);
+    return rows as DetailUjian[];
   }
 }
 

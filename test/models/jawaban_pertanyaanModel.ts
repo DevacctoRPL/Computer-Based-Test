@@ -42,8 +42,9 @@ class Jawaban_PertanyaanModel {
 
   static async add(jawaban: JawabanPertanyaan): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `INSERT INTO jawaban_pertanyaan (id_pertanyaan, isi_jawaban, id_detail_ujian) VALUES (?, ?, ?)`,
+      `INSERT INTO jawaban_pertanyaan (id, id_pertanyaan, isi_jawaban, id_detail_ujian) VALUES (?, ?, ?, ?)`,
       [
+        jawaban.id,
         jawaban.id_pertanyaan,
         JSON.stringify(jawaban.isi_jawaban), // Stringify JSON untuk disimpan di database
         jawaban.id_detail_ujian,
