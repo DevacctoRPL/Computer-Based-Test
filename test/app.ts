@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express";
+import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from 'dotenv'
@@ -43,9 +43,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(helmet()) // biar keren
 
-// app.use((req: Request, res: Response) => {
-//   res.status(404).send("Maaf, tidak dapat melayani.");
-// });
 
 // Register routes
 app.use('/api/', adminRoutes); // Tested Passed!

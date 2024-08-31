@@ -3,7 +3,7 @@ import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 import Nilai_SiswaModel from "./nilai_siswaModel.js";
 
-interface JawabanSiswa {
+export interface JawabanSiswa {
   id?: number;
   nis: number;
   id_pertanyaan: number;
@@ -11,40 +11,27 @@ interface JawabanSiswa {
 }
 
 class Jawaban_SiswaModel {
-  static async getAll(): Promise<JawabanSiswa[]> {
-    const [rows] = await pool.query<RowDataPacket[]>(`SELECT * FROM jawaban_siswa`);
-    return rows as JawabanSiswa[];
-  }
-
-  static async getById(id: number): Promise<JawabanSiswa | null> {
-    const [rows] = await pool.query<RowDataPacket[]>(
-      `SELECT * FROM jawaban_siswa WHERE id = ?`,
-      [id]
-    );
-    return (rows[0] as JawabanSiswa) || null;
-  }
-
   static async add(jawabanSiswa: JawabanSiswa): Promise<void> {
-    // Simpan jawaban siswa ke database
-    await pool.query<ResultSetHeader>(
-      `INSERT INTO jawaban_siswa (nis, id_pertanyaan, jawaban) VALUES (?, ?, ?)`,
-      [jawabanSiswa.nis, jawabanSiswa.id_pertanyaan, jawabanSiswa.jawaban]
-    );
+    try {
+      // Validasi input jika perlu
+      if (!jawabanSiswa.nis || !jawabanSiswa.id_pertanyaan || !jawabanSiswa.jawaban) {
+        throw new Error('Invalid input');
+      }
 
-    // Cek jawaban siswa dan simpan hasilnya
-    await this.checkAndSaveNilai(jawabanSiswa.nis, jawabanSiswa.id_pertanyaan);
+      // Simpan jawaban siswa ke database
+      await pool.query<ResultSetHeader>(
+        `INSERT INTO jawaban_siswa (nis, id_pertanyaan, jawaban) VALUES (?, ?, ?)`,
+        [jawabanSiswa.nis, jawabanSiswa.id_pertanyaan, jawabanSiswa.jawaban]
+      );
+
+      // // Cek jawaban siswa dan simpan hasilnya jika perlu
+      // await this.checkAndSaveNilai(jawabanSiswa.nis, jawabanSiswa.id_pertanyaan);
+    } catch (error) {
+      console.error("Error in add method:", error);
+      throw error; // Propagate error to controller
+    }
   }
 
-  static async update(id: number, jawaban: JawabanSiswa): Promise<void> {
-    await pool.query<ResultSetHeader>(
-      `UPDATE jawaban_siswa SET nis = ?, id_pertanyaan = ?, jawaban = ? WHERE id = ?`,
-      [jawaban.nis, jawaban.id_pertanyaan, jawaban.jawaban, id]
-    );
-  }
-
-  static async delete(id: number): Promise<void> {
-    await pool.query<ResultSetHeader>(`DELETE FROM jawaban_siswa WHERE id = ?`, [id]);
-  }
 
   //ANOTHER SERVICES OPERATION
   private static async checkAndSaveNilai(nis: number, id_pertanyaan: number): Promise<void> {
@@ -111,6 +98,30 @@ class Jawaban_SiswaModel {
       console.log('Data jawaban guru atau siswa tidak lengkap.');
     }
   }  
+
+  static async getAll(): Promise<JawabanSiswa[]> {
+    const [rows] = await pool.query<RowDataPacket[]>(`SELECT * FROM jawaban_siswa`);
+    return rows as JawabanSiswa[];
+  }
+
+  static async getById(id: number): Promise<JawabanSiswa | null> {
+    const [rows] = await pool.query<RowDataPacket[]>(
+      `SELECT * FROM jawaban_siswa WHERE id = ?`,
+      [id]
+    );
+    return (rows[0] as JawabanSiswa) || null;
+  }
+
+  static async update(id: number, jawaban: JawabanSiswa): Promise<void> {
+    await pool.query<ResultSetHeader>(
+      `UPDATE jawaban_siswa SET nis = ?, id_pertanyaan = ?, jawaban = ? WHERE id = ?`,
+      [jawaban.nis, jawaban.id_pertanyaan, jawaban.jawaban, id]
+    );
+  }
+
+  static async delete(id: number): Promise<void> {
+    await pool.query<ResultSetHeader>(`DELETE FROM jawaban_siswa WHERE id = ?`, [id]);
+  }
   
 }
 

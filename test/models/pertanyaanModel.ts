@@ -1,7 +1,7 @@
 import pool from "../../src/backend/database/connection.js";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
-interface Pertanyaan {
+export interface Pertanyaan {
   id?: string;
   nomor: number;
   pertanyaan: string;
@@ -10,8 +10,39 @@ interface Pertanyaan {
 }
 
 class PertanyaanModel {
-  static async getAll(): Promise<Pertanyaan[]> {
-    const [rows] = await pool.query<RowDataPacket[]>(`SELECT * FROM pertanyaan`);
+  static async getDetailByFields(fields: Partial<Pertanyaan>): Promise<Pertanyaan[]> {
+    let query = `SELECT * FROM pertanyaan WHERE 1=1`;
+    const queryParams: any[] = [];
+
+    // Dynamically add query conditions
+    if (fields.id) {
+      query += ` AND id = ?`;
+      queryParams.push(fields.id);
+    }
+
+    if (fields.nomor) {
+      query += ` AND nomor = ?`;
+      queryParams.push(fields.nomor);
+    }
+
+    if (fields.pertanyaan) {
+      query += ` AND pertanyaan = ?`;
+      queryParams.push(fields.pertanyaan);
+    }
+
+    if (fields.gambar) {
+      query += ` AND gambar = ?`;
+      queryParams.push(fields.gambar);
+    }
+
+    if (fields.id_detail_ujian) {
+      query += ` AND id_detail_ujian = ?`;
+      queryParams.push(fields.id_detail_ujian);
+    }
+
+    // Add more fields as needed
+
+    const [rows] = await pool.query<RowDataPacket[]>(query, queryParams);
     return rows as Pertanyaan[];
   }
 

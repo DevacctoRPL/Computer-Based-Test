@@ -441,6 +441,19 @@ const InputQuestion: React.FC = () => {
                     id:pertanyaanID,
                     id_pertanyaan:pertanyaanID,
                     isi_jawaban:JSON.stringify({
+                      daftar_jawaban: `${
+                        allTexts[indexNomor].length > 0
+                          ? JSON.stringify(
+                              allTexts[indexNomor].map((item) => item.Jawaban)
+                            )
+                          : null
+                      }`,
+                      daftar_jawaban_bergambar:  `${
+                        allImageURIs[indexNomor].length > 0
+                          ? JSON.stringify(allImageURIs[indexNomor])
+                          : null
+                      }`,
+                      
                       jawaban_yang_di_pilih:answerText,
                       jawaban_alphabet:alphabetRadio
                     }),

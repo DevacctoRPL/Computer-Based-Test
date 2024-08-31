@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Jawaban_SiswaModel from "../models/jawaban_siswaModel.js";
+import {JawabanSiswa} from "../models/jawaban_siswaModel.js";
 
 class JawabanSiswaController {
   static async getAll(req: Request, res: Response): Promise<void> {
@@ -27,11 +28,18 @@ class JawabanSiswaController {
 
   static async add(req: Request, res: Response): Promise<void> {
     try {
-      const jawabanSiswa = req.body;
+      // Validasi input dari req.body
+      const jawabanSiswa: JawabanSiswa = req.body;
+      if (!jawabanSiswa.nis || !jawabanSiswa.id_pertanyaan || !jawabanSiswa.jawaban) {
+        res.status(400).json({ message: "Invalid input data" });
+        return;
+      }
+
       await Jawaban_SiswaModel.add(jawabanSiswa);
       res.status(201).json({ message: "Jawaban Siswa added successfully" });
     } catch (error) {
-      res.status(500).json({ message: "Error adding data", error });
+      const errorMessage = (error as Error).message;
+      res.status(500).json({ message: "Error adding data", error: errorMessage });
     }
   }
 

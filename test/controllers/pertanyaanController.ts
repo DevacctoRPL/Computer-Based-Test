@@ -1,13 +1,27 @@
 import { Request, Response } from "express";
 import PertanyaanModel from "../models/pertanyaanModel.js";
+import { Pertanyaan } from "../models/pertanyaanModel.js";
 
 class PertanyaanController {
-  static async getAll(req: Request, res: Response): Promise<void> {
+  static async getDetailByFields(req: Request, res: Response): Promise<void> {
     try {
-      const pertanyaan = await PertanyaanModel.getAll();
-      res.status(200).json(pertanyaan);
+      const { id, nomor, pertanyaan, gambar,id_detail_ujian } = req.query;
+
+      // Prepare fields object
+      const fields: Partial<Pertanyaan> = {
+        id: id as string,
+        nomor: nomor ? parseInt(nomor as string) : undefined,
+        pertanyaan: pertanyaan as string,
+        gambar: gambar as string,
+        id_detail_ujian: id_detail_ujian as string
+      };
+
+      // Call the new model method with the fields
+      const detailUjian = await PertanyaanModel.getDetailByFields(fields);
+      res.json(detailUjian);
     } catch (error) {
-      res.status(500).json({ message: "Error retrieving data", error });
+      res.status(500).json({ message: 'Error when retrieving detail ujian', error });
+      console.log(error);
     }
   }
 

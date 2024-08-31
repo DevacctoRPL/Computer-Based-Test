@@ -1,12 +1,6 @@
 import pool from "../../src/backend/database/connection.js";
 import { RowDataPacket, ResultSetHeader } from "mysql2/promise";
 
-// interface Login {
-//   id: number;
-//   niu?: number;  // Gunakan niu sesuai dengan struktur tabel Anda
-//   sandi: string;
-// }
-
 // Definisikan interface untuk tipe data pengguna
 interface User {
   nis?: number;

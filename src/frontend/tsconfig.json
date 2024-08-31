@@ -10,6 +10,8 @@
   ],
   "compilerOptions": {
     // ... other options ...
-    "types": ["react", "styled-components"]
+    "types": ["react", "styled-components"],
+    "paths": {
+    }
   }
 }
