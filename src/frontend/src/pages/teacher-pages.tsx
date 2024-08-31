@@ -1,7 +1,7 @@
 import React from "react";
-import Teacher from "../components/admin/siswaTable";
-import Navbar from "../components/navbar";
-import Sidebar from "../components/sidebar";
+import Teacher from "../components/admin/siswaTable.js";
+import Navbar from "../components/navbar.js";
+import Sidebar from "../components/sidebar.js";
 
 const pageTeacher : React.FC = () => {
   return (

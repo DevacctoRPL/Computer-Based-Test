@@ -3,4 +3,5 @@ node_modules
 .env
 dist
 .vscode
+decode.js
 

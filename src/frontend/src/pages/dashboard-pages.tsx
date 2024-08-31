@@ -2,10 +2,9 @@ import React, { useState, useEffect } from "react";
 import useSessionChecking from "../hooks/useSessionChecking.js";
 import Sidebar from "../components/sidebar.js";
 import Navbar from "../components/navbar.js";
-// import Teacher from "./teacher-pages.js";
+import ExamSchedule from "../components/Exam/getExamSchedule.js"
 import axios from "axios";
 import jwt from "jsonwebtoken";
-import Teacher from "../components/admin/siswaTable.js";
 
 const Dashboard: React.FC = () => {
   const [nama, setNama] = useState<string | null>(null); // State to store 'nama'
@@ -16,26 +15,15 @@ const Dashboard: React.FC = () => {
     const token = localStorage.getItem("token");  
     if (token) {
       try {
-        const decodedToken = jwt.decode(token) as { niu?: number };
+        const decodedToken = jwt.decode(token) as { niu?: number, id_kelas: string };
   
         if (decodedToken && decodedToken.niu && typeof decodedToken.niu === 'number') {
           const formatNiuToString = decodedToken.niu.toString();
-
-          let userType: string;
-          if (formatNiuToString.startsWith("1020")) {
-            userType = "siswa";
-          } else if (formatNiuToString.startsWith("1214")) {
-            userType = "guru";
-          } else {
-            userType = "unknown";
-          }
+          const userType = formatNiuToString.startsWith("1020") ? "siswa" : formatNiuToString.startsWith("1214") ? "guru" : "unknown";
   
-          axios
-            .get(
-              `https://49kdgk28-7774.asse.devtunnels.ms/api/${userType}/${decodedToken.niu}`
-            )
+          axios.get(`https://49kdgk28-7774.asse.devtunnels.ms/api/${userType}/${decodedToken.niu}`)
             .then((res) => {
-              setNama(res.data.nama); // Store 'nama' in state
+              setNama(res.data.nama);
             })
             .catch((error) => {
               console.error("Error fetching data", error);
@@ -51,21 +39,20 @@ const Dashboard: React.FC = () => {
   
    // Empty array to run effect once on mount
 
-  return (
-    <main className="flex flex-col h-screen">
+   return (
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
-      <div className="flex flex-1 border-b-[52px] border-red-100">
+      <div className="flex flex-1">
         <Sidebar />
-        <section className="flex flex-1 flex-col p-4 justify-start items-start gap-12 ml-5">
-          <div className="h-11 w-56 bg-purple-100 rounded-lg mt-auto text-center absolute py-14">
-            {nama ? nama : "Loading..."} {/* Display 'nama' */}
+        <main className="flex-1 p-8">
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-purple-800">Welcome, {nama ? nama : "Student"}!</h1>
+            <p className="text-gray-600 mt-2">Here's your exam information for today.</p>
           </div>
-          {/* <div className="my-auto">
-        <Teacher/>
-          </div> */}
-        </section>
+          <ExamSchedule />
+        </main>
       </div>
-    </main>
+    </div>
   );
 };
 

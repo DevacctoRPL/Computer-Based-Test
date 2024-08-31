@@ -31,6 +31,7 @@ class JawabanPertanyaanController {
       await Jawaban_PertanyaanModel.add(jawaban);
       res.status(201).json({ message: "Jawaban added successfully" });
     } catch (error) {
+      console.log(error)
       res.status(500).json({ message: "Error adding data", error });
     }
   }

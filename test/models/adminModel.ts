@@ -30,8 +30,8 @@ class AdminModel {
 
   static async addAdmin(Admin: Admin): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `INSERT INTO admin (id, nama, sandi) VALUES (?, ?, ?)`,
-      [Admin.id, Admin.nama, Admin.sandi]
+      `INSERT INTO admin (id, nama, sandi, panel_admin) VALUES (?, ?, ?, ?)`,
+      [Admin.id, Admin.nama, Admin.sandi, Admin.panel_admin]
     );
   }
   static async updateAdmin(id: string, Admin: Admin): Promise<void> {

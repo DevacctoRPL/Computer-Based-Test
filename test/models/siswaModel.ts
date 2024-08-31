@@ -1,20 +1,15 @@
 import pool from "../../src/backend/database/connection.js";
 import { RowDataPacket, ResultSetHeader } from "mysql2/promise";
 
-// interface Login {
-//   id: number;
-//   niu?: number;  // Gunakan niu sesuai dengan struktur tabel Anda
-//   sandi: string;
-// }
-
 // Definisikan interface untuk tipe data pengguna
 interface User {
   nis?: number;
-  id_kelas: string;
   nama: string;
   panggilan: string;
   sandi: string;
-  lulus: boolean;
+  is_lulus: boolean;
+  is_switch_tab: boolean;
+  id_kelas: string;
 }
 
 // Class UserModel untuk operasi CRUD
@@ -37,14 +32,15 @@ class SiswaModel {
   // Method untuk menambahkan pengguna baru
   static async addSiswa(user: User): Promise<void> {
     await pool.query<ResultSetHeader>(
-      "INSERT INTO siswa (nis, id_kelas, nama, panggilan, sandi, lulus) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO siswa (nis, nama, panggilan, sandi, is_lulus, is_switch_tab, id_kelas) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [
         user.nis,
-        user.id_kelas,
         user.nama,
         user.panggilan,
         user.sandi,
-        user.lulus,
+        user.is_lulus,
+        user.is_switch_tab,
+        user.id_kelas,
       ]
     );
   }

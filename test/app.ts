@@ -1,4 +1,4 @@
-import express, {Request, Response} from "express";
+import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import dotenv from 'dotenv'
@@ -24,7 +24,7 @@ import ujianRoutes from "./routes/ujianRoutes.js";
 dotenv.config();
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: '*',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Jika Anda membutuhkan cookie atau header lainnya dari client
 };
@@ -42,6 +42,7 @@ app.use(
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(helmet()) // biar keren
+
 
 // Register routes
 app.use('/api/', adminRoutes); // Tested Passed!
