@@ -24,7 +24,7 @@ import ujianRoutes from "./routes/ujianRoutes.js";
 dotenv.config();
 
 const corsOptions = {
-  origin: '*',
+  origin: 'localhost:5100',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true, // Jika Anda membutuhkan cookie atau header lainnya dari client
 };

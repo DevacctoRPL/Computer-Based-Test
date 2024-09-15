@@ -1,10 +1,17 @@
 import pool from "../database/connection.js";
 import { RowDataPacket, ResultSetHeader } from "mysql2";
 
+interface PanelAdmin{
+  anti_switch: true;
+  anti_resize: true;
+  hide_result: false;
+}
+
 interface Admin {
   id?: string;
   nama: string;
   sandi: string;
+  panel_admin: PanelAdmin[];  
 }
 
 class AdminModel {
@@ -23,13 +30,13 @@ class AdminModel {
 
   static async addAdmin(Admin: Admin): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `INSERT INTO admin (id, nama, sandi) VALUES (?, ?, ?)`,
-      [Admin.id, Admin.nama, Admin.sandi]
+      `INSERT INTO admin (id, nama, sandi, panel_admin) VALUES (?, ?, ?, ?)`,
+      [Admin.id, Admin.nama, Admin.sandi, Admin.panel_admin]
     );
   }
   static async updateAdmin(id: string, Admin: Admin): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `UPDATE admin SET nama = ? , sandi = ? WHERE nig = ?`,
+      `UPDATE admin SET nama = ? , sandi = ? WHERE id = ?`,
       [Admin.nama, Admin.sandi, id]
     );
   }
