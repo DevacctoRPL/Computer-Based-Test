@@ -26,9 +26,9 @@ export async function getGuruByNig(req: Request, res: Response): Promise<void> {
 }
 
 export async function addGuru(req: Request, res: Response): Promise<void> {
-    const { nig, nama, kode_guru, id_mapel_kelas, sandi } = req.body;
+    const { nig, nama, kode_guru, id_kelas, sandi } = req.body;
     try {
-      await GuruModel.addGuru({ nig, nama, kode_guru, id_mapel_kelas, sandi });
+      await GuruModel.addGuru({ nig, nama, kode_guru, id_kelas, sandi });
       res.status(201).json({ message: "Guru added successfully" });
     } catch (error) {
       res.status(500).json({ message: "Error adding Guru", error });
@@ -37,10 +37,10 @@ export async function addGuru(req: Request, res: Response): Promise<void> {
   
   export async function updateGuru(req: Request, res: Response): Promise<void> {
     const guruId = parseInt(req.params.id, 10);
-    const { nig, nama, kode_guru, id_mapel_kelas, sandi } = req.body;
+    const { nig, nama, kode_guru, sandi, id_kelas } = req.body;
     try {
       await GuruModel.updateGuru(guruId, {
-        nig, nama, kode_guru, id_mapel_kelas, sandi
+        nig, nama, kode_guru, sandi, id_kelas
       });
       res.json({ message: "Guru updated successfully" });
     } catch (error) {

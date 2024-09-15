@@ -11,7 +11,7 @@ const Teacher: React.FC = () => {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:7772/api/siswa")
+    fetch("http://192.168.8.10:7772/api/siswa")
       .then((response) => response.json())
       .then((data) => setTeachers(data))
       .catch((error) => console.error("Error fetching data:", error));

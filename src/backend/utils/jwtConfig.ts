@@ -6,12 +6,12 @@ dotenv.config();
 const ts = process.env.TOKEN_SECRET || "TheGreatestDevacctoRPLEra!";
 
 interface JwtPayload {
-    nis?: number;
+    niu?: number;
     sandi: string;
 }
 
-export function generateAccessToken(payload: JwtPayload): string {
-    return jwt.sign(payload, ts, { expiresIn: '10s' });
+export function generateAccessTokenTest(payload: JwtPayload): string {
+    console.log(ts)
+    return jwt.sign(payload, ts, { expiresIn: '3h' });
 }
 
-export default jwt

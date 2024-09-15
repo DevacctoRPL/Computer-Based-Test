@@ -5,8 +5,8 @@ interface Guru {
   nig?: number;
   nama: string;
   kode_guru: string;
-  id_mapel_kelas: string;
   sandi: string;
+  id_kelas: string;
 }
 
 class GuruModel {
@@ -25,8 +25,8 @@ class GuruModel {
 
   static async addGuru(guru: Guru): Promise<void> {
     await pool.query<ResultSetHeader>(
-      `INSERT INTO guru (nig, nama, kode_guru, id_mapel_kelas, sandi) VALUES (?, ?, ?, ?, ?)`,
-      [guru.nig, guru.nama, guru.kode_guru, guru.id_mapel_kelas, guru.sandi]
+      `INSERT INTO guru (nig, nama, kode_guru, sandi, id_kelas) VALUES (?, ?, ?, ?, ?)`,
+      [guru.nig, guru.nama, guru.kode_guru, guru.sandi,  guru.id_kelas],
     );
   }
   static async updateGuru(nig: number, guru: Guru): Promise<void> {

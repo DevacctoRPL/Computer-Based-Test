@@ -11,7 +11,7 @@ const GuruTable: React.FC = () => {
   const [guru, setGuru] = useState<Guru[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:7772/api/guru')
+    axios.get('http://192.168.8.10:7772/api/guru')
       .then(response => {
         setGuru(response.data);
       })

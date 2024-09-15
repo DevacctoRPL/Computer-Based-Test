@@ -27,13 +27,10 @@ class JawabanSiswaController {
   }
 
   static async add(req: Request, res: Response): Promise<void> {
+    console.log(req.body)
     try {
       // Validasi input dari req.body
       const jawabanSiswa: JawabanSiswa = req.body;
-      if (!jawabanSiswa.nis || !jawabanSiswa.id_pertanyaan || !jawabanSiswa.jawaban) {
-        res.status(400).json({ message: "Invalid input data" });
-        return;
-      }
 
       await Jawaban_SiswaModel.add(jawabanSiswa);
       res.status(201).json({ message: "Jawaban Siswa added successfully" });

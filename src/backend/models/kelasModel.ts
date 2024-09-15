@@ -3,9 +3,9 @@ import { RowDataPacket, ResultSetHeader } from "mysql2";
 
 interface Kelas {
   id?: string;
-  nama_kelas: string;
+  kelas: string;
   jurusan: string;
-  angkatan: string;
+  nomor_kelas: string;
 }
 
 class KelasModel {
@@ -23,26 +23,23 @@ class KelasModel {
   }
 
   static async addKelas(kelas: Kelas): Promise<void> {
-    // Membuat ID berdasarkan nama_kelas dan angkatan
-    const id = `${kelas.nama_kelas.toLowerCase().replace(/\s+/g, '')}${kelas.angkatan}`;
+    // Membuat ID berdasarkan kelas, jurusan, dan nomor_kelas
+    const id = `${kelas.kelas}-${kelas.jurusan}-${kelas.nomor_kelas}`;
     console.log(`Generated ID: ${id}`); // Debugging statement
     
     // Menyimpan data kelas ke dalam database
-    await pool.query<ResultSetHeader[]>(
-      `INSERT INTO kelas (id, nama_kelas, jurusan, angkatan) VALUES (?, ?, ?, ?)`,
-      [id, kelas.nama_kelas, kelas.jurusan, kelas.angkatan]
+    await pool.query<ResultSetHeader>(
+      `INSERT INTO kelas (id, kelas, jurusan, nomor_kelas) VALUES (?, ?, ?, ?)`,
+      [id, kelas.kelas, kelas.jurusan, kelas.nomor_kelas]
     );
   }
-  
 
-  static async updateKelas(oldId:string, kelas: Kelas): Promise<void> {
-    await pool.query<ResultSetHeader[]>(`UPDATE kelas SET id = ?, nama_kelas = ?, jurusan = ?, angkatan = ? WHERE id = ?`, [
-        kelas.id,
-        kelas.nama_kelas,
-        kelas.jurusan,
-        kelas.angkatan,
-        oldId
-    ]);
+  static async updateKelas(oldId: string, kelas: Kelas): Promise<void> {
+    const id = `${kelas.kelas}-${kelas.jurusan}-${kelas.nomor_kelas}`;
+    await pool.query<ResultSetHeader>(
+      `UPDATE kelas SET id = ?, kelas = ?, jurusan = ?, nomor_kelas = ? WHERE id = ?`,
+      [id, kelas.kelas, kelas.jurusan, kelas.nomor_kelas, oldId]
+    );
   }
 
   static async deleteKelas(id: string): Promise<void> {
@@ -50,5 +47,4 @@ class KelasModel {
   }
 }
 
-export default KelasModel
-//ini komen
+export default KelasModel;

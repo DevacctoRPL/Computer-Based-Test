@@ -64,7 +64,7 @@ const InputQuestion: React.FC = () => {
       const NIU = getNIUFromToken();
       if (NIU) {
         try {
-          const url = `https://49kdgk28-7774.asse.devtunnels.ms/api/detail-ujian?nig_guru=${NIU}`;
+          const url = `https://49kdgk28-7772.asse.devtunnels.ms/api/detail-ujian?nig_guru=${NIU}`;
           console.log("Fetching from URL:", url);
           const response = await fetch(url);
           console.log("Response status:", response.status);
@@ -122,38 +122,6 @@ const InputQuestion: React.FC = () => {
     setSelectedOptions(newSelectedOptions);
   };
 
-  // const submitData = async () => {
-  //   for (const option of selectedOptions) {
-  //     if (option.id) {
-  //       try {
-  //         await axios.post(
-  //           "https://49kdgk28-7774.asse.devtunnels.ms/api/pertanyaan",
-  //           {
-  //             //data data yang mau dikirim
-  //           }
-  //         );
-
-  //         // Kirim data ke tabel jawaban_pertanyaan
-  //         await axios.post(
-  //           "https://49kdgk28-7774.asse.devtunnels.ms/api/jawaban-pertanyaan",
-  //           {
-  //             //data data yang mau dikirim
-  //           }
-  //         );
-
-  //         console.log(`Data untuk kelas ${option.id_kelas} berhasil dikirim`);
-  //       } catch (error) {
-  //         console.error(
-  //           `Error mengirim data untuk kelas ${option.id_kelas}:`,
-  //           error
-  //         );
-  //       }
-  //     }
-  //   }
-  // };
-
-  //=======================================================================================================
-
   const handleFileUpload = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const file = fileInputRef.current?.files?.[0];
@@ -165,7 +133,7 @@ const InputQuestion: React.FC = () => {
 
       try {
         const response = await fetch(
-          "https://49kdgk28-7774.asse.devtunnels.ms/api/convert",
+          "https://49kdgk28-7772.asse.devtunnels.ms/api/convert",
           {
             method: "POST",
             body: formData,
@@ -422,7 +390,7 @@ const InputQuestion: React.FC = () => {
                 const decodedToken = jwt.decode(token);
                     const NIU = (decodedToken as jwt.JwtPayload).niu;
                 await axios.post(
-                  "https://49kdgk28-7774.asse.devtunnels.ms/api/pertanyaan",
+                  "https://49kdgk28-7772.asse.devtunnels.ms/api/pertanyaan",
                   {
                     //data data yang mau dikirim
                     id:pertanyaanID,
@@ -435,7 +403,7 @@ const InputQuestion: React.FC = () => {
       
                 // Kirim data ke tabel jawaban_pertanyaan
                 await axios.post(
-                  "https://49kdgk28-7774.asse.devtunnels.ms/api/jawaban-pertanyaan",
+                  "https://49kdgk28-7772.asse.devtunnels.ms/api/jawaban-pertanyaan",
                   {
                     //data data yang mau dikirim
                     id:pertanyaanID,

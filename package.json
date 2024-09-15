@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-prod": "tsc && npm run prod",
     "start-dev": "tsc && npm run dev",
-    "prod": "node dist/app.js",
+    "prod": "node dist/src/app.js",
     "dev": "node dist/test/app.js",
     "lint": "eslint ."
   },

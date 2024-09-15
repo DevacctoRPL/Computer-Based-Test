@@ -1,45 +1,28 @@
-import React, { useEffect } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import Login from './pages/login-pages.js';
+import Login from './pages/Login/login-pages.js';
 import Dashboard from './pages/dashboard-pages.js';
-import SoalSiswa from './pages/studentExam-pages.js';
-import Teacher from './pages/teacher-pages.js';
-
-import InputQuestion from './pages/questionInput-pages.js'
-
-import AdminPages from './pages/admin/admin.js'
+import StudentsQuestions from './pages/Exam/studentExam-pages.js';
+import Teacher from './pages/Teacher/teacher-pages.js';
+import InputQuestion from './pages/Pre-Exam/QuestionMaker/questionInput-pages.js';
+import AdminPages from './pages/admin/admin.js';
 import GuruAdminPages from './pages/admin/guruPages.js';
 import SiswaAdminPages from './pages/admin/siswaPages.js';
-
-//TESTING CODE!
-// import InputQuestionTest from './test/inputSoalTest.js';
+import PrivateRoute from './components/privateRoutes.js';
 
 const App: React.FC = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-    }
-  }, [navigate]);
-
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/soal" element={<SoalSiswa />} />
+      <Route path="/soal" element={<StudentsQuestions />} />
       <Route path="/teacher" element={<Teacher />} />
-
       <Route path="/" element={<Dashboard />} />
+      <Route path="/input-question" element={<InputQuestion />} />
 
-      {/* <Route path="/input-question" element={<InputQuestion />} /> */}
-      <Route path="/input-question-test" element={<InputQuestion />} />
-
-      <Route path="/admin" element={<AdminPages />} />
-      <Route path="/admin/guru" element={<GuruAdminPages />} />
-      <Route path="/admin/siswa" element={<SiswaAdminPages />} />
-      
+      <Route path="/admin" element={<PrivateRoute element={<AdminPages />} />} />
+      <Route path="/admin/guru" element={<PrivateRoute element={<GuruAdminPages />} />} />
+      <Route path="/admin/siswa" element={<PrivateRoute element={<SiswaAdminPages />} />} />
     </Routes>
   );
 }

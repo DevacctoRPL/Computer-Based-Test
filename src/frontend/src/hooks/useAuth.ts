@@ -17,7 +17,7 @@ const useAuth = (): UseAuthReturn => {
   const navigate = useNavigate();
 
   // const localAPI = 'http://localhost:7772';
-  const devTunnelAPI = 'https://49kdgk28-7774.asse.devtunnels.ms';
+  const devTunnelAPI = 'https://49kdgk28-7772.asse.devtunnels.ms';
 
   const login = async (niu: number, sandi: string) => {
     setLoading(true);
