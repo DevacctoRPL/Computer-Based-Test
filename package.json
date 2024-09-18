@@ -10,13 +10,17 @@
     "start-dev": "tsc && npm run dev",
     "prod": "node dist/src/app.js",
     "dev": "node dist/test/app.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start:backend": "npm run start-prod",
+    "start:frontend": "cd src/frontend && npm run dev",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@eslint/js": "^9.8.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
@@ -24,6 +28,7 @@
     "@types/node": "^22.0.0",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
+    "concurrently": "^9.0.1",
     "eslint": "^9.8.0",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-react": "^7.35.0",
@@ -32,7 +37,6 @@
     "typescript-eslint": "^8.0.1"
   },
   "dependencies": {
-    "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",

@@ -8,6 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "moduleResolution": "Node16",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "typeRoots": ["./src/@types", "./node_modules/@types"]
   }
 }

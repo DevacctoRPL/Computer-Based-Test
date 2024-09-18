@@ -14,7 +14,7 @@ const QuestionNumber: React.FC<QuestionNumberProps> = ({ onSoalClick }) => {
   const [soalData, setSoalData] = useState<Pertanyaan[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [answeredQuestions, setAnsweredQuestions] = useState<{ [key: string]: string }>({});
-  const [error, setError] = useState<boolean>(false);
+  const [, setError] = useState<boolean>(false);
 
   const fetchQuestionNumber = async () => {
     try {
@@ -74,8 +74,8 @@ const QuestionNumber: React.FC<QuestionNumberProps> = ({ onSoalClick }) => {
 
   const getButtonColor = (id: string) => {
     if (selectedId === id) return "bg-purple-300";
-    if (answeredQuestions[id] === "yakin") return "bg-green-300";
-    if (answeredQuestions[id] === "ragu") return "bg-yellow-300";
+    if (answeredQuestions[id] === "Sudah Dijawab") return "bg-green-300";
+    if (answeredQuestions[id] === "Belum Dijawab") return "bg-red-300";
     return "bg-white";
   };
 

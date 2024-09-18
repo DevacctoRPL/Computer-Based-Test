@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import { Book, Clock, User, List } from 'lucide-react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 interface ExamDetail {
   id_ujian: string;
@@ -34,6 +34,7 @@ const ExamSchedule: React.FC = () => {
         if (decodedToken && typeof decodedToken !== 'string') {
           const { niu } = decodedToken as { niu: string };
 
+          // Fetch the exams for today
           const examResponse = await axios.get('https://49kdgk28-7772.asse.devtunnels.ms/api/today-exam', {
             params: { nis: niu }
           });
@@ -41,19 +42,33 @@ const ExamSchedule: React.FC = () => {
           if (examResponse.status === 404) {
             setError('Tidak ada ujian untuk hari ini.');
             setExamDetails(null);
-          } else {
-            const now = new Date();
-            const filteredExams = examResponse.data.filter((exam: ExamDetail) => {
-              const endTime = new Date(exam.waktu_berakhir);
-              return endTime >= now;
-            });
+            setLoading(false);
+            return;
+          }
 
-            if (filteredExams.length === 0) {
-              setError('Semua ujian hari ini sudah berakhir.');
-            } else {
-              setExamDetails(filteredExams);
-              setError(null);
-            }
+          const now = new Date();
+          const filteredExams = examResponse.data.filter((exam: ExamDetail) => {
+            const endTime = new Date(exam.waktu_berakhir);
+            return endTime >= now;
+          });
+
+          // Fetch student scores to check if the exam is already done
+          const nilaiResponse = await axios.get('https://49kdgk28-7772.asse.devtunnels.ms/api/nilai-siswa', {
+            params: { nis: niu }
+          });
+
+          const nilaiUjian = nilaiResponse.data.map((nilai: { id_ujian: string, nis: number }) => nilai.nis);
+          console.log(nilaiUjian )
+
+          // Filter out exams that the student has already completed
+          const examsToShow = filteredExams.filter((exam: ExamDetail) => !nilaiUjian.includes(exam.id_ujian));
+          console.log(examsToShow)
+
+          if (examsToShow.length === 0) {
+            setError('Belum ada ujian.');
+          } else {
+            setExamDetails(examsToShow);
+            setError(null);
           }
 
           setLoading(false);
@@ -77,7 +92,7 @@ const ExamSchedule: React.FC = () => {
     const storedExamId = localStorage.getItem('path_ujian');
     if (storedExamId === idUjian) {
       // Redirect to /soal
-      navigate('/soal');
+      navigate('/exam');
     } else {
       // Redirect to root or handle error
       navigate('/');

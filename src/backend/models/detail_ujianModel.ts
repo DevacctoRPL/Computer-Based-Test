@@ -132,19 +132,21 @@ class DetailUjianModel {
   //IMPROVE SERVICES
 
   static async getExamsForToday(nis: string): Promise<DetailUjian[]> {
+    // Query buat dapetin data id_kelas dari table siswa, dengan nis siswa sebagai acuan data
     const studentQuery = 'SELECT id_kelas FROM siswa WHERE nis = ?';
     const [studentRows] = await pool.query<RowDataPacket[]>(studentQuery, [nis]);
-
+  
     if (studentRows.length === 0) {
       console.log('Student not found');
       return [];
     }
-
+  
     const idKelas = studentRows[0].id_kelas;
     const currentDate = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
-
+  
     console.log('Fetching exams for class:', idKelas, 'on date:', currentDate);
-
+  
+    // Query buat fetching data ujian per hari itu
     const examQuery = `
       SELECT 
         du.id AS id_ujian,
@@ -166,12 +168,35 @@ class DetailUjianModel {
         du.id_kelas = ? 
         AND du.tanggal_pelaksanaan = ?
     `;
-
+  
     const [examRows] = await pool.query<RowDataPacket[]>(examQuery, [idKelas, currentDate]);
-
-    console.log('Exams found:', examRows);
-
-    return examRows as DetailUjian[];
+  
+    if (examRows.length === 0) {
+      console.log('No exams found for class:', idKelas);
+      return [];
+    }
+  
+    // Filtrasi kalau kalau udah dijawab sama murid, gabole ditampilin lagi
+    const filteredExams: DetailUjian[] = [];
+  
+    for (const exam of examRows) {
+      const checkAnswerQuery = `
+        SELECT * FROM nilai_siswa 
+        WHERE nis = ? AND id_ujian = ?
+      `;
+      const [answerRows] = await pool.query<RowDataPacket[]>(checkAnswerQuery, [nis, exam.id_ujian]);
+  
+      if (answerRows.length === 0) {
+        // kalau recordnya ga ada, alias belum jawab, tambahin ke list filteredExams
+        filteredExams.push(exam as DetailUjian);
+      } else {
+        console.log(`Exam ${exam.id_ujian} already answered by student ${nis}`);
+      }
+    }
+  
+    console.log('Exams to be shown:', filteredExams);
+  
+    return filteredExams;
   }
 }
 

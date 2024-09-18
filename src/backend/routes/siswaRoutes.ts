@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { jwtAuthMiddleware } from '../middleware/jwtAuth.js';
 import { getAllSiswa, getSiswaByNis, addSiswa, updateSiswa, deleteSiswa } from '../controllers/siswaController.js';
 
 const siswaRoutes = Router();

@@ -65,6 +65,27 @@ class AdminController {
       res.status(500).json({ message: 'Internal server error' });
     }
   }
+  static async updateFeature(req: Request, res: Response): Promise<void> {
+    try {
+      const { id } = req.params;
+      const { feature, value } = req.body;
+      console.log("liat ni: ", id, feature, value)
+      
+      // Ensure the feature is a valid key
+      const validFeatures = ['HiddenScore', 'AntiResize', 'AntiSwitchingTab'];
+      if (!validFeatures.includes(feature)) {
+        res.status(400).json({ message: 'Invalid feature' });
+        return;
+      }
+      
+      // Update feature in database
+      await AdminModel.updateFeature(id, feature, value);
+      res.status(200).json({ message: 'Feature updated successfully' });
+    } catch (error) {
+      console.error(`Error updating feature for admin with id ${req.params.id}:`, error);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  }
 }
 
 export default AdminController;

@@ -1,6 +1,6 @@
 import React from "react";
 
-import Penus from "/assets/penus.png";
+import Penus from "../public/assets/penus.png";
 
 const Navbar: React.FC = () => {
     return (
