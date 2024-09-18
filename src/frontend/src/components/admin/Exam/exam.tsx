@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import jwt from "jsonwebtoken";
+import { X, PlusCircle } from "lucide-react";
 
 interface ExamDetail {
   judul_soal: string;
   jumlah_soal: number;
-  durasi: string; // Durasi dalam format HH:mm:ss
-  tanggal_pelaksanaan: string; // Format yyyy-MM-dd
-  waktu_dimulai: string; // Format yyyy-MM-ddTHH:mm:ss
-  waktu_berakhir: string; // Format yyyy-MM-ddTHH:mm:ss
+  durasi: string;
+  tanggal_pelaksanaan: string;
+  waktu_mulai: string;
+  waktu_berakhir: string;
   id_mapel: string;
   nig_guru: string;
   id_ujian: string;
@@ -20,21 +20,16 @@ interface Option {
   label: string;
 }
 
-interface DecodedJWT {
-  niu: string;
-}
-
-const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
-  onComplete,
+const   ExamDetails: React.FC = ({
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [examDetails, setExamDetails] = useState<ExamDetail>({
     judul_soal: "",
     jumlah_soal: 0,
-    durasi: "00:00:00", // Default durasi dalam format HH:mm:ss
-    tanggal_pelaksanaan: new Date().toISOString().split('T')[0], // Format yyyy-MM-dd
-    waktu_dimulai: new Date().toISOString().slice(0, 16), // Format yyyy-MM-ddTHH:mm
-    waktu_berakhir: new Date().toISOString().slice(0, 16), // Format yyyy-MM-ddTHH:mm
+    durasi: "00:00:00",
+    tanggal_pelaksanaan: new Date().toISOString().split("T")[0],
+    waktu_mulai: new Date().toISOString().slice(0, 16),
+    waktu_berakhir: new Date().toISOString().slice(0, 16),
     id_mapel: "",
     nig_guru: "",
     id_ujian: "",
@@ -44,28 +39,42 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
   const [mapelOptions, setMapelOptions] = useState<Option[]>([]);
   const [ujianOptions, setUjianOptions] = useState<Option[]>([]);
   const [kelasOptions, setKelasOptions] = useState<Option[]>([]);
+  const [guruOptions, setGuruOptions] = useState<Option[]>([]);
+  const [selectedClasses, setSelectedClasses] = useState<string[]>([""]);
 
   useEffect(() => {
     fetchMapelOptions();
     fetchUjianOptions();
     fetchKelasOptions();
-
-    const token = localStorage.getItem("token");
-    if (token) {
-      const decodedToken = jwt.decode(token) as DecodedJWT;
-      setExamDetails((prev) => ({ ...prev, nig_guru: decodedToken.niu }));
-    }
+    fetchGuruOptions();
   }, []);
 
   useEffect(() => {
-    // Update waktu_dimulai dan waktu_berakhir ketika tanggal_pelaksanaan berubah
     const baseDate = examDetails.tanggal_pelaksanaan;
     setExamDetails((prev) => ({
       ...prev,
-      waktu_dimulai: `${baseDate}T${prev.waktu_dimulai.split('T')[1]}`,
-      waktu_berakhir: `${baseDate}T${prev.waktu_berakhir.split('T')[1]}`,
+      waktu_mulai: `${baseDate}T${prev.waktu_mulai.split("T")[1]}`,
+      waktu_berakhir: `${baseDate}T${prev.waktu_berakhir.split("T")[1]}`,
     }));
   }, [examDetails.tanggal_pelaksanaan]);
+
+  const fetchGuruOptions = async () => {
+    try {
+      const response = await axios.get(
+        "https://49kdgk28-7772.asse.devtunnels.ms/api/guru"
+      );
+      const data = response.data;
+      const validOptions = data.filter((item: any) => item.nig);
+      const nigOptions: Option[] = validOptions.map((item: any) => ({
+        value: item.nig,
+        label: `${item.nama}`.toUpperCase(),
+      }));
+      nigOptions.sort((a, b) => a.label.localeCompare(b.label));
+      setGuruOptions(nigOptions);
+    } catch (error) {
+      console.error("Error fetching guru options:", error);
+    }
+  };
 
   const fetchMapelOptions = async () => {
     try {
@@ -76,7 +85,7 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
       const validOptions = data.filter((item: any) => item.id);
       const idOptions: Option[] = validOptions.map((item: any) => ({
         value: item.id,
-        label: `MAPEL: ${item.id}`.toUpperCase(),
+        label: `${item.id}`.toUpperCase(),
       }));
       idOptions.sort((a, b) => a.label.localeCompare(b.label));
       setMapelOptions(idOptions);
@@ -94,7 +103,7 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
       const validOptions = data.filter((item: any) => item.id);
       const idOptions: Option[] = validOptions.map((item: any) => ({
         value: item.id,
-        label: `UJIAN ID: ${item.id}`.toUpperCase(),
+        label: `${item.id}`.toUpperCase(),
       }));
       idOptions.sort((a, b) => a.label.localeCompare(b.label));
       setUjianOptions(idOptions);
@@ -112,7 +121,7 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
       const validOptions = data.filter((item: any) => item.id);
       const idOptions: Option[] = validOptions.map((item: any) => ({
         value: item.id,
-        label: `KELAS: ${item.id}`.toUpperCase(),
+        label: `${item.id}`.toUpperCase(),
       }));
       idOptions.sort((a, b) => a.label.localeCompare(b.label));
       setKelasOptions(idOptions);
@@ -128,43 +137,65 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
     setExamDetails((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleClassChange = (index: number, value: string) => {
+    const updatedClasses = [...selectedClasses];
+    updatedClasses[index] = value; // Store the id_kelas here
+    setSelectedClasses(updatedClasses);
+  };
+
+  // Add a new class selection
+  const addClass = () => {
+    setSelectedClasses([...selectedClasses, ""]); // Add a new empty value for id_kelas
+  };
+
+  // Remove a class selection at a specific index
+  const removeClass = (index: number) => {
+    const updatedClasses = selectedClasses.filter((_, i) => i !== index);
+    setSelectedClasses(updatedClasses);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
-    // Struktur data sesuai dengan yang diharapkan oleh backend
-    const dataToSend = {
-      judul_soal: examDetails.judul_soal,
-      jumlah_soal: examDetails.jumlah_soal,
-      durasi: examDetails.durasi,
-      tanggal_pelaksanaan: examDetails.tanggal_pelaksanaan,
-      waktu_mulai: examDetails.waktu_dimulai,
-      waktu_berakhir: examDetails.waktu_berakhir,
-      id_mapel: examDetails.id_mapel,
-      nig_guru: examDetails.nig_guru,
-      id_ujian: examDetails.id_ujian,
-      id_kelas: examDetails.id_kelas
-    };
-  
-    try {
-      await axios.post(
-        "https://49kdgk28-7772.asse.devtunnels.ms/api/detail-ujian",
-        dataToSend,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-      console.log("Data submitted successfully:", dataToSend);
-      setIsOpen(false);
-      onComplete(true);
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // Jika kesalahan dari axios
-        console.error("Axios error:", error.response?.data);
-        alert(`Error: ${error.response?.data.message || 'Unknown error'}`);
-      } else {
-        // Jika kesalahan bukan dari axios
-        console.error("Unexpected error:", error);
-        alert('An unexpected error occurred.');
+
+    for (const id_kelas of selectedClasses) {
+      if (!id_kelas) continue; // Skip empty class selections
+
+      const dataToSend = {
+        ...examDetails,
+        id_kelas,
+      };
+
+      console.log(dataToSend)
+
+      try {
+        await axios.post(
+          "https://49kdgk28-7772.asse.devtunnels.ms/api/detail-ujian",
+          dataToSend,
+          { headers: { "Content-Type": "application/json" } }
+        );
+        console.log("Data submitted successfully for class:", id_kelas);
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          console.error(
+            "Axios error for class",
+            id_kelas,
+            ":",
+            error.response?.data
+          )
+          console.error("Woi ini data sending: ", dataToSend);
+          alert(
+            `Error for class ${id_kelas}: ${
+              error.response?.data.message || "Unknown error"
+            }`
+          );
+        } else {
+          console.error("Unexpected error for class", id_kelas, ":", error);
+          alert(`An unexpected error occurred for class ${id_kelas}.`);
+        }
       }
     }
+
+    setIsOpen(false);   
   };
 
   const isFormComplete = () => {
@@ -174,16 +205,17 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
       examDetails.durasi !== "00:00:00" &&
       examDetails.id_mapel &&
       examDetails.id_ujian &&
-      examDetails.id_kelas &&
-      examDetails.waktu_dimulai &&
+      examDetails.nig_guru &&
+      selectedClasses.some((kelas) => kelas !== "") &&
+      examDetails.waktu_mulai &&
       examDetails.waktu_berakhir
     );
   };
 
   return (
-    <div className="mb-6 border border-gray-200 rounded-lg">
+    <div className="mb-6 border border-gray-200 rounded-lg bg-white">
       <button
-        className="w-full p-4 text-left font-semibold bg-gray-100 hover:bg-gray-200"
+        className="w-full p-4 text-left font-semibold bg-white hover:bg-gray-200"
         onClick={() => setIsOpen(!isOpen)}
       >
         Detail Ujian {isOpen ? "▲" : "▼"}
@@ -192,10 +224,28 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
         <form onSubmit={handleSubmit} className="p-4">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block mb-2">Judul Soal</label>
+              <label className="block mb-2">Kode Ujian</label>
+              <select
+                name="id_ujian"
+                value={examDetails.id_ujian}
+                onChange={handleInputChange}
+                className="w-full p-2 border rounded"
+                required
+              >
+                <option value="">Pilih Ujian</option>
+                {ujianOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block mb-2">Mata Pelajaran</label>
               <input
                 type="text"
                 name="judul_soal"
+                placeholder="Cth: Pemrograman Berorientasi Objek"
                 value={examDetails.judul_soal}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded"
@@ -240,8 +290,8 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
               <label className="block mb-2">Waktu Mulai</label>
               <input
                 type="datetime-local"
-                name="waktu_dimulai"
-                value={examDetails.waktu_dimulai}
+                name="waktu_mulai"
+                value={examDetails.waktu_mulai}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded"
                 required
@@ -259,7 +309,7 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
               />
             </div>
             <div>
-              <label className="block mb-2">Mapel</label>
+              <label className="block mb-2">Kode Mapel</label>
               <select
                 name="id_mapel"
                 value={examDetails.id_mapel}
@@ -276,33 +326,56 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
               </select>
             </div>
             <div>
-              <label className="block mb-2">Ujian</label>
-              <select
-                name="id_ujian"
-                value={examDetails.id_ujian}
-                onChange={handleInputChange}
-                className="w-full p-2 border rounded"
-                required
+              <label className="block mb-2">Kelas</label>
+              {selectedClasses.map((kelas, index) => (
+                <div key={index} className="flex items-center mb-2">
+                  <select
+                    name="id_kelas"
+                    value={kelas} // This will be the id_kelas
+                    onChange={(e) => handleClassChange(index, e.target.value)}
+                    className="w-full p-2 border rounded"
+                    required
+                  >
+                    <option value="">Pilih Kelas</option>
+                    {kelasOptions.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {" "}
+                        {/* option.value is id_kelas */}
+                        {option.label} {/* option.label is the class name */}
+                      </option>
+                    ))}
+                  </select>
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => removeClass(index)}
+                      className="ml-2 text-red-500"
+                    >
+                      <X size={20} />
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={addClass}
+                className="mt-2 flex items-center text-blue-500"
               >
-                <option value="">Pilih Ujian</option>
-                {ujianOptions.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
+                <PlusCircle size={20} className="mr-1" />
+                Tambah Kelas
+              </button>
             </div>
             <div>
-              <label className="block mb-2">Kelas</label>
+              <label className="block mb-2">Guru</label>
               <select
-                name="id_kelas"
-                value={examDetails.id_kelas}
+                name="nig_guru"
+                value={examDetails.nig_guru}
                 onChange={handleInputChange}
                 className="w-full p-2 border rounded"
                 required
               >
-                <option value="">Pilih Kelas</option>
-                {kelasOptions.map((option) => (
+                <option value="">Guru</option>
+                {guruOptions.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
@@ -317,21 +390,13 @@ const ExamDetails: React.FC<{ onComplete: (isComplete: boolean) => void }> = ({
               onClick={(e) => {
                 if (!isFormComplete()) {
                   e.preventDefault(); // Mencegah form dari pengiriman
-                  alert("Formulir belum lengkap, silakan lengkapi semua bidang sebelum menyimpan.");
+                  alert(
+                    "Formulir belum lengkap, silakan lengkapi semua bidang sebelum menyimpan."
+                  );
                 }
               }}
             >
               Simpan Detail Ujian
-            </button>
-            <button
-              type="button"
-              className="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600"
-              onClick={() => {
-                onComplete(true);
-                setIsOpen(false);
-              }}
-            >
-              Saya Sudah Membuat Detail Ujian
             </button>
           </div>
         </form>

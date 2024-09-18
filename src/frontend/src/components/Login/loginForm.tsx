@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import useAuth from '../../hooks/useAuth.js';
 // Import assets
-import User from "/assets/user.png";
-import Padlock from "/assets/padlock.png";
+import User from "../../public/assets/user.png";
+import Padlock from "../../public/assets/padlock.png";
 
 const LoginForm: React.FC = () => {
     const [niu, setNiu] = useState<number | string>('');

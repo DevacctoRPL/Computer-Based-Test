@@ -45,6 +45,12 @@ class AdminModel {
         `DELETE FROM admin WHERE id = ?`, [id]
     );
   }
+  static async updateFeature(id: string, feature: string, value: boolean): Promise<void> {
+    await pool.query<ResultSetHeader>(
+      `UPDATE admin SET panel_admin = JSON_SET(panel_admin, '$.${feature}', ?) WHERE id = ?`,
+      [value, id]
+    );
+  }
 }
 
 export default AdminModel

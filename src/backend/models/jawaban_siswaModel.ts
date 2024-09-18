@@ -88,20 +88,20 @@ class Jawaban_SiswaModel {
       if (rowsNilaiSiswa.length > 0) {
         // Jika data sudah ada, gabungkan detil_nilai baru dengan yang sudah ada
         const existingDetilNilai = JSON.parse(rowsNilaiSiswa[0].detil_nilai);
-
+      
         // Filter duplikat, hanya tambahkan pertanyaan baru yang belum ada
         const updatedDetilNilai = [...existingDetilNilai];
-
+      
         detilNilaiBaru.forEach((newItem) => {
           const exists = existingDetilNilai.some((existingItem: any) => existingItem.id_pertanyaan === newItem.id_pertanyaan);
           if (!exists) {
             updatedDetilNilai.push(newItem); // Hanya tambahkan jika belum ada
           }
         });
-  
-        const existingNilaiAkhir = rowsNilaiSiswa[0].nilai_akhir;
-        const updatedNilaiAkhir = (existingNilaiAkhir + nilaiAkhir) / 2; // Rata-rata dari nilai sebelumnya dan nilai baru
-  
+      
+        // Ganti penghitungan nilai dengan menggunakan nilai terbaru (tanpa dirata-rata)
+        const updatedNilaiAkhir = nilaiAkhir; // Gunakan nilai akhir terbaru tanpa rata-rata
+      
         // Update data nilai_siswa dengan detil_nilai dan nilai_akhir yang diperbarui
         await connection.query<ResultSetHeader>(
           'UPDATE nilai_siswa SET nilai_akhir = ?, detil_nilai = ? WHERE nis = ? AND id_ujian = ?',
@@ -126,7 +126,6 @@ class Jawaban_SiswaModel {
       connection.release();
     }
   }
-  
 
   static async add(jawabanSiswa: JawabanSiswa): Promise<void> {
     try {

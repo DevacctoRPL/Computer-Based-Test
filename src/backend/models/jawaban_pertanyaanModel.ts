@@ -20,10 +20,7 @@ class Jawaban_PertanyaanModel {
     const [rows] = await pool.query<RowDataPacket[]>(
       `SELECT * FROM jawaban_pertanyaan`
     );
-    return rows.map((row) => ({
-      ...row,
-      isi_jawaban: JSON.parse(row.isi_jawaban), // Parse JSON untuk mengembalikan array
-    })) as JawabanPertanyaan[];
+    return rows as JawabanPertanyaan[];
   }
 
   static async getById(id: string): Promise<JawabanPertanyaan | null> {

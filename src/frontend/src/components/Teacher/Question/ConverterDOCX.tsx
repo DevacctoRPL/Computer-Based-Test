@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, FormEvent } from "react";
-import useClearNullList from "../../hooks/useClearNullList.js";
+import useClearNullList from "../../../hooks/useClearNullList.js";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 interface Answer {
@@ -36,11 +36,11 @@ const InputQuestion: React.FC = () => {
   // const [soal, setSoal] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const outputRef = useRef<HTMLDivElement>(null);
-  let NIUGURU = ""
 
   useEffect(() => {
     // Mendekode token JWT dan mengambil NIU
     const getNIUFromToken = () => {
+      let NIUGURU = ""
       const token = localStorage.getItem("token");
       console.log("Token:", token);
       if (token) {
@@ -55,8 +55,6 @@ const InputQuestion: React.FC = () => {
       }
       return null;
     };
-
-    let id_detailUjian = ""
 
     const fetchDataFromAPI = async () => {
       setIsLoading(true);
@@ -211,6 +209,7 @@ const InputQuestion: React.FC = () => {
         radioInput.name = `jawaban-${localQuestionIndex - 1}`; // Gunakan indeks lokal
         radioInput.classList.add("radio-input");
         radioInput.value = labels[answerIndex];
+        radioInput.setAttribute("disabled", "true")
 
         // Cek apakah jawaban ini adalah jawaban yang benar
         const isCorrectAnswer = item.innerHTML.includes("(asTrueAnswer)");
@@ -451,10 +450,10 @@ const InputQuestion: React.FC = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
-      <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-        Convert DOCX to HTML
-      </h1>
+    <div className="max-w-3xl mx-auto px-6 pb-4 bg-white shadow-md rounded-lg">
+      <p className="text-md mb-6 text-center text-gray-800">
+        -erlangftsiesta-
+      </p>
       <form
         onSubmit={handleFileUpload}
         encType="multipart/form-data"
@@ -477,6 +476,7 @@ const InputQuestion: React.FC = () => {
       </form>
 
       <form onSubmit={handleSave} className="flex flex-col space-y-4">
+        <p className="text-gray-400">*hasil yang tercetak adalah Preview Model, anda tidak akan bisa merubah isinya</p>
         <div
           ref={outputRef}
           id="output"

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import SpinnerLoad from "../spinnerLoad.js";
 
 interface Pertanyaan {
@@ -33,94 +33,104 @@ interface JawabanData {
   nomor: string;
   alphabet: string;
   J_text: string;
-  status: 'ragu' | 'yakin';
-  niu?: number
+  status: "Belum Dijawab" | "Sudah Dijawab";
+  niu?: number;
 }
 
-const Soal: React.FC<SoalProps> = ({ currentQuestionId, onNextQuestion }) => {
+const Soal: React.FC<SoalProps> = ({ currentQuestionId }) => {
   const [niu, setNiu] = useState<string>(""); //State for get UserID
 
   const [pertanyaan, setPertanyaan] = useState<Pertanyaan | null>(null);
   const [jawaban, setJawaban] = useState<PilihanJawaban[]>([]);
-  
+
   const [selectedAnswer, setSelectedAnswer] = useState<string>("");
-  const [soalData, setSoalData] = useState<Pertanyaan[]>([]);
+  const [, setSoalData] = useState<Pertanyaan[]>([]);
   const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true); // State untuk tombol submit
   const [isLastQuestion, setIsLastQuestion] = useState<boolean>(false);
 
-  const [status, setStatus] = useState<'ragu' | 'yakin'>('ragu');
+  const [status, setStatus] = useState<"Belum Dijawab" | "Sudah Dijawab">(
+    "Belum Dijawab"
+  );
   const [error, setError] = useState<boolean>(false); // State for handling errors
 
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    
     const fetchSoal = async () => {
       try {
         // Mendapatkan ID ujian dari localStorage
-        const examId = localStorage.getItem('path_ujian');
+        const examId = localStorage.getItem("path_ujian");
         if (!examId) {
           setError(true);
           return;
         }
-  
+
         // Ambil pertanyaan dan jawaban
         const responsePertanyaan = await axios.get<Pertanyaan>(
           `https://49kdgk28-7772.asse.devtunnels.ms/api/pertanyaan/${currentQuestionId}`
         );
         setPertanyaan(responsePertanyaan.data);
-  
+
         const responseJawaban = await axios.get<Jawaban>(
           `https://49kdgk28-7772.asse.devtunnels.ms/api/jawaban-pertanyaan/${currentQuestionId}`
         );
-  
+
         const isiJawaban = JSON.parse(responseJawaban.data.isi_jawaban);
         let pilihanJawaban: PilihanJawaban[] = [];
-  
+
         if (isiJawaban.daftar_jawaban !== "null") {
           pilihanJawaban = JSON.parse(isiJawaban.daftar_jawaban).map(
             (jawaban: string, index: number) => ({
               pilihan: jawaban,
-              kode: String.fromCharCode(65 + index)
+              kode: String.fromCharCode(65 + index),
             })
           );
         } else if (isiJawaban.daftar_jawaban_bergambar) {
           pilihanJawaban = JSON.parse(isiJawaban.daftar_jawaban_bergambar).map(
             (jawaban: PilihanJawaban, index: number) => ({
               ...jawaban,
-              kode: String.fromCharCode(65 + index)
+              kode: String.fromCharCode(65 + index),
             })
           );
         }
-  
+
         // Ambil semua soal untuk ujian ini
         const responseSoal = await axios.get<Pertanyaan[]>(
           `https://49kdgk28-7772.asse.devtunnels.ms/api/pertanyaan?id_detail_ujian=${examId}`
         );
-        const sortedSoalData = responseSoal.data.sort((a, b) => parseInt(a.nomor) - parseInt(b.nomor));
+        const sortedSoalData = responseSoal.data.sort(
+          (a, b) => parseInt(a.nomor) - parseInt(b.nomor)
+        );
         setSoalData(sortedSoalData);
         setSoalData(responseSoal.data);
         setJawaban(pilihanJawaban);
-  
-      // Check if current question is the last one based on nomor
-      setIsLastQuestion(sortedSoalData[sortedSoalData.length - 1].nomor === responsePertanyaan.data.nomor);
-  
+
+        // Check if current question is the last one based on nomor
+        setIsLastQuestion(
+          sortedSoalData[sortedSoalData.length - 1].nomor ===
+            responsePertanyaan.data.nomor
+        );
+
         // Muat jawaban yang disimpan dari localStorage
-        const savedAnswers = JSON.parse(localStorage.getItem('examAnswers') || '[]');
-        const savedAnswer = savedAnswers.find((answer: JawabanData) => answer.nomor === responsePertanyaan.data.nomor);
+        const savedAnswers = JSON.parse(
+          localStorage.getItem("examAnswers") || "[]"
+        );
+        const savedAnswer = savedAnswers.find(
+          (answer: JawabanData) =>
+            answer.nomor === responsePertanyaan.data.nomor
+        );
         if (savedAnswer) {
           setSelectedAnswer(savedAnswer.J_text);
           setStatus(savedAnswer.status);
         } else {
           setSelectedAnswer("");
-          setStatus('ragu');
+          setStatus("Belum Dijawab");
         }
-  
+
         // Cek apakah semua soal telah dijawab
         const totalQuestions = responseSoal.data.length;
         const answeredQuestions = savedAnswers.length;
         setIsSubmitDisabled(totalQuestions !== answeredQuestions); // Disable tombol submit jika jumlah soal dan jawaban belum sesuai
-  
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -132,52 +142,58 @@ const Soal: React.FC<SoalProps> = ({ currentQuestionId, onNextQuestion }) => {
       fetchSoal();
     }
 
-    
-  
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwt.decode(token);
-      if (decodedToken && typeof decodedToken !== 'string') {
+      if (decodedToken && typeof decodedToken !== "string") {
         setNiu(decodedToken.niu || "");
       }
     }
   }, [currentQuestionId]);
-  
 
   const handleAnswerChange = (pilihan: string) => {
     setSelectedAnswer(pilihan);
     saveAnswer(pilihan, status);
   };
 
-  const saveAnswer = (answer: string, answerStatus: 'ragu' | 'yakin') => {
+  const saveAnswer = (
+    answer: string,
+    answerStatus: "Belum Dijawab" | "Sudah Dijawab"
+  ) => {
     if (pertanyaan) {
-      const selectedOption = jawaban.find(j => j.pilihan === answer);
+      const selectedOption = jawaban.find((j) => j.pilihan === answer);
       const jawabanData: JawabanData = {
         id: pertanyaan.id,
         nomor: pertanyaan.nomor,
         alphabet: selectedOption?.kode || "",
         J_text: answer,
-        status: answerStatus
+        status: answerStatus,
       };
 
-      const existingAnswers = JSON.parse(localStorage.getItem('examAnswers') || '[]');
-      const existingAnswerIndex = existingAnswers.findIndex((ans: JawabanData) => ans.nomor === pertanyaan.nomor);
-      
+      const existingAnswers = JSON.parse(
+        localStorage.getItem("examAnswers") || "[]"
+      );
+      const existingAnswerIndex = existingAnswers.findIndex(
+        (ans: JawabanData) => ans.nomor === pertanyaan.nomor
+      );
+
       if (existingAnswerIndex !== -1) {
         existingAnswers[existingAnswerIndex] = jawabanData;
       } else {
         existingAnswers.push(jawabanData);
       }
 
-      localStorage.setItem('examAnswers', JSON.stringify(existingAnswers));
+      localStorage.setItem("examAnswers", JSON.stringify(existingAnswers));
     }
   };
 
   const handleSubmit = async () => {
     try {
-      const path_ujian = localStorage.getItem('path_ujian');
-      const examAnswers = JSON.parse(localStorage.getItem('examAnswers') || '[]');
-      
+      const path_ujian = localStorage.getItem("path_ujian");
+      const examAnswers = JSON.parse(
+        localStorage.getItem("examAnswers") || "[]"
+      );
+
       // Prepare the data in the correct format
       const formattedData = examAnswers.map((answer: JawabanData) => ({
         nis: niu,
@@ -187,46 +203,49 @@ const Soal: React.FC<SoalProps> = ({ currentQuestionId, onNextQuestion }) => {
           nomor: answer.nomor,
           alphabet: answer.alphabet,
           J_text: answer.J_text,
-          status: answer.status
+          status: answer.status,
         }),
-        id_detail_ujian: path_ujian
+        id_detail_ujian: path_ujian,
       }));
 
-      console.log(formattedData)
+      console.log(formattedData);
 
       // Send each formatted answer individually
       for (const data of formattedData) {
-        await axios.post('https://49kdgk28-7772.asse.devtunnels.ms/api/jawaban-siswa', data,{
-          headers: {
-            'Content-Type': 'application/json',
+        await axios.post(
+          "https://49kdgk28-7772.asse.devtunnels.ms/api/jawaban-siswa",
+          data,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-        });
+        );
       }
-      alert('Jawaban berhasil disubmit!');
+      alert("Jawaban berhasil disubmit!");
 
       // clear localStorage after successful submission
-      localStorage.removeItem('examAnswers');
-      localStorage.removeItem('path_ujian');
-      window.location.href = '/';
+      localStorage.removeItem("examAnswers");
+      localStorage.removeItem("path_ujian");
+      window.location.href = "/";
 
       // const interval = setInterval(() => {
       //   const examAnswers = JSON.parse(localStorage.getItem('examAnswers') || '[]');
       //   const totalQuestions = soalData.length;
       //   const answeredQuestions = examAnswers.length;
-    
+
       //   setIsSubmitDisabled(totalQuestions !== answeredQuestions);
       // }, 5000);
-    
+
       // // Bersihkan interval saat komponen di-unmount
       // return () => clearInterval(interval);
-
     } catch (error) {
-      console.error('Error submitting answers:', error);
-      alert('Terjadi kesalahan saat mengirim jawaban. Silakan coba lagi.');
+      console.error("Error submitting answers:", error);
+      alert("Terjadi kesalahan saat mengirim jawaban. Silakan coba lagi.");
     }
   };
 
-  const handleStatusChange = (newStatus: 'ragu' | 'yakin') => {
+  const handleStatusChange = (newStatus: "Belum Dijawab" | "Sudah Dijawab") => {
     setStatus(newStatus);
     saveAnswer(selectedAnswer, newStatus);
   };
@@ -310,26 +329,34 @@ const Soal: React.FC<SoalProps> = ({ currentQuestionId, onNextQuestion }) => {
         </div>
         {pertanyaan && (
           <div id="status_button" className="submit text-center mt-4">
-            <button 
-              className={`bg-yellow-500 mr-2 focus:outline-none focus:ring rounded-lg p-2 ${status === 'ragu' ? 'opacity-100' : 'opacity-50'}`}
-              onClick={() => handleStatusChange('ragu')}
+            <button
+              className={`text-white bg-red-500 mr-2 focus:outline-none focus:ring rounded-lg p-2 ${
+                status === "Belum Dijawab" ? "opacity-100" : "opacity-50"
+              }`}
+              onClick={() => handleStatusChange("Belum Dijawab")}
             >
-              Ragu
+              Belum Dijawab
             </button>
-            <button 
-              className={`bg-green-500 mr-2 focus:outline-none focus:ring rounded-lg p-2 ${status === 'yakin' ? 'opacity-100' : 'opacity-50'}`}
-              onClick={() => handleStatusChange('yakin')}
+            <button
+              className={`bg-green-500 mr-2 focus:outline-none focus:ring rounded-lg p-2 ${
+                status === "Sudah Dijawab" ? "opacity-100" : "opacity-50"
+              }`}
+              onClick={() => handleStatusChange("Sudah Dijawab")}
             >
-              Yakin
+              Sudah Dijawab
             </button>
             {isLastQuestion && (
               <button
-              onClick={handleSubmit}
-              className={`bg-purple-600 text-white p-2 rounded-lg ${
-                isSubmitDisabled ? "cursor-not-allowed" : ""
-              }`}
-              disabled={isSubmitDisabled}
-            >
+                onClick={() => {
+                  const userConfirmed = window.confirm(
+                    "Pastikan Jawabanmu Terisi sepenuhnya! Apakah kamu yakin ingin submit?"
+                  );
+                  if (userConfirmed) {
+                    handleSubmit();
+                  }
+                }}
+                className={`bg-purple-600 text-white p-2 rounded-lg`}
+              >
                 Submit Soal
               </button>
             )}
